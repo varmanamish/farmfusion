@@ -1,0 +1,53 @@
+body{
+    margin: 0px;
+    padding: 0px;
+  
+}
+section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: #706c6c;
+    background-image: url("../bgs/bg1.jpg");
+}
+section form{
+    display: flex;
+    flex-direction: column;    
+    width:50%;
+    height: 80%;
+    font-size: large;
+    background-color: rgba(255, 255, 255, 0.416);
+    backdrop-filter: blur(5px);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(255, 111, 0, 0.333);
+}
+
+section form input{
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    width: 90%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.616);
+    font-size: large;
+}
+
+section form h3{
+    margin: 10px;
+    margin-left: 40%;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: x-large;
+    font-weight: 700;
+}
+
+section form p{
+    margin: 10px;
+    font-size: large;
+}
+section form #message{
+    color: red;
+}
+
