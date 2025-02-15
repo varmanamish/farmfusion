@@ -1,5 +1,10 @@
 from django.shortcuts import render
-import profile 
+from .models import CustomUser
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
+from django.db import IntegrityError
+from django.urls import reverse
+
 # Create your views here.
 def login_view(request):
     if request.method == "POST":
@@ -27,29 +32,32 @@ def logout_view(request):
 
 def register(request):
     if request.method == "POST":
-        # Get username, email, password and confirmation password from the form
-        username = request.POST["username"] # username is the name of the input field in the form
-        email = request.POST["email"] # email is the name of the input field in the form
-        password = request.POST["password"] # password is the name of the input field in the form
-        confirmation = request.POST["confirmation"] # confirmation is the name of the input field in the form
-        # Ensure password matches confirmation
+        username = request.POST["username"]
+        email = request.POST["email"]
+        password = request.POST["password"]
+        confirmation = request.POST["confirmation"]
+        profile_img = request.FILES.get("profileimage")
+        is_farmer = request.POST.get("is_farmer") == "T"  # Convert to boolean
+
         if password != confirmation:
-            return render(request, "register.html", {
-                "message": "Passwords must match."
-            })
-        # Attempt to create new user
+            return render(request, "register.html", {"message": "Passwords must match."})
+
         try:
-            user = User.objects.create_user(username, email, password) # create_user() is a built-in function provided by Django
-            user.save()
+            user = CustomUser.objects.create_user(
+                username=username,
+                email=email,
+                password=password,
+                profile_pic=profile_img,
+                is_farmer=is_farmer
+            )
         except IntegrityError:
-            return render(request, "register.html", {
-                "message": "Username already taken."
-            })
+            return render(request, "register.html", {"message": "Username already taken."})
+
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
-    # If method is GET, return register page
-    else:
-        return render(request, "register.html")
+    
+    return render(request, "register.html")
+
     
 def profile(request):
     return render(request, "profile.html")
