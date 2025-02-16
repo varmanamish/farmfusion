@@ -13,10 +13,18 @@
        <h3>register now</h3>
        {% csrf_token %}
        <br>
-       <p>your name <span>*</span></p>
+       <p>your first name <span>*</span></p>
+       <input type="text" name="firstname" placeholder="enter your first name" required maxlength="50" class="box">
+       <p>your last name <span>*</span></p>
+       <input type="text" name="lastname" placeholder="enter your last name" required maxlength="50" class="box">
+       <p>user name <span>*</span></p>
        <input type="text" name="username" placeholder="enter your name" required maxlength="50" class="box">
        <p>your email <span>*</span></p>
        <input type="email" name="email" placeholder="enter your email" required maxlength="50" class="box">
+       <p>Phone no <span>*</span></p>
+       <input type="text" name="phone" placeholder="enter your phone no" required maxlength="50" class="box">
+       <p>date of birth<span>*</span></p>
+       <input type="date" name="dob" placeholder="enter your DOB" required maxlength="50" class="box">
        <p>your password <span>*</span></p>
        <input type="password" name="password" placeholder="enter your password" required maxlength="20" class="box">
        <p>confirm password <span>*</span></p>
@@ -33,7 +41,11 @@
     </form>
  
  </section>
-
+ {% if error %}
+ <script>
+     alert("{{ error }}");
+ </script>
+ {% endif %} 
  
 
 </body>

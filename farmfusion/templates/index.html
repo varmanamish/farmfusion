@@ -105,9 +105,15 @@
                         <li><a href="{% url 'products' %}">Products</a></li>
                         <li><a href="{% url 'partners' %}">Partners</a></li>
                         <li ><a href="{% url 'contacts' %}">Contacts</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'profile' %}">profile</a></li>
+                        <li><a href="{% url 'logout' %}">logout</a></li>
+                        {% else %}
+                        {
                         <li ><a href="{% url 'register' %}">Register</a></li>
                         <li class="last"><a href="{% url 'login' %}">Login</a></li>
-                        
+                        }
+                        {% endif %}
                     </ul>
                 </nav>
             </div>
