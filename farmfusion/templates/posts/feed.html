@@ -7,6 +7,53 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="{% static 'css/feed.css' %}" />
+        <style>
+            /* Modal styling */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+
+            .modal-content {
+                background-color: white;
+                margin: 10% auto;
+                padding: 20px;
+                border-radius: 5px;
+                width: 50%;
+                position: relative;
+            }
+
+            .close {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                font-size: 20px;
+                cursor: pointer;
+            }
+
+            input,
+            textarea {
+                width: 100%;
+                padding: 8px;
+                margin: 8px 0;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            .submit-btn {
+                background-color: #28a745;
+                color: white;
+                padding: 10px 15px;
+                border: none;
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body>
         <main class="main">
@@ -123,13 +170,13 @@
                             <h3>Settings</h3>
                         </a>
 
-                        <label class="btn btn-primary" for="create-post"
-                            >Create Post</label
+                        <label class="btn btn-primary" id="create-post-button"
+                            >+</label
                         >
                     </div>
                 </div>
                 <div class="middle">
-                    <form class="create-post">
+                    <!-- <form class="create-post">
                         <div class="profile-pic">
                             <img
                                 src="https://res.cloudinary.com/freecodez/image/upload/v1698067298/images/fy8azbqxhgdrbbijhipe.webp"
@@ -146,7 +193,7 @@
                             value="Post"
                             class="btn btn-primary"
                         />
-                    </form>
+                    </form> -->
 
                     <div class="feeds">
                         {% for post in posts %}
@@ -361,6 +408,65 @@
                 </div>
             </div>
         </main>
+
+        <!-- Button Popup -->
+        <div id="postModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Create a Post</h2>
+                <form
+                    action="your_django_backend_url_here"
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+                    <label>Username:</label>
+                    <input type="text" name="username" required />
+
+                    <label>Location:</label>
+                    <input type="text" name="location" />
+
+                    <label>Profile Picture:</label>
+                    <input type="file" name="profile_pic" accept="image/*" />
+
+                    <label>Post Image:</label>
+                    <input type="file" name="post_image" accept="image/*" />
+
+                    <label>Caption:</label>
+                    <textarea name="caption" rows="3"></textarea>
+
+                    <label>Likes Count:</label>
+                    <input
+                        type="number"
+                        name="likes_count"
+                        value="0"
+                        readonly
+                    />
+
+                    <button type="submit" class="submit-btn">Post</button>
+                </form>
+            </div>
+        </div>
         <script src="{% static 'js/feed.js' %}"></script>
+
+        <script>
+            document
+                .getElementById("create-post-button")
+                .addEventListener("click", function () {
+                    document.getElementById("postModal").style.display =
+                        "block";
+                });
+
+            function closeModal() {
+                document.getElementById("postModal").style.display = "none";
+            }
+
+            // Close the modal when clicking outside of it
+            window.onclick = function (event) {
+                let modal = document.getElementById("postModal");
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            };
+        </script>
     </body>
 </html>
