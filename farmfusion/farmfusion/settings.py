@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [  
     'accounts',
+    'posts',
     'ecom',
     'django.contrib.admin',
     'django.contrib.auth',
