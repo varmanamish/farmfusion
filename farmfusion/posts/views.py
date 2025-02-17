@@ -23,9 +23,10 @@ def add_post(request):
         # Create and save the post
         Post.objects.create(
             user=request.user,  # Automatically assign the logged-in user
+            username=request.user.username,  # Save the username in the post
+            profile_pic=request.user.profile_pic,  # Save the user's profile picture in the post
             location=location,
             caption=caption,
-            profile_pic=profile_pic,
             post_image=post_image,
             likes_count=0  
         )
