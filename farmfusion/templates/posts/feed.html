@@ -202,20 +202,20 @@
                             <div class="user">
                                 <div class="profile-pic">
                                     <img
-                                        src="{{ post.profile_pic.url }}"
+                                        src="{{ post.user.profile_pic.url }}"
                                         alt="Profile Picture"
                                     />
                                 </div>
                                 <div class="info">
                                     <h3>{{ post.user.username }}</h3>
-                                    <small
-                                        >{{ post.location }},
-                                        {{post.created_at}} ago</small
-                                    >
+                                    <small>
+                                        {{ post.location }}, {{ post.created_at
+                                        }} ago
+                                    </small>
                                 </div>
-                                <span class="edit"
-                                    ><i class="uil uil-ellipsis-h"></i
-                                ></span>
+                                <span class="edit">
+                                    <i class="uil uil-ellipsis-h"></i>
+                                </span>
                             </div>
 
                             <div class="photo">
