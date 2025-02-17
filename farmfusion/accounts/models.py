@@ -30,6 +30,7 @@ class CustomUser(AbstractUser):
 
 class Wallet(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="wallet")
+    wallet_pin =models.CharField(null=True)
     wallet_amount = models.IntegerField(default=0)
     free_amount = models.IntegerField(default=0)
     is_locked = models.BooleanField(default=False)
