@@ -207,7 +207,7 @@
                                     />
                                 </div>
                                 <div class="info">
-                                    <h3>{{ post.username }}</h3>
+                                    <h3>{{ post.user.username }}</h3>
                                     <small
                                         >{{ post.location }},
                                         {{post.created_at}} ago</small
@@ -420,8 +420,6 @@
                     enctype="multipart/form-data"
                 >
                     {% csrf_token %}
-                    <label>Username:</label>
-                    <input type="text" name="username" required />
 
                     <label>Location:</label>
                     <input type="text" name="location" />
