@@ -1831,11 +1831,12 @@
                                                     href="#"
                                                     title="{{ product.name }}"
                                                 >
+                                                    <!-- Append this for max-height -->
                                                     <img
                                                         src="{{ product.image.url }}"
                                                         alt="{{ product.name }}"
                                                         class="tab-image"
-                                                        object-fit="contain"
+                                                        style="max-height: 20px"
                                                     />
                                                 </a>
                                             </figure>
