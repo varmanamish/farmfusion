@@ -180,7 +180,7 @@ def createwallet(request):
             passw =   request.POST.get("pasw"," ")
             walletc =Wallet.objects.create(
                  wallet_pin=passw,
-                 user_id = request.user.id  
+                 user_id = request.user.id ,
             )
             print("done")
             walletc.save()

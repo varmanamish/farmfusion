@@ -101,7 +101,7 @@
 <form method="POST" action="{% url 'createwallet' %}">
     {% csrf_token %}
     <label>Enter PIN:</label>
-    <input type="password" name="wallet_pin" required>
+    <input type="password" name="pasw" required>
     <br><br>
     <input type="submit" class="btn btn-warning">
     <button type="button" class="btn btn-secondary" onclick="closePopup()">Cancel</button>
