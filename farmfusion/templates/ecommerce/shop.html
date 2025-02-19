@@ -1848,17 +1848,30 @@
                                                 </h3>
                                                 <div>
                                                     <span class="rating">
+                                                        {% comment %} {% for i
+                                                        in "12345"|make_list %}
+                                                        {% if
+                                                        forloop.counter<=product.rating|floatformat:0\%}
+                                                        ⭐ {% else %} ☆ {% endif
+                                                        %} {% endfor %}
+                                                        {%endcomment %}
                                                     </span>
                                                     <span
                                                         >({{product.rating}})</span
                                                     >
                                                 </div>
+
                                                 <div
                                                     class="d-flex justify-content-center align-items-center gap-2"
                                                 >
+                                                    <del>$24.00</del>
                                                     <span
                                                         class="text-dark fw-semibold"
                                                         >${{product.cost}}</span
+                                                    >
+                                                    <span
+                                                        class="badge border border-dark-subtle rounded-0 fw-normal px-1 fs-7 lh-1 text-body-tertiary"
+                                                        >10% OFF</span
                                                     >
                                                 </div>
                                                 <div
@@ -2032,7 +2045,7 @@
                                                     title="Product Title"
                                                 >
                                                     <img
-                                                        src="farmfusion/media/product-thumb-2.png"
+                                                        src="media/product-thumb-2.png"
                                                         alt="Product Thumbnail"
                                                         class="tab-image"
                                                     />
@@ -3318,7 +3331,7 @@
                                                     title="Product Title"
                                                 >
                                                     <img
-                                                        src="images/product-thumb-16.png"
+                                                        src="media/product-thumb-1.png"
                                                         alt="Product Thumbnail"
                                                         class="tab-image"
                                                     />
@@ -3572,7 +3585,7 @@
                                                     title="Product Title"
                                                 >
                                                     <img
-                                                        src="images/product-thumb-18.png"
+                                                        src="media/product-thumb-18.png"
                                                         alt="Product Thumbnail"
                                                         class="tab-image"
                                                     />
