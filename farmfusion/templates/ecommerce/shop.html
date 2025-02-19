@@ -1848,13 +1848,17 @@
                                                 </h3>
                                                 <div>
                                                     <span class="rating">
-                                                        {% comment %} {% for i
-                                                        in "12345"|make_list %}
-                                                        {% if
-                                                        forloop.counter<=product.rating|floatformat:0\%}
-                                                        ⭐ {% else %} ☆ {% endif
-                                                        %} {% endfor %}
-                                                        {%endcomment %}
+                                                        {% with product.rating|floatformat:0 as rating %}
+                                                            {% for i in "12345"|make_list %}
+                                                                {% if forloop.counter <= rating|add:0 %} 
+                                                                    ⭐
+                                                                {% else %}
+                                                                    ☆
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endwith %}
+
+
                                                     </span>
                                                     <span
                                                         >({{product.rating}})</span
