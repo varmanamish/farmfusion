@@ -10,7 +10,7 @@ class CustomUserManager(BaseUserManager):
         user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
-        Wallet.objects.create(user=user)  # Automatically create a wallet for the user
+          # Automatically create a wallet for the user
         return user
 
     def create_superuser(self, username, email, password=None, **extra_fields):
@@ -30,6 +30,7 @@ class CustomUser(AbstractUser):
 
 class Wallet(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="wallet")
+    wallet_pin =models.CharField(null=True)
     wallet_amount = models.IntegerField(default=0)
     free_amount = models.IntegerField(default=0)
     is_locked = models.BooleanField(default=False)

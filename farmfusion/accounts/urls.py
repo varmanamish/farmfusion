@@ -9,4 +9,7 @@ urlpatterns=[
     path('addmoney',views.addmoney,name="addmoney"),
     path('withdraw',views.withdraw,name="withdraw"),
     path('check',views.check,name="check"),
+    path('wallet',views.wallet,name='wallet'),
+    path('createwallet',views.createwallet,name='createwallet'),
+    path('walletverif',views.walletverif,name='walletverif'),
 ]

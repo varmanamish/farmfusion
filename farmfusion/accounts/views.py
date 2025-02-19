@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import CustomUser
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
@@ -73,10 +73,14 @@ def register(request):
 def profile(request):
     try:
         print('START')
-        user_profile= request.user
-        print(user_profile)
+        user_profile = request.user
+
+        # Fetch the user's wallet, if it exists
+        wallet = Wallet.objects.filter(user=request.user).first()
+
         context = {
             'profile': user_profile,
+            'wallet': wallet,  # Pass wallet data to the template
         }           
         
         print('sent')
@@ -84,48 +88,101 @@ def profile(request):
         return render(request, 'profile.html', context)
     except Exception as e:
         print(e)
-        return render(request,"profile.html")
+        return render(request, 'profile.html', {'error': str(e)})
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Wallet
+
 @login_required
 def addmoney(request):
-    """Adds money to the user's wallet."""
     if request.method == "POST":
-        user_wallet = request.user.wallet
-        amount = int(request.POST.get("amount", 0))  
+        pin = request.POST.get("wallet_pin").strip()
+        amount = request.POST.get("amount").strip()
 
-        if amount > 0:
-            user_wallet.wallet_amount += amount
-            user_wallet.free_amount += amount 
-            user_wallet.save()
-            return JsonResponse({"success": True, "message": "Money added successfully!"})
-        return JsonResponse({"success": False, "message": "Invalid amount!"})
+        if not amount.isdigit() or int(amount) <= 0:
+            messages.error(request, "Invalid amount.")
+            return redirect("profile")
 
-    return JsonResponse({"success": False, "message": "Invalid request method!"})
+        amount = int(amount)
+
+        try:
+            wallet = Wallet.objects.get(user=request.user)
+
+            if wallet.wallet_pin != pin:
+                messages.error(request, "Incorrect PIN.")
+                return redirect("profile")
+
+            wallet.wallet_amount += amount
+            wallet.save()
+
+            messages.success(request, f"Successfully added ${amount} to your wallet.")
+        except Wallet.DoesNotExist:
+            messages.error(request, "No wallet found.")
+    
+    return redirect("profile")
+
 
 @login_required
 def withdraw(request):
     if request.method == "POST":
-        user_wallet = request.user.wallet
-        amount = int(request.POST.get("amount", 0))
+        pin = request.POST.get("wallet_pin").strip()
+        amount = request.POST.get("amount").strip()
 
-        if user_wallet.is_locked:
-            return JsonResponse({"success": False, "message": "Wallet is locked!"})
+        if not amount.isdigit() or int(amount) <= 0:
+            messages.error(request, "Invalid amount.")
+            return redirect("profile")
 
-        if amount > 0 and user_wallet.free_amount >= amount:
-            user_wallet.wallet_amount -= amount
-            user_wallet.free_amount -= amount
-            user_wallet.save()
-            return JsonResponse({"success": True, "message": "Withdrawal successful!"})
-        
-        return JsonResponse({"success": False, "message": "Insufficient funds!"})
+        amount = int(amount)
 
-    return JsonResponse({"success": False, "message": "Invalid request method!"})
+        try:
+            wallet = Wallet.objects.get(user=request.user)
+
+            if wallet.wallet_pin != pin:
+                messages.error(request, "Incorrect PIN.")
+                return redirect("profile")
+
+            if wallet.wallet_amount < amount:
+                messages.error(request, "Insufficient balance.")
+                return redirect("profile")
+
+            wallet.wallet_amount -= amount
+            wallet.save()
+
+            messages.success(request, f"Successfully withdrew ${amount} from your wallet.")
+        except Wallet.DoesNotExist:
+            messages.error(request, "No wallet found.")
+
+    return redirect("profile")
+
 
 @login_required
 def check(request):
-    user_wallet = request.user.wallet
+    """Returns wallet details as JSON."""
+    user_wallet, created = Wallet.objects.get_or_create(user=request.user)
     data = {
         "wallet_amount": user_wallet.wallet_amount,
         "free_amount": user_wallet.free_amount,
         "is_locked": user_wallet.is_locked,
     }
     return JsonResponse(data)
+@login_required
+def wallet(request):
+    """Render the wallet page with CSRF token."""
+    return render(request, "wallet.html")
+@login_required
+def walletverif(request):
+    if request.method == "POST":
+        confirmpassword = request.POST["password"]
+@login_required
+def createwallet(request):
+        if request.method == "POST":
+            passw =   request.POST.get("pasw"," ")
+            walletc =Wallet.objects.create(
+                 wallet_pin=passw,
+                 user_id = request.user.id ,
+            )
+            print("done")
+            walletc.save()
+            return redirect('profile')
+        return redirect('profile')
