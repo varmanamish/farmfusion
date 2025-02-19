@@ -27,46 +27,47 @@
     <script src="{% static 'js/jquery.carouFredSel-6.1.0-packed.js' %}"></script>
     <script src="{% static 'js/jquery.mousewheel.min.js' %}"></script>
     <script src="{% static 'js/jquery.touchSwipe.min.js' %}"></script>
-     
-    <script>
-        $(window).load(function() {
-            jQuery '#camera_wrap_1'.camera({
-                height: '73,00%',
-                // thumbnails: true,
-                playPause: false,
-                time: 8000,
-                transPeriod: 900,
-                fx: 'simpleFade',
-                loader: 'none',
-                minHeight: '200px',
-                navigation: false
-            });
-            
-            $().UItoTop({ easingType: 'easeOutQuart' });
-            
-            $ '#foo'.carouFredSel({
-                auto: false,
-                responsive: true,
-                width: '100%',
-                prev: '#prev1',
-                next: '#next1',
-                scroll: 1,
-                items: {
-                    height: 'auto',
-                    width: 300,
-                    visible: {
-                        min: 1,
-                        max: 1
-                    }
-                },
-                mousewheel: false,
-                swipe: {
-                    onMouse: true,
-                    onTouch: true
-                }
-            });
+     <script>
+    $(window).on("load", function() {
+        jQuery('#camera_wrap_1').camera({
+            height: '73.00%',  // Fixed comma issue
+            // thumbnails: true,
+            playPause: false,
+            time: 8000,
+            transPeriod: 900,
+            fx: 'simpleFade',
+            loader: 'none',
+            minHeight: '200px',
+            navigation: false
         });
-    </script>
+    
+        // Smooth scrolling to top
+        $().UItoTop({ easingType: 'easeOutQuart' });
+    
+        // Carousel settings
+        $('#foo').carouFredSel({
+            auto: false,
+            responsive: true,
+            width: '100%',
+            prev: '#prev1',
+            next: '#next1',
+            scroll: 1,
+            items: {
+                height: 'auto',
+                width: 300,
+                visible: {
+                    min: 1,
+                    max: 1
+                }
+            },
+            mousewheel: false,
+            swipe: {
+                onMouse: true,
+                onTouch: true
+            }
+        });
+    });
+</script>
 
     <!--[if lt IE 8]>
     <div style='clear: both; text-align:center; position: relative;'>
