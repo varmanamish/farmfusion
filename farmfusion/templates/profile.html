@@ -80,9 +80,9 @@
     <button type="button" class="btn btn-secondary" onclick="closeAddMoneyPopup()">Cancel</button>
 </form>
 </div>
-<div class="popup" id="addMoneyPopup">
-  <h2>Confirm PIN to Add Money</h2>
-  <form method="POST" action="{% url 'addmoney' %}">
+<div class="popup" id="withdrawPopup">
+  <h2>Confirm PIN to Withdraw money</h2>
+  <form method="POST" action="{% url 'withdraw' %}">
       {% csrf_token %}
       <label>Enter PIN:</label>
       <input type="password" name="wallet_pin" required>
@@ -90,8 +90,8 @@
       <label>Enter Amount:</label>
       <input type="number" name="amount" required>
       <br><br>
-      <input type="submit" value="Add Money" class="btn btn-success">
-      <button type="button" class="btn btn-secondary" onclick="closeAddMoneyPopup()">Cancel</button>
+      <input type="submit" value="withdraw" class="btn btn-success">
+      <button type="button" class="btn btn-secondary" onclick="closeWithdrawPopup())">Cancel</button>
   </form>
   </div>
   
