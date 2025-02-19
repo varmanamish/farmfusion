@@ -10,7 +10,7 @@ class CustomUserManager(BaseUserManager):
         user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
-        Wallet.objects.create(user=user)  # Automatically create a wallet for the user
+          # Automatically create a wallet for the user
         return user
 
     def create_superuser(self, username, email, password=None, **extra_fields):

@@ -53,14 +53,16 @@
 </head>
 <body>
   <!-- Add Money and Withdraw Buttons -->
-{% if wallet %}
+{% if wallet.wallet_pin is not null %}
 <p><strong>Wallet Balance:</strong> ${{ wallet.wallet_amount }}</p>
 
 <button class="btn btn-primary" onclick="openAddMoneyPopup()">Add Money</button>
 <br><br>
 <button class="btn btn-danger" onclick="openWithdrawPopup()">Withdraw</button>
 {% else %}
-<p>You don't have a wallet yet.</p>
+<p>You don't have a wallet please create.</p>
+<button class="btn btn-primary" onclick="createwallet()">create wallet</button>
+<br><br>
 {% endif %}
 
 <!-- Add Money Pop-up -->
@@ -78,20 +80,31 @@
     <button type="button" class="btn btn-secondary" onclick="closeAddMoneyPopup()">Cancel</button>
 </form>
 </div>
-
+<div class="popup" id="addMoneyPopup">
+  <h2>Confirm PIN to Add Money</h2>
+  <form method="POST" action="{% url 'addmoney' %}">
+      {% csrf_token %}
+      <label>Enter PIN:</label>
+      <input type="password" name="wallet_pin" required>
+      <br><br>
+      <label>Enter Amount:</label>
+      <input type="number" name="amount" required>
+      <br><br>
+      <input type="submit" value="Add Money" class="btn btn-success">
+      <button type="button" class="btn btn-secondary" onclick="closeAddMoneyPopup()">Cancel</button>
+  </form>
+  </div>
+  
 <!-- Withdraw Money Pop-up -->
-<div class="popup" id="withdrawPopup">
-<h2>Confirm PIN to Withdraw</h2>
-<form method="POST" action="{% url 'withdraw' %}">
+<div class="popup" id="createwallet">
+<h2>Create PIN</h2>
+<form method="POST" action="{% url 'createwallet' %}">
     {% csrf_token %}
     <label>Enter PIN:</label>
-    <input type="password" name="wallet_pin" required>
+    <input type="password" name="pasw" required>
     <br><br>
-    <label>Enter Amount:</label>
-    <input type="number" name="amount" required>
-    <br><br>
-    <input type="submit" value="Withdraw" class="btn btn-warning">
-    <button type="button" class="btn btn-secondary" onclick="closeWithdrawPopup()">Cancel</button>
+    <input type="submit" class="btn btn-warning">
+    <button type="button" class="btn btn-secondary" onclick="closePopup()">Cancel</button>
 </form>
 </div>
 
@@ -132,6 +145,12 @@ function closeAddMoneyPopup() {
 
 function openWithdrawPopup() {
     document.getElementById('withdrawPopup').style.display = 'block';
+}
+function createwallet() {
+  document.getElementById('createwallet').style.display = 'block';
+}
+function closPopup() {
+  document.getElementById('createwallet').style.display = 'none';
 }
 function closeWithdrawPopup() {
     document.getElementById('withdrawPopup').style.display = 'none';
