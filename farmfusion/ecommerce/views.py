@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
-from .models import Product
 from django.http import JsonResponse
-
+from django.contrib.auth.decorators import login_required
+from .models import Product, Order, OrderItem
 
 def shop(request):
     products = Product.objects.all()
@@ -34,3 +34,36 @@ def view_cart(request):
     cart = request.session.get("cart", {})
     total = sum(item["cost"] * item["quantity"] for item in cart.values())
     return render(request, "ecommerce/cart.html", {"cart": cart, "total": total})
+
+
+
+@login_required
+def checkout(request):
+    if request.method == "POST":
+        user = request.user  # Get the logged-in user
+        cart = request.session.get("cart", {})
+
+        if not cart:
+            return JsonResponse({"message": "Cart is empty!"}, status=400)
+
+        total_amount = sum(float(item["cost"]) * int(item["quantity"]) for item in cart.values())
+
+        # Create a new Order instance
+        order = Order.objects.create(user=user, total_amount=total_amount)
+
+        # Create OrderItems
+        for product_id, item in cart.items():
+            product = Product.objects.get(id=product_id)
+            OrderItem.objects.create(
+                order=order,
+                product=product,
+                quantity=item["quantity"],
+                price=item["cost"],
+            )
+
+        # Clear the session cart
+        request.session["cart"] = {}
+
+        return JsonResponse({"message": "Checkout successful!", "order_id": order.id})
+    
+    return JsonResponse({"message": "Invalid request"}, status=400)
