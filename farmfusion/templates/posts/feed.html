@@ -460,11 +460,23 @@
             };
 
             function showTab(tabId) {
+                // Remove 'active' class from all tab contents
                 document.querySelectorAll('.tab-content').forEach(tab => {
                     tab.classList.remove('active');
                 });
+            
+                // Remove 'active' class from all tab buttons
+                document.querySelectorAll('.category h6').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+            
+                // Add 'active' class to the selected tab content
                 document.getElementById(tabId).classList.add('active');
+            
+                // Add 'active' class to the clicked tab button
+                document.querySelector(`.category h6[onclick="showTab('${tabId}')"]`).classList.add('active');
             }
+            
         </script>
     </body>
 </html>
