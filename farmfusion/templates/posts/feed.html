@@ -1,0 +1,471 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="{% static 'css/feed.css' %}" />
+        <style>
+            /* Create Post Popup styling */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+
+            .modal-content {
+                background-color: white;
+                margin: 10% auto;
+                padding: 20px;
+                border-radius: 5px;
+                width: 50%;
+                position: relative;
+            }
+
+            .close {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                font-size: 20px;
+                cursor: pointer;
+            }
+
+            input,
+            textarea {
+                width: 100%;
+                padding: 8px;
+                margin: 8px 0;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            .submit-btn {
+                background-color: #28a745;
+                color: white;
+                padding: 10px 15px;
+                border: none;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <main class="main">
+            <div class="container">
+                <div class="left">
+                    <a class="profile">
+                        <div class="profile-pic">
+                            <img
+                                src="https://res.cloudinary.com/freecodez/image/upload/v1698067298/images/fy8azbqxhgdrbbijhipe.webp"
+                            />
+                        </div>
+                        <div class="handle">
+                            <h4>Freecodez</h4>
+                            <p class="text-muted">@freecodez</p>
+                        </div>
+                    </a>
+                    <div class="sidebar">
+                        <a class="menu-item active">
+                            <span><i class="uil uil-home"></i></span>
+                            <h3>Home</h3>
+                        </a>
+                        <a class="menu-item">
+                            <span><i class="uil uil-compass"></i></span>
+                            <h3>Explore</h3>
+                        </a>
+                        <a class="menu-item" id="notifications">
+                            <span
+                                ><i class="uil uil-bell"
+                                    ><small class="notification-count"
+                                        >9+</small
+                                    ></i
+                                ></span
+                            >
+                            <h3>Notifications</h3>
+                            <div class="notifications-popup">
+                                <div>
+                                    <div class="profile-pic">
+                                        <img
+                                            src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                                        />
+                                    </div>
+                                    <div class="notification-body">
+                                        <b>Abigail Willey</b> accepted your
+                                        friend request
+                                        <small class="text-muted"
+                                            >2 DAYS AGO</small
+                                        >
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="profile-pic">
+                                        <img
+                                            src="https://i.pinimg.com/474x/e1/d6/32/e1d632b7d8ba9ffd34318a09ddf1b275.jpg"
+                                        />
+                                    </div>
+                                    <div class="notification-body">
+                                        <b>Varun Nair</b> commented on your post
+                                        <small class="text-muted"
+                                            >1 HOUR AGO</small
+                                        >
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="profile-pic">
+                                        <img
+                                            src="https://i.pinimg.com/280x280_RS/60/72/af/6072af5d0841567c677a9e7597501563.jpg"
+                                        />
+                                    </div>
+                                    <div class="notification-body">
+                                        <b>Marry Opmong</b> and 210 other liked
+                                        your post
+                                        <small class="text-muted"
+                                            >4 MINUTES AGO</small
+                                        >
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="profile-pic">
+                                        <img
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx7jXK7iCNJK_u4XvbwTkXPx140LlR1qh2XoihxvkMgM2ZvViJaIxaPFleTUJ7SBp9xBw&usqp=CAU"
+                                        />
+                                    </div>
+                                    <div class="notification-body">
+                                        <b>Wilson Fisk</b> started following you
+                                        <small class="text-muted">
+                                            11 HOURS AGO</small
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="menu-item" id="messages-notifications">
+                            <span>
+                                <i class="uil uil-envelope">
+                                    <small class="notification-count">6</small>
+                                </i>
+                            </span>
+                            <h3>Messages</h3>
+                        </a>
+                        <a class="menu-item">
+                            <span><i class="uil uil-bookmark"></i></span>
+                            <h3>Bookmarks</h3>
+                        </a>
+                        <a class="menu-item">
+                            <span><i class="uil uil-analytics"></i></span>
+                            <h3>Analytics</h3>
+                        </a>
+                        <a class="menu-item">
+                            <span><i class="uil uil-palette"></i></span>
+                            <h3>Theme</h3>
+                        </a>
+                        <a class="menu-item">
+                            <span><i class="uil uil-setting"></i></span>
+                            <h3>Settings</h3>
+                        </a>
+
+                        <label class="btn btn-primary" id="create-post-button"
+                            >+</label
+                        >
+                    </div>
+                </div>
+                <div class="middle">
+                    <!-- <form class="create-post">
+                        <div class="profile-pic">
+                            <img
+                                src="https://res.cloudinary.com/freecodez/image/upload/v1698067298/images/fy8azbqxhgdrbbijhipe.webp"
+                                alt=""
+                            />
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="What's on your mind Freecodez?"
+                            id="create-post"
+                        />
+                        <input
+                            type="submit"
+                            value="Post"
+                            class="btn btn-primary"
+                        />
+                    </form> -->
+
+                    <div class="feeds">
+                        {% for post in posts %}
+                        <div class="feed">
+                            <div class="head"></div>
+                            <div class="user">
+                                <div class="profile-pic">
+                                    <img
+                                        src="{{ post.user.profile_pic.url }}"
+                                        alt="Profile Picture"
+                                    />
+                                </div>
+                                <div class="info">
+                                    <h3>{{ post.user.username }}</h3>
+                                    <small>
+                                        {{ post.location }}, {{post.created_at}}
+                                        ago
+                                    </small>
+                                </div>
+                                <span class="edit">
+                                    <i class="uil uil-ellipsis-h"></i>
+                                </span>
+                            </div>
+
+                            <div class="photo">
+                                <img
+                                    src="{{ post.post_image.url }}"
+                                    alt="Post Image"
+                                />
+                            </div>
+
+                            <div class="action-button">
+                                <div class="interaction-button">
+                                    <span
+                                        ><i class="uil uil-thumbs-up"></i
+                                    ></span>
+                                    <span><i class="uil uil-comment"></i></span>
+                                    <span><i class="uil uil-share"></i></span>
+                                </div>
+                                <div class="bookmark">
+                                    <span
+                                        ><i class="uil uil-bookmark"></i
+                                    ></span>
+                                </div>
+                            </div>
+
+                            <div class="liked-by">
+                                <p>
+                                    Liked by
+                                    <b>{{ post.likes_count }} others</b>
+                                </p>
+                            </div>
+
+                            <div class="caption">
+                                <p>
+                                    <b>{{ post.username }}</b>
+                                    {{ post.caption }}
+                                </p>
+                            </div>
+                            <div class="comments text-muted">
+                                View all comments
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="messages">
+                        <div class="heading">
+                            <h4>Messages</h4>
+                            <span><i class="uil uil-edit"></i></span>
+                        </div>
+
+                        <div class="search-bar">
+                            <span><i class="uil uil-search"></i></span>
+                            <input
+                                type="text"
+                                placeholder="Search Messages"
+                                id="message-search"
+                            />
+                        </div>
+
+                        <div class="category">
+                            <h6 class="active">Primary</h6>
+                            <h6>General</h6>
+                            <h6 class="message-requests">Requests(7)</h6>
+                        </div>
+                        <div class="message">
+                            <div class="profile-pic">
+                                <img
+                                    src="https://64.media.tumblr.com/2d678d77b051ee352d722d1f7fd2c029/88958e5f55a67155-7d/s250x400/74d69559d55329719bb0a50d8e9d77cbf0ec6da0.jpg"
+                                />
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h5>Kareena Joshua</h5>
+                                <p class="text-muted">Just woke up bruh..</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-pic">
+                                <img
+                                    src="https://64.media.tumblr.com/7b28774544438d73ca8c1daad11402e0/88958e5f55a67155-fd/s250x400/a9ef3dad54f6c57a53fdeef1a793f0143a9aea27.jpg"
+                                />
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h5>Dan Smith</h5>
+                                <p class="text-bold">2 New Messages</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-pic">
+                                <img
+                                    src="https://res.cloudinary.com/freecodez/image/upload/v1698067298/images/fy8azbqxhgdrbbijhipe.webp"
+                                />
+                            </div>
+                            <div class="message-body">
+                                <h5>Chris Brown</h5>
+                                <p class="text-muted">Lol u right</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-pic">
+                                <img
+                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx7jXK7iCNJK_u4XvbwTkXPx140LlR1qh2XoihxvkMgM2ZvViJaIxaPFleTUJ7SBp9xBw&usqp=CAU"
+                                />
+                            </div>
+                            <div class="message-body">
+                                <h5>Lana Rose</h5>
+                                <p class="text-bold">Birthday tomorrow!!</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-pic">
+                                <img
+                                    src="https://i.pinimg.com/236x/95/c4/96/95c496f64dd0e4c6f75f96c0abbbea6b.jpg"
+                                />
+                            </div>
+                            <div class="message-body">
+                                <h5>Varun Nair</h5>
+                                <p class="text-muted">Ssup?</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-pic">
+                                <img
+                                    src="https://i.pinimg.com/736x/6d/4b/de/6d4bde9293ac23d4711c828859af20e4.jpg"
+                                />
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h5>Jahnvi Doifode</h5>
+                                <p class="text-bold">3 New Messages</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="friend-requests">
+                        <h4>Requests</h4>
+                        <div class="request">
+                            <div class="info">
+                                <div class="profile-pic">
+                                    <img
+                                        src="https://i.pinimg.com/736x/6d/4b/de/6d4bde9293ac23d4711c828859af20e4.jpg"
+                                    />
+                                </div>
+                                <div>
+                                    <h5>Wilson Fisk</h5>
+                                    <p class="text-muted">8 mutual friends</p>
+                                </div>
+                            </div>
+                            <div class="action">
+                                <button class="btn btn-primary">Accept</button>
+                                <button class="btn">Decline</button>
+                            </div>
+                        </div>
+                        <div class="request">
+                            <div class="info">
+                                <div class="profile-pic">
+                                    <img
+                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx7jXK7iCNJK_u4XvbwTkXPx140LlR1qh2XoihxvkMgM2ZvViJaIxaPFleTUJ7SBp9xBw&usqp=CAU"
+                                    />
+                                </div>
+                                <div>
+                                    <h5>Srishti Tirkey</h5>
+                                    <p class="text-muted">2 mutual friends</p>
+                                </div>
+                            </div>
+                            <div class="action">
+                                <button class="btn btn-primary">Accept</button>
+                                <button class="btn">Decline</button>
+                            </div>
+                        </div>
+                        <div class="request">
+                            <div class="info">
+                                <div class="profile-pic">
+                                    <img
+                                        src="https://i.pinimg.com/550x/91/7b/a7/917ba7b03ab2aa2fab7b1b3a83a00be3.jpg"
+                                    />
+                                </div>
+                                <div>
+                                    <h5>Christ Kahea</h5>
+                                    <p class="text-muted">1 mutual friend</p>
+                                </div>
+                            </div>
+                            <div class="action">
+                                <button class="btn btn-primary">Accept</button>
+                                <button class="btn">Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Button Popup -->
+        <div id="postModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Create a Post</h2>
+                <form
+                    action="{% url 'add_post' %}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+                    {% csrf_token %}
+
+                    <label>Location:</label>
+                    <input type="text" name="location" />
+
+                    <label>Profile Picture:</label>
+                    <input type="file" name="profile_pic" accept="image/*" />
+
+                    <label>Post Image:</label>
+                    <input type="file" name="post_image" accept="image/*" />
+
+                    <label>Caption:</label>
+                    <textarea name="caption" rows="3"></textarea>
+
+                    <label>Likes Count:</label>
+                    <input
+                        type="number"
+                        name="likes_count"
+                        value="0"
+                        readonly
+                    />
+
+                    <button type="submit" class="submit-btn">Post</button>
+                </form>
+            </div>
+        </div>
+        <script src="{% static 'js/feed.js' %}"></script>
+
+        <script>
+            document
+                .getElementById("create-post-button")
+                .addEventListener("click", function () {
+                    document.getElementById("postModal").style.display =
+                        "block";
+                });
+
+            function closeModal() {
+                document.getElementById("postModal").style.display = "none";
+            }
+
+            // Close the modal when clicking outside of it
+            window.onclick = function (event) {
+                let modal = document.getElementById("postModal");
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            };
+        </script>
+    </body>
+</html>

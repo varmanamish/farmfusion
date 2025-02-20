@@ -1,0 +1,36 @@
+from django.shortcuts import render,redirect
+from .models import Product
+from django.http import JsonResponse
+
+
+def shop(request):
+    products = Product.objects.all()
+    return render(request, 'ecommerce/shop.html', {'products': products})
+
+def add_to_cart(request):
+    if request.method == "POST":
+        product_id = request.POST.get("product_id")
+        quantity = int(request.POST.get("quantity", 1))
+
+        # Get the product
+        product = Product.objects.get(id=product_id)
+
+        # Initialize the session cart if it doesn't exist
+        cart = request.session.get("cart", {})
+
+        if product_id in cart:
+            cart[product_id]["quantity"] += quantity  # Update quantity
+        else:
+            cart[product_id] = {
+                "name": product.name,
+                "cost": float(product.cost),
+                "quantity": quantity,
+            }
+
+        request.session["cart"] = cart  # Save cart to session
+        return JsonResponse({"message": "Added to cart", "cart_count": len(cart)})
+
+def view_cart(request):
+    cart = request.session.get("cart", {})
+    total = sum(item["cost"] * item["quantity"] for item in cart.values())
+    return render(request, "ecommerce/cart.html", {"cart": cart, "total": total})
