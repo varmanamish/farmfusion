@@ -813,8 +813,38 @@
                             <button class="w-100 btn btn-primary btn-lg btn-perform-transaction">Continue to checkout</button>
                         </div>
                     </div>
-                    
                 </div>
+
+                
+
+                <div
+                class="offcanvas offcanvas-end"
+                data-bs-scroll="true"
+                tabindex="-1"
+                id="offcanvasWishlist"
+                >
+                    <div class="offcanvas-header justify-content-center">
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="offcanvas"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="order-md-last">
+                            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-primary">Your Wishlist</span>
+                                <span class="badge bg-primary rounded-pill">[[ORDERCOUNT]]</span>
+                            </h4>
+                            <ul class="list-group mb-3">
+                                [[CODE FOR ORDERS ]]
+                            </ul>
+                            {% comment %} <button class="w-100 btn btn-primary btn-lg">Browse More Products</button> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+
 
                 <div
                     class="offcanvas offcanvas-start"
@@ -1337,14 +1367,19 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" class="p-2 mx-1">
+                                        <a
+                                            href="#"
+                                            class="p-2 mx-1"
+                                            data-bs-toggle="offcanvas"
+                                            data-bs-target="#offcanvasWishlist"
+                                            aria-controls="offcanvasWishlist"
+                                        >
                                             <svg width="24" height="24">
-                                                <use
-                                                    xlink:href="#wishlist"
-                                                ></use>
+                                                <use xlink:href="#wishlist"></use>
                                             </svg>
                                         </a>
                                     </li>
+                                    
                                     <li>
                                         <a
                                             href="#"
