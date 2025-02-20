@@ -1,5 +1,9 @@
+console.log("cart.js is loaded and running");
+
+
 document.addEventListener("DOMContentLoaded", function () {
     let cart = [];
+    console.log(document.querySelector(".btn-perform-transaction"));
 
     // Add event listeners to all "Add to Cart" buttons
     document.querySelectorAll(".btn-cart").forEach(button => {
@@ -69,6 +73,32 @@ document.addEventListener("DOMContentLoaded", function () {
             </li>
         `;
     }
+
+    const checkoutButton = document.querySelector(".btn-perform-transaction");
+    console.log("Checkout button found:", checkoutButton);
+    
+    document.querySelector(".btn-perform-transaction").addEventListener("click", function () {
+        console.log("Checkout button clicked!"); // Debugging log
+    
+        fetch("/shop/checkout/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": getCSRFToken(),
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Response received:", data); // Debugging log
+            alert(data.message);
+            if (data.message === "Checkout successful!") {
+                document.querySelector(".list-group").innerHTML = "<p>Your cart is empty.</p>";
+                document.querySelector(".badge.bg-primary").innerText = "0"; // Reset cart count
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+    
 
     function getCSRFToken() {
         let tokenElement = document.querySelector("meta[name='csrf-token']");
