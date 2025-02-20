@@ -1,9 +1,23 @@
 from django.shortcuts import render, redirect
-from .models import PostDetails as Post
+from .models import PostDetails as Post, Follow
+from django.contrib.auth.decorators import login_required
 
 def feed(request):
     posts = Post.objects.all().order_by('-created_at')
-    return render(request, 'posts/feed.html', {'posts': posts})
+
+    if request.user.is_authenticated:
+        followers = Follow.objects.filter(following=request.user)
+        following = Follow.objects.filter(follower=request.user)
+    else:
+        followers = []
+        following = []
+
+    return render(request, 'posts/feed.html', {
+        'posts': posts,
+        'followers': followers,
+        'following': following
+    })
+
 
 
 # @login_required  # Ensure only logged-in users can post
@@ -34,3 +48,6 @@ def add_post(request):
         return redirect('feed')  # Redirect to the feed page after posting
 
     return render(request, 'posts/add_post.html')  # Render form if GET request
+
+
+
