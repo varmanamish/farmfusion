@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [  
     'accounts',
+    "support",
     'posts',
     'ecom',
     'ecommerce',
