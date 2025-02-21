@@ -76,6 +76,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'farmfusion.wsgi.application'
 
+IPSTACK_API_KEY="36f6f66bd83372ce80a0d0edf66660d2"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
