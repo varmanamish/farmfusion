@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import PostDetails as Post, Follow
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+
 
 def feed(request):
     posts = Post.objects.all().order_by('-created_at')
@@ -50,4 +53,17 @@ def add_post(request):
     return render(request, 'posts/add_post.html')  # Render form if GET request
 
 
+@login_required
+def like_post(request):
+    if request.method == 'POST':
+        post_id = request.POST.get('post_id')
+        post = get_object_or_404(Post, id=post_id)
 
+        # Increment the likes count by 1
+        post.likes_count += 1
+        post.save()
+
+        # Return the updated likes count as a response
+        return JsonResponse({'likes_count': post.likes_count})
+    
+    return JsonResponse({'error': 'Invalid request'}, status=400)
