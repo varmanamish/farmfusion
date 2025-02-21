@@ -264,6 +264,10 @@
                                                 // Update the likes count in the UI
                                                 const likesText = this.closest(".feed").querySelector(".liked-by b");
                                                 likesText.textContent = `${data.likes_count} others`;
+                                                // Change the like button icon to filled thumbs-up
+                                                const likeIcon = this.querySelector("i");
+                                                likeIcon.classList.remove("uil-thumbs-up");
+                                                likeIcon.classList.add("uil-heart");
                                             } else if (data.error) {
                                                 // Handle the error (e.g., user already liked the post)
                                                 alert(data.error); // You can show a more custom error message if needed
@@ -346,17 +350,11 @@
                     <label>Location:</label>
                     <input type="text" name="location" />
 
-                    <label>Profile Picture:</label>
-                    <input type="file" name="profile_pic" accept="image/*" />
-
                     <label>Post Image:</label>
                     <input type="file" name="post_image" accept="image/*" />
 
                     <label>Caption:</label>
                     <textarea name="caption" rows="3"></textarea>
-
-                    <label>Likes Count:</label>
-                    <input type="number" name="likes_count" value="0" readonly />
 
                     <button type="submit" class="submit-btn">Post</button>
                 </form>
