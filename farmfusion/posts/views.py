@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import PostDetails as Post, Follow
+from .models import PostDetails as Post, Follow,Like
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
@@ -59,9 +59,16 @@ def like_post(request):
         post_id = request.POST.get('post_id')
         post = get_object_or_404(Post, id=post_id)
 
-        # Increment the likes count by 1
+        # Check if the user has already liked this post
+        if Like.objects.filter(user=request.user, post=post).exists():
+            return JsonResponse({'error': 'You have already liked this post.'}, status=400)
+
+        # Increment the likes count
         post.likes_count += 1
         post.save()
+
+        # Create a new like entry
+        Like.objects.create(user=request.user, post=post)
 
         # Return the updated likes count as a response
         return JsonResponse({'likes_count': post.likes_count})
