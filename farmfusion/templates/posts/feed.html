@@ -246,43 +246,36 @@
 
                     <!-- Add JavaScript for AJAX -->
                     <script>
-                        document.addEventListener('DOMContentLoaded', function () {
+                        document.addEventListener("DOMContentLoaded", function () {
                             // Add event listener to each like button
-                            document.querySelectorAll('.like-btn').forEach(button => {
-                                button.addEventListener('click', function () {
-                                    const postId = this.getAttribute('data-post-id');
-                    
+                            document.querySelectorAll(".like-btn").forEach((button) => {
+                                button.addEventListener("click", function () {
+                                    const postId = this.getAttribute("data-post-id");
+
                                     // Send AJAX request to like the post
-                                    fetch('/posts/like_post/', {
-                                        method: 'POST',
+                                    fetch("/posts/like_post/", {
+                                        method: "POST",
                                         headers: {
-                                            'Content-Type': 'application/x-www-form-urlencoded',
-                                            'X-CSRFToken': getCSRFToken(),
+                                            "Content-Type": "application/x-www-form-urlencoded",
+                                            "X-CSRFToken": getCSRFToken(),
                                         },
-                                        body: `post_id=${postId}`
+                                        body: `post_id=${postId}`,
                                     })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.likes_count) {
-                                            // Update the likes count in the UI
-                                            const likesText = this.closest('.feed').querySelector('.liked-by b');
-                                            likesText.textContent = `${data.likes_count} others`;
-                                        } else if (data.error) {
-                                            // Handle the error (e.g., user already liked the post)
-                                            alert(data.error);  // You can show a more custom error message if needed
-                                        }
-                                    })
-                                    .catch(error => console.error('Error:', error));
+                                        .then((response) => response.json())
+                                        .then((data) => {
+                                            if (data.likes_count) {
+                                                // Update the likes count in the UI
+                                                const likesText = this.closest(".feed").querySelector(".liked-by b");
+                                                likesText.textContent = `${data.likes_count} others`;
+                                            } else if (data.error) {
+                                                // Handle the error (e.g., user already liked the post)
+                                                alert(data.error); // You can show a more custom error message if needed
+                                            }
+                                        })
+                                        .catch((error) => console.error("Error:", error));
                                 });
                             });
                         });
-                    
-                        function getCSRFToken() {
-                            let tokenElement = document.querySelector("meta[name='csrf-token']");
-                            return tokenElement ? tokenElement.getAttribute("content") : null;
-                        }
-                    </script>
-                    
 
                         function getCSRFToken() {
                             let tokenElement = document.querySelector("meta[name='csrf-token']");
@@ -298,7 +291,7 @@
                         </div>
 
                         <div class="search-bar">
-                            <span><i class="uil uil-search"></i></span>
+                            <span style="display: flex; justify-content: center; flex-direction: column"><i class="uil uil-search"></i></span>
                             <input type="text" placeholder="Search Messages" id="message-search" />
                         </div>
 
