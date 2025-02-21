@@ -21,8 +21,8 @@ class Follow(models.Model):
 
     def __str__(self):
         return f"{self.follower.username} follows {self.following.username}"
-
-
+    
+    
 
 class Like(models.Model):
     user = models.ForeignKey('accounts.CustomUser', on_delete=models.CASCADE)
