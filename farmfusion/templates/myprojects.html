@@ -309,9 +309,16 @@
                 </div>
                 <div class="modal-body">
                     <form id="projectForm">
+                      {% csrf_token %}
                         <fieldset>
                             <legend>Farm Investment Details</legend>
                             
+                            <div class="d-flex flex-row justify-content-between">
+                              <label for="name">Project Name:</label>
+                              <div class="input-container">
+                                  <input type="text" id="name" name="name" min="0" step="1000" required>
+                              </div>
+                          </div>
                             <!-- Capital -->
                             <div class="d-flex flex-row justify-content-between">
                                 <label for="capital">Total Capital Required ($):</label>
@@ -377,4 +384,30 @@
         <span class="btn-text">Create</span>
       </button>
   </body>
+  <script>
+    document.getElementById("projectForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+  
+      let formData = new FormData(this);
+  
+      fetch("{% url 'createinvestmentmodel' %}", {
+          method: "POST",
+          body: formData,
+          headers: {
+              "X-CSRFToken": "{{ csrf_token }}",
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.error) {
+              alert("Error: " + data.error);
+          } else {
+              alert("Investment proposal created successfully!");
+              location.reload();
+          }
+      })
+      .catch(error => console.error("Error:", error));
+  });
+  
+  </script>
 </html>

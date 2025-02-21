@@ -13,27 +13,39 @@ def myinvestment(request):
 def myprojects(request):
     return render(request,"myprojects.html")
 
+
+@login_required
 def createinvestmentmodel(request):
-    if request.method=="POST":
-        name = request.POST["name"],
-        farmer= request.user.farmer,
-        capital= request.POST["capital"],
-        farmer_share = request.POST["farmer_share"],
-        working_share = request.POST["working_share"],
-        estimated_time = request.POST["estimated_time"],
-        profit_generated = request.POST["profit_generated"],
-        farmer_share = int(farmer_share)
-        capital = int(farmer)
-        perc = (farmer_share/capital)
-        InvestmentModel.objects.create(
-            name =name,
-            farmer=farmer,
-            capital=capital,
-            farmer_share=farmer_share,
-            working_share=working_share,
-            estimated_time=estimated_time,
-            profit_generated=profit_generated
-        )
+    if request.method == "POST":
+        try:
+            name = request.POST.get("name")
+            capital = int(request.POST.get("capital"))
+            farmer_share = int(request.POST.get("farmerShare"))
+            working_share = int(request.POST.get("workingShare"))
+            estimated_time = request.POST.get("estimatedTime")
+            farmer = request.user.farmer
+
+            # Ensure farmer share does not exceed total capital
+            if farmer_share > capital:
+                return JsonResponse({"error": "Farmer share cannot exceed total capital."}, status=400)
+
+            # Create the investment model
+            investment_model = InvestmentModel.objects.create(
+                name=name,
+                farmer=farmer,
+                capital=capital,
+                farmer_share=farmer_share,
+                working_share=working_share,
+                estimated_time=estimated_time
+            )
+
+            return JsonResponse({"message": "Investment proposal created successfully!", "id": investment_model.id})
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
 
 def showpreviousproj(request):
     cards = InvestmentModel.objects.filter(user=request.user)
