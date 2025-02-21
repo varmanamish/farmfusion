@@ -312,28 +312,22 @@ main .container .left .profle {
 }
 
 .middle .stories .story:nth-child(1) {
-    background: url("https://res.cloudinary.com/freecodez/image/upload/v1701160592/images/lj28zmzoxxneyza8jlwh.webp")
-        no-repeat center center/cover;
+    background: url("https://res.cloudinary.com/freecodez/image/upload/v1701160592/images/lj28zmzoxxneyza8jlwh.webp") no-repeat center center/cover;
 }
 .middle .stories .story:nth-child(2) {
-    background: url("https://i0.wp.com/hindipro.com/wp-content/uploads/2021/05/dp-for-girls-min.jpg?resize=438%2C500")
-        no-repeat center center/cover;
+    background: url("https://i0.wp.com/hindipro.com/wp-content/uploads/2021/05/dp-for-girls-min.jpg?resize=438%2C500") no-repeat center center/cover;
 }
 .middle .stories .story:nth-child(3) {
-    background: url("https://i.pinimg.com/1200x/f7/1d/c6/f71dc699e49a0ece1ff62a5c73accf7f.jpg")
-        no-repeat center center/cover;
+    background: url("https://i.pinimg.com/1200x/f7/1d/c6/f71dc699e49a0ece1ff62a5c73accf7f.jpg") no-repeat center center/cover;
 }
 .middle .stories .story:nth-child(4) {
-    background: url("https://i.pinimg.com/474x/9e/e6/d6/9ee6d64d7322828c38c3255ca0a3bd67.jpg")
-        no-repeat center center/cover;
+    background: url("https://i.pinimg.com/474x/9e/e6/d6/9ee6d64d7322828c38c3255ca0a3bd67.jpg") no-repeat center center/cover;
 }
 .middle .stories .story:nth-child(5) {
-    background: url("https://yohohindi.com/wp-content/uploads/2022/08/68-girls-dp-yohohindi.com_-844x1024.jpeg")
-        no-repeat center center/cover;
+    background: url("https://yohohindi.com/wp-content/uploads/2022/08/68-girls-dp-yohohindi.com_-844x1024.jpeg") no-repeat center center/cover;
 }
 .middle .stories .story:nth-child(6) {
-    background: url("https://i.pinimg.com/474x/65/80/c0/6580c079b360ca086827b843e2569f46.jpg")
-        no-repeat center center/cover;
+    background: url("https://i.pinimg.com/474x/65/80/c0/6580c079b360ca086827b843e2569f46.jpg") no-repeat center center/cover;
 }
 
 .middle .story .profile-pic {
