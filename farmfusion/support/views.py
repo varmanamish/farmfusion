@@ -1,8 +1,11 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+from .models import SupportPost
 
-
-def support(request):
-    return render(request, 'support/support.html')
+def support_posts(request):
+    # Fetch all support posts
+    support_posts = SupportPost.objects.all()
+    
+    # Render the HTML template with the support posts
+    return render(request, 'support/support_posts.html', {
+        'support_posts': support_posts,
+    })
