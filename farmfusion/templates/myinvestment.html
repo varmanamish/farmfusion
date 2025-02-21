@@ -20,10 +20,10 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
                 <a class="nav-item nav-link active" href="#">Home<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">Services</a>  
-                <a class="nav-item nav-link" href="#">Products</a>
-                <a class="nav-item nav-link" href="#">Partners</a>
-                <a class="nav-item nav-link" href="#">Contacts</a>
+                <a class="nav-item nav-link" href="{% url 'services' %}">Services</a>  
+                <a class="nav-item nav-link" href="{% url 'products' %}">Products</a>
+                <a class="nav-item nav-link" href="{% url 'partners' %}">Partners</a>
+                <a class="nav-item nav-link" href="{% url 'contacts' %}">Contacts</a>
             </div>
         </div>
     </nav>
@@ -130,7 +130,7 @@
           const amount = document.getElementById('investmentAmount').value;
           if (amount && amount > 0) {
             console.log('Investment Amount Submitted:', { investmentAmount: amount });
-            alert(Successfully committed ₹${parseInt(amount).toLocaleString()} to Mirchi Crop in Guntur!);
+            alert("Successfully committed ₹${parseInt(amount).toLocaleString()} to Mirchi Crop in Guntur!");
             $('#investModal').modal('hide'); // Hide modal using jQuery
             this.reset(); // Reset form
           } else {
