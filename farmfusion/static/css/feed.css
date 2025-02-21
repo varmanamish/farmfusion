@@ -28,6 +28,28 @@
     border: 0;
 }
 
+.modal-content{
+    width: 50% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin: 15% 0% 0% 20%;
+}
+
+input, textarea {
+    width: 50% !important; 
+    padding: 8px !important;
+     margin: 8px 0; 
+     display: flex !important;
+     justify-content: center !important;
+     margin-left: 25% !important;
+     border: 1px solid #ccc; 
+     border-radius: 4px;
+}
+
+label{
+    margin-left: 25% !important;
+}
+
 body {
     font-family: "Poppins", sans-serif;
     color: var(--color-dark);
@@ -228,7 +250,9 @@ main .container .left .profle {
 
 .left .btn {
     margin-top: 1rem;
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 15%;
     text-align: center;
     padding: 1rem 0;
 }
