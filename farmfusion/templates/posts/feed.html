@@ -90,11 +90,11 @@
                 <div class="left">
                     <a class="profile">
                         <div class="profile-pic">
-                            <img src="https://res.cloudinary.com/freecodez/image/upload/v1698067298/images/fy8azbqxhgdrbbijhipe.webp" />
+                            <img src="{{ request.user.profile_pic.url }}" />
                         </div>
                         <div class="handle">
-                            <h4>Freecodez</h4>
-                            <p class="text-muted">@freecodez</p>
+                            <h4>{{request.user.username}}</h4>
+                            <p class="text-muted">@{{request.user.username}}</p>
                         </div>
                     </a>
                     <div class="sidebar">
@@ -208,11 +208,8 @@
                                 </div>
                                 <div class="info">
                                     <h3>{{ post.user.username }}</h3>
-                                    <small>{{ post.location }}, {{ post.created_at }} ago</small>
+                                    <small>{{ post.location }}, {{ post.created_at }}</small>
                                 </div>
-                                <span class="edit">
-                                    <i class="uil uil-ellipsis-h"></i>
-                                </span>
                             </div>
 
                             <div class="photo">
@@ -246,43 +243,40 @@
 
                     <!-- Add JavaScript for AJAX -->
                     <script>
-                        document.addEventListener('DOMContentLoaded', function () {
+                        document.addEventListener("DOMContentLoaded", function () {
                             // Add event listener to each like button
-                            document.querySelectorAll('.like-btn').forEach(button => {
-                                button.addEventListener('click', function () {
-                                    const postId = this.getAttribute('data-post-id');
-                    
+                            document.querySelectorAll(".like-btn").forEach((button) => {
+                                button.addEventListener("click", function () {
+                                    const postId = this.getAttribute("data-post-id");
+
                                     // Send AJAX request to like the post
-                                    fetch('/posts/like_post/', {
-                                        method: 'POST',
+                                    fetch("/posts/like_post/", {
+                                        method: "POST",
                                         headers: {
-                                            'Content-Type': 'application/x-www-form-urlencoded',
-                                            'X-CSRFToken': getCSRFToken(),
+                                            "Content-Type": "application/x-www-form-urlencoded",
+                                            "X-CSRFToken": getCSRFToken(),
                                         },
-                                        body: `post_id=${postId}`
+                                        body: `post_id=${postId}`,
                                     })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.likes_count) {
-                                            // Update the likes count in the UI
-                                            const likesText = this.closest('.feed').querySelector('.liked-by b');
-                                            likesText.textContent = `${data.likes_count} others`;
-                                        } else if (data.error) {
-                                            // Handle the error (e.g., user already liked the post)
-                                            alert(data.error);  // You can show a more custom error message if needed
-                                        }
-                                    })
-                                    .catch(error => console.error('Error:', error));
+                                        .then((response) => response.json())
+                                        .then((data) => {
+                                            if (data.likes_count) {
+                                                // Update the likes count in the UI
+                                                const likesText = this.closest(".feed").querySelector(".liked-by b");
+                                                likesText.textContent = `${data.likes_count} others`;
+                                                // Change the like button icon to filled thumbs-up
+                                                const likeIcon = this.querySelector("i");
+                                                likeIcon.classList.remove("uil-thumbs-up");
+                                                likeIcon.classList.add("uil-heart");
+                                            } else if (data.error) {
+                                                // Handle the error (e.g., user already liked the post)
+                                                alert(data.error); // You can show a more custom error message if needed
+                                            }
+                                        })
+                                        .catch((error) => console.error("Error:", error));
                                 });
                             });
                         });
-                    
-                        function getCSRFToken() {
-                            let tokenElement = document.querySelector("meta[name='csrf-token']");
-                            return tokenElement ? tokenElement.getAttribute("content") : null;
-                        }
-                    </script>
-                    
 
                         function getCSRFToken() {
                             let tokenElement = document.querySelector("meta[name='csrf-token']");
@@ -298,7 +292,7 @@
                         </div>
 
                         <div class="search-bar">
-                            <span><i class="uil uil-search"></i></span>
+                            <span style="display: flex; justify-content: center; flex-direction: column"><i class="uil uil-search"></i></span>
                             <input type="text" placeholder="Search Messages" id="message-search" />
                         </div>
 
@@ -341,54 +335,6 @@
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="friend-requests">
-                        <h4>Requests</h4>
-                        <div class="request">
-                            <div class="info">
-                                <div class="profile-pic">
-                                    <img src="https://i.pinimg.com/736x/6d/4b/de/6d4bde9293ac23d4711c828859af20e4.jpg" />
-                                </div>
-                                <div>
-                                    <h5>Wilson Fisk</h5>
-                                    <p class="text-muted">8 mutual friends</p>
-                                </div>
-                            </div>
-                            <div class="action">
-                                <button class="btn btn-primary">Accept</button>
-                                <button class="btn">Decline</button>
-                            </div>
-                        </div>
-                        <div class="request">
-                            <div class="info">
-                                <div class="profile-pic">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx7jXK7iCNJK_u4XvbwTkXPx140LlR1qh2XoihxvkMgM2ZvViJaIxaPFleTUJ7SBp9xBw&usqp=CAU" />
-                                </div>
-                                <div>
-                                    <h5>Srishti Tirkey</h5>
-                                    <p class="text-muted">2 mutual friends</p>
-                                </div>
-                            </div>
-                            <div class="action">
-                                <button class="btn btn-primary">Accept</button>
-                                <button class="btn">Decline</button>
-                            </div>
-                        </div>
-                        <div class="request">
-                            <div class="info">
-                                <div class="profile-pic">
-                                    <img src="https://i.pinimg.com/550x/91/7b/a7/917ba7b03ab2aa2fab7b1b3a83a00be3.jpg" />
-                                </div>
-                                <div>
-                                    <h5>Christ Kahea</h5>
-                                    <p class="text-muted">1 mutual friend</p>
-                                </div>
-                            </div>
-                            <div class="action">
-                                <button class="btn btn-primary">Accept</button>
-                                <button class="btn">Decline</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </main>
@@ -404,17 +350,11 @@
                     <label>Location:</label>
                     <input type="text" name="location" />
 
-                    <label>Profile Picture:</label>
-                    <input type="file" name="profile_pic" accept="image/*" />
-
                     <label>Post Image:</label>
                     <input type="file" name="post_image" accept="image/*" />
 
                     <label>Caption:</label>
                     <textarea name="caption" rows="3"></textarea>
-
-                    <label>Likes Count:</label>
-                    <input type="number" name="likes_count" value="0" readonly />
 
                     <button type="submit" class="submit-btn">Post</button>
                 </form>
