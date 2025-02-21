@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bootstrap Card Grid with Support Button</title>
-  <!-- Bootstrap CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     .slider-container {
@@ -32,46 +31,22 @@
     <h1 style="margin-top: 40px;">Support Peeps!</h1>
   <div class="container my-5">
     <div class="row row-cols-1 row-cols-md-3 g-4">
-      <!-- Card 1 -->
-      <div class="col">
-        <div class="card">
-          <img src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-169994-674010.jpg&fm=jpg" class="card-img-top" alt="Card Image">
-          <div class="card-body">
-            <h5 class="card-title">Card Title 1</h5>
-            <p class="card-text">This is a short description for card number 1. It gives some context about the content.</p>
-            <p class="card-text"><small class="text-muted">John Doe</small></p>
-            <button class="btn btn-primary support-btn" data-card="1">Support</button>
+      {% for post in support_posts %}
+        <div class="col">
+          <div class="card">
+            <img src="{{ post.support_image.url }}" class="card-img-top" alt="Card Image">
+            <div class="card-body">
+              <h5 class="card-title">{{ post.description }}</h5>
+              <p class="card-text">Requested Support: ${{ post.requested_support_amount }}</p>
+              <p class="card-text"><small class="text-muted">{{ post.requesting_user.username }}</small></p>
+              <button class="btn btn-primary support-btn" data-card="{{ post.id }}">Support</button>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- Card 2 -->
-      <div class="col">
-        <div class="card">
-          <img src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-169994-674010.jpg&fm=jpg" class="card-img-top" alt="Card Image">
-          <div class="card-body">
-            <h5 class="card-title">Card Title 2</h5>
-            <p class="card-text">This is a short description for card number 2. It's a different card with unique content.</p>
-            <p class="card-text"><small class="text-muted">Jane Smith</small></p>
-            <button class="btn btn-primary support-btn" data-card="2">Support</button>
-          </div>
-        </div>
-      </div>
-      <!-- Card 3 -->
-      <div class="col">
-        <div class="card">
-          <img src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-169994-674010.jpg&fm=jpg" class="card-img-top" alt="Card Image">
-          <div class="card-body">
-            <h5 class="card-title">Card Title 3</h5>
-            <p class="card-text">This is a short description for card number 3. It provides additional details for the viewer.</p>
-            <p class="card-text"><small class="text-muted">Alice Johnson</small></p>
-            <button class="btn btn-primary support-btn" data-card="3">Support</button>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 
-  <!-- Slider Modal -->
   <div class="slider-container" id="slider-container">
     <div class="slider-popup">
       <h4>Support Amount</h4>
@@ -81,15 +56,14 @@
     </div>
   </div>
 
-  <!-- Bootstrap JS and dependencies -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
   <script>
-    // Function to open the slider
+    // Open slider modal for setting support amount
     document.querySelectorAll('.support-btn').forEach(button => {
       button.addEventListener('click', function() {
-        const cardNumber = this.getAttribute('data-card');
+        const cardId = this.getAttribute('data-card');
         const sliderContainer = document.getElementById('slider-container');
         const slider = document.getElementById('support-slider');
         const sliderValue = document.getElementById('slider-value');
@@ -101,6 +75,9 @@
         slider.addEventListener('input', function() {
           sliderValue.textContent = slider.value;
         });
+
+        // Handle saving the support amount when the slider is updated
+        
       });
     });
 
