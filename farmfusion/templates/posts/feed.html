@@ -15,6 +15,125 @@
         <link href="https://cdn.jsdelivr.net/npm/@icon/unicons@3.0.6-alpha.0/unicons.min.css" rel="stylesheet" />
         <style>
             /* Create Post Popup styling */
+
+            /* Hide by default */
+.messages {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 350px;
+    max-width: 90%;
+}
+
+/* Show when toggled */
+.messages.show {
+    display: block;
+}
+
+/* Optional: Overlay background when popup is open */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+/* Show overlay when messages popup is open */
+.messages.show + .overlay {
+    display: block;
+}
+/* Popup styles */
+.messages {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 350px;
+    max-width: 90%;
+}
+
+/* Show when toggled */
+.messages.show {
+    display: block;
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #555;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    color: black;
+}
+
+/* Overlay background */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+/* Show overlay when messages popup is open */
+.messages.show + .overlay {
+    display: block;
+}
+
+
+            .messages-popup {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 400px;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                padding: 15px;
+            }
+            
+            .messages {
+                max-height: 400px;
+                overflow-y: auto;
+            }
+            
+            #closeMessages {
+                cursor: pointer;
+                font-size: 18px;
+                float: right;
+            }
+            
+
             .modal {
                 display: none;
                 position: fixed;
@@ -25,15 +144,7 @@
                 height: 100%;
                 background-color: rgba(0, 0, 0, 0.5);
             }
-            /* 
-            .modal-content {
-                background-color: white;
-                margin: 10% auto;
-                padding: 20px;
-                border-radius: 5px;
-                width: 50%;
-                position: relative;
-            } */
+            
 
             .close {
                 position: absolute;
@@ -138,116 +249,16 @@
         <main class="main">
             <div class="container">
                 <div class="left">
-                    <a class="profile">
-                        <div class="profile-pic">
-                            <img src="{{ request.user.profile_pic.url }}" />
-                        </div>
-                        <div class="handle">
-                            <h4>{{request.user.username}}</h4>
-                            <p class="text-muted">@{{request.user.username}}</p>
-                        </div>
-                    </a>
+                    
                     <div class="sidebar">
                         <a class="menu-item active">
                             <span><i class="uil uil-home"></i></span>
                             <h3>Home</h3>
-                        </a>
-                        <a class="menu-item">
-                            <span><i class="uil uil-compass"></i></span>
-                            <h3>Explore</h3>
-                        </a>
-                        <a class="menu-item" id="notifications">
-                            <span
-                                ><i class="uil uil-bell"><small class="notification-count">9+</small></i></span
-                            >
-                            <h3>Notifications</h3>
-                            <div class="notifications-popup">
-                                <div>
-                                    <div class="profile-pic">
-                                        <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
-                                    </div>
-                                    <div class="notification-body">
-                                        <b>Abigail Willey</b> accepted your friend request
-                                        <small class="text-muted">2 DAYS AGO</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-pic">
-                                        <img src="https://i.pinimg.com/474x/e1/d6/32/e1d632b7d8ba9ffd34318a09ddf1b275.jpg" />
-                                    </div>
-                                    <div class="notification-body">
-                                        <b>Varun Nair</b> commented on your post
-                                        <small class="text-muted">1 HOUR AGO</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-pic">
-                                        <img src="https://i.pinimg.com/280x280_RS/60/72/af/6072af5d0841567c677a9e7597501563.jpg" />
-                                    </div>
-                                    <div class="notification-body">
-                                        <b>Marry Opmong</b> and 210 other liked your post
-                                        <small class="text-muted">4 MINUTES AGO</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-pic">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx7jXK7iCNJK_u4XvbwTkXPx140LlR1qh2XoihxvkMgM2ZvViJaIxaPFleTUJ7SBp9xBw&usqp=CAU" />
-                                    </div>
-                                    <div class="notification-body">
-                                        <b>Wilson Fisk</b> started following you
-                                        <small class="text-muted"> 11 HOURS AGO</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="menu-item" id="messages-notifications">
-                            <span>
-                                <i class="uil uil-envelope">
-                                    <small class="notification-count">6</small>
-                                </i>
-                            </span>
-                            <h3>Messages</h3>
-                        </a>
-                        <a class="menu-item">
-                            <span><i class="uil uil-bookmark"></i></span>
-                            <h3>Bookmarks</h3>
-                        </a>
-                        <a class="menu-item">
-                            <span><i class="uil uil-analytics"></i></span>
-                            <h3>Analytics</h3>
-                        </a>
-                        <a class="menu-item">
-                            <span><i class="uil uil-palette"></i></span>
-                            <h3>Theme</h3>
-                        </a>
-                        <a class="menu-item">
-                            <span><i class="uil uil-setting"></i></span>
-                            <h3>Settings</h3>
-                        </a>
-
+                        </a>               
                         <label class="btn btn-primary" id="create-post-button">+</label>
                     </div>
                 </div>
                 <div class="middle">
-                    <!-- <form class="create-post">
-                        <div class="profile-pic">
-                            <img
-                                src="https://res.cloudinary.com/freecodez/image/upload/v1698067298/images/fy8azbqxhgdrbbijhipe.webp"
-                                alt=""
-                            />
-                        </div>
-                        <input
-                            type="text"
-                            placeholder="What's on your mind Freecodez?"
-                            id="create-post"
-                        />
-                        <input
-                            type="submit"
-                            value="Post"
-                            class="btn btn-primary"
-                        />
-                    </form> -->
-
                     <div class="feeds">
                         {% for post in posts %}
                         <div class="feed">
@@ -335,60 +346,68 @@
                     </script>
                 </div>
                 <div class="right">
-                    <div class="messages">
-                        <div class="heading">
-                            <h4>People You Know!</h4>
-                            <span><i class="uil uil-edit"></i></span>
-                        </div>
-
-                        <div class="search-bar">
-                            <span style="display: flex; justify-content: center; flex-direction: column"><i class="uil uil-search"></i></span>
-                            <input type="text" placeholder="Search Messages" id="message-search" />
-                        </div>
-
-                        <div class="category">
-                            <h6 class="active" onclick="showTab('followers')">Followers</h6>
-                            <h6 onclick="showTab('following')">Following</h6>
-                        </div>
-
-                        <!-- Followers Section -->
-                        <div id="followers" class="tab-content active">
-                            {% for follow in followers %}
-                            <div class="user">
-                                <div class="profile-pic">
-                                    <img src="{{ follow.follower.profile_pic.url }}" alt="Profile Picture" />
-                                </div>
-                                <div class="user-body">
-                                    <h5>{{ follow.follower.username }}</h5>
-                                    <p class="text-muted">Following you</p>
-                                </div>
+                    <div id="profile-container">
+                        <a class="profile">
+                            <div class="profile-pic">
+                                <img src="{{ request.user.profile_pic.url }}" />
                             </div>
-                            {% empty %}
-                            <p class="text-muted">No followers yet.</p>
-                            {% endfor %}
-                        </div>
-
-                        <!-- Following Section -->
-                        <div id="following" class="tab-content">
-                            {% for follow in following %}
-                            <div class="user">
-                                <div class="profile-pic">
-                                    <img src="{{ follow.following.profile_pic.url }}" alt="Profile Picture" />
-                                </div>
-                                <div class="user-body">
-                                    <h5>{{ follow.following.username }}</h5>
-                                    <p class="text-muted">You're following</p>
-                                </div>
+                            <div class="handle">
+                                <h4>{{request.user.username}}</h4>
+                                <p class="text-muted">@{{request.user.username}}</p>
                             </div>
-                            {% empty %}
-                            <p class="text-muted">You're not following anyone yet.</p>
-                            {% endfor %}
-                        </div>
+                        </a>
                     </div>
-                </div>
+                    
+                </div>    
             </div>
         </main>
-
+        
+        <!-- Popup Modal -->
+        <div class="messages" id="messages">
+            <span class="close-btn">&times;</span> <!-- Close Button -->
+        
+            <div class="category">
+                <h6 class="active" onclick="showTab('followers')">Followers</h6>
+                <h6 onclick="showTab('following')">Following</h6>
+            </div>
+        
+            <!-- Followers Section -->
+            <div id="followers" class="tab-content active">
+                {% for follow in followers %}
+                <div class="user">
+                    <div class="profile-pic">
+                        <img src="{{ follow.follower.profile_pic.url }}" alt="Profile Picture" />
+                    </div>
+                    <div class="user-body">
+                        <h5>{{ follow.follower.username }}</h5>
+                        <p class="text-muted">Following you</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-muted">No followers yet.</p>
+                {% endfor %}
+            </div>
+        
+            <!-- Following Section -->
+            <div id="following" class="tab-content">
+                {% for follow in following %}
+                <div class="user">
+                    <div class="profile-pic">
+                        <img src="{{ follow.following.profile_pic.url }}" alt="Profile Picture" />
+                    </div>
+                    <div class="user-body">
+                        <h5>{{ follow.following.username }}</h5>
+                        <p class="text-muted">You're following</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-muted">You're not following anyone yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+        
+        
+        
         <!-- Button Popup -->
         <div id="postModal" class="modal">
             <div class="modal-content">
@@ -446,6 +465,37 @@
                 // Add 'active' class to the clicked tab button
                 document.querySelector(`.category h6[onclick="showTab('${tabId}')"]`).classList.add("active");
             }
+            document.addEventListener("DOMContentLoaded", function () {
+                let profileContainer = document.getElementById("profile-container");
+                let messagesPopup = document.getElementById("messages");
+                let closeButton = document.querySelector(".close-btn");
+                
+                if (profileContainer && messagesPopup) {
+                    // Open popup when clicking profile
+                    profileContainer.addEventListener("click", function (event) {
+                        event.stopPropagation(); // Prevents immediate closing
+                        messagesPopup.classList.toggle("show");
+                    });
+            
+                    // Close popup when clicking the close button
+                    if (closeButton) {
+                        closeButton.addEventListener("click", function () {
+                            messagesPopup.classList.remove("show");
+                        });
+                    }
+            
+                    // Close popup when clicking outside
+                    document.addEventListener("click", function (event) {
+                        if (!profileContainer.contains(event.target) && !messagesPopup.contains(event.target)) {
+                            messagesPopup.classList.remove("show");
+                        }
+                    });
+                }
+            });
+            
+            
         </script>
+
+        
     </body>
 </html>
