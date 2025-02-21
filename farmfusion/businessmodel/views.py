@@ -9,9 +9,11 @@ from accounts.models import CustomUser,Wallet
 # Create your views here.
 def myinvestment(request):
     return render(request,"myinvestment.html")
+
 def myprojects(request):
     return render(request,"myprojects.html")
-def craeteinvestmentmodel(request):
+
+def createinvestmentmodel(request):
     if request.method=="POST":
         name = request.POST["name"],
         farmer= request.user.farmer,
@@ -32,9 +34,11 @@ def craeteinvestmentmodel(request):
             estimated_time=estimated_time,
             profit_generated=profit_generated
         )
+
 def showpreviousproj(request):
     cards = InvestmentModel.objects.filter(user=request.user)
     return render(request,"myprojects.html",context={cards})
+
 def invest(request):
     if request.method=="POST":
         investamount = request.POST.get("investamount").strip()
@@ -63,6 +67,8 @@ def showinvestments(request):
         "invested_models": invested_models,
         "investments_made": investments_made
     })
+
+
 def showallmodels(request):
     investor = request.user.investor  # Get the logged-in investor
     all_investment_models = InvestmentModel.objects.all()  # Fetch all investment opportunities

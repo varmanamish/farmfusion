@@ -116,10 +116,10 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
                 <a class="nav-item nav-link active" href="#">Home<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="{% url 'services' %}">Services</a>  
-                <a class="nav-item nav-link" href="{% url 'products' %}">Products</a>
-                <a class="nav-item nav-link" href="{% url 'partners' %}">Partners</a>
-                <a class="nav-item nav-link" href="{% url 'contacts' %}">Contacts</a>
+                <a class="nav-item nav-link" href="#">Services</a>
+                <a class="nav-item nav-link" href="#">Products</a>
+                <a class="nav-item nav-link" href="#">Partners</a>
+                <a class="nav-item nav-link" href="#">Contacts</a>
             </div>
         </div>
     </nav>
@@ -251,7 +251,7 @@
         </div>
       </div>
 
-      <!-- Modal -->
+      <!-- Modal for Investors -->
       <div class="modal fade" id="investModal" tabindex="-1" role="dialog" aria-labelledby="investModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -297,10 +297,84 @@
         </div>
       </div>
 
+      <!-- Modal for Create Project Form -->
+      <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="createProjectModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createProjectModalLabel">Create a Farm Investment Proposal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="projectForm">
+                        <fieldset>
+                            <legend>Farm Investment Details</legend>
+                            
+                            <!-- Capital -->
+                            <div class="d-flex flex-row justify-content-between">
+                                <label for="capital">Total Capital Required ($):</label>
+                                <div class="input-container">
+                                    <input type="number" id="capital" name="capital" min="0" step="1000" required>
+                                </div>
+                            </div>
+
+                            <!-- Farmer Share -->
+                            <div class="d-flex flex-row justify-content-between">
+                                <label for="farmerShare">Farmer Share (%):</label>
+                                <small>Percentage of total capital contributed by the farmer</small>
+                                <div class="input-container">
+                                    <input type="number" id="farmerShare" name="farmerShare" min="0" max="100" step="0.1" required>
+                                </div>
+                            </div>
+
+                            <!-- Working Share -->
+                            <div class="d-flex flex-row justify-content-around">
+                                <label for="workingShare">Working Share (%):</label>
+                                <small>Percentage of operational effort or equity for investors</small>
+                                <div class="input-container">
+                                    <input type="number" id="workingShare" name="workingShare" min="0" max="100" step="0.1" required>
+                                </div>
+                            </div>
+
+                            <!-- Estimated Time -->
+                            <div class="d-flex flex-row justify-content-between">
+                                <label>Estimated Time to Profitability:</label>
+                                <div class="input-container">
+                                    <div class="radio-group">
+                                        <label><input type="radio" id="time1" name="estimatedTime" value="1-2 years" required> 1-2 Years</label>
+                                        <label><input type="radio" id="time3" name="estimatedTime" value="3-5 years"> 3-5 Years</label>
+                                        <label><input type="radio" id="time5" name="estimatedTime" value="5+ years"> 5+ Years</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Return on Investment -->
+                            <div class="d-flex flex-row justify-content-between">
+                                <label for="roi">Expected Return on Investment (%):</label>
+                                <div class="input-container">
+                                    <input type="number" id="roi" name="roi" min="0" step="0.1" required>
+                                    <small>Annual ROI expected for investors</small>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Floating Submit Button -->
+                        <button type="submit" class="float-btn">Submit Proposal</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+      </div>
+
       <!-- Floating Create Project Button -->
-      <button class="float-btn" title="Create a Project">
+      <button class="float-btn" title="Create a Project" data-toggle="modal" data-target="#createProjectModal">
         <i class="bi bi-plus"></i>
-        <a class="btn-text" >Create</a>
+        <span class="btn-text">Create</span>
       </button>
-      
+  </body>
 </html>
