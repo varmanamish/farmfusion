@@ -1,151 +1,142 @@
-{% load static %}
+{%load static%}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Products</title>
-    <meta charset="utf-8">
-    <meta name="format-detection" content="telephone=no" />
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/superfish.css' %}">
-    <link rel="stylesheet" href="{% static 'css/touchTouch.css' %}">
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'js/jquery-migrate-1.1.1.js' %}"></script>
-    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-    <script src="{% static 'js/script.js' %}"></script>
-    <script src="{% static 'js/jquery.equalheights.js' %}"></script>
-    <script src="{% static 'js/superfish.js' %}"></script>
-    <script src="{% static 'js/jquery.mobilemenu.js' %}"></script>
-    <script src="{% static 'js/touchTouch.jquery.js' %}"></script>
-    <script src="{% static 'js/jquery.ui.totop.js' %}"></script>
-    <script>
-        $(window).load(function() {
-            $('.magnifier').touchTouch();
-            $().UItoTop({ easingType: 'easeOutQuart' });
-        });
-    </script>
-
-    <!--[if lt IE 8]>
-    <div style='clear: both; text-align:center; position: relative;'>
-        <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-            <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
+<html>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/farmer.css' %}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <a class="navbar-brand" href="#">
+            <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo" />
         </a>
-    </div>
-    <![endif]-->
-    <!--[if lt IE 9]>
-    <script src="{% static 'js/html5shiv.js' %}"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/ie.css' %}">
-    <![endif]-->
-</head>
-<body>
-<!--==============================header=================================-->
-<header>
-    <div class="container_16">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link active" href="#">Home<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#">Services</a>  
+                <a class="nav-item nav-link" href="#">Products</a>
+                <a class="nav-item nav-link" href="#">Partners</a>
+                <a class="nav-item nav-link" href="#">Contacts</a>
+            </div>
+        </div>
+    </nav>
+    <div class="wcu-section pt-5 pb-5">
+      <div class="container">
         <div class="row">
-            <div class="grid_16">
-                <h1><a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="agro united"></a></h1>
-                <nav>
-                    <ul class="sf-menu">
-                        <li><a href="{% url 'index' %}">About us</a>
-                            <ul>
-                                <li><a href="#">History</a></li>
-                                <li><a href="#">Offers</a></li>
-                                <li><a href="#">News</a>
-                                    <ul>
-                                        <li><a href="#">Fresh</a></li>
-                                        <li><a href="#">Archive</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="{% url 'services' %}">Services</a></li>
-                        <li><a href="{% url 'products' %}">Products</a></li>
-                        <li><a href="{% url 'partners' %}">Partners</a></li>
-                        <li class="last"><a href="{% url 'contacts' %}">Contacts</a></li>
-                    </ul>
-                </nav>
+          <div class="col-12">
+            <h1 class="wcu-section-heading">Want to invest?</h1>
+            <p class="wcu-section-description">
+              We use both original recipes and classic versions of famous food
+              items.
+            </p>
+          </div>
+          <div class="col-12">
+            <div class="wcu-card p-3 mb-3">
+              <div class="d-flex flex-row justify-content-between">
+                <div>
+                    <h1 class="wcu-card-title mt-3">Mirchi crop in Guntur</h1>
+                    <img class="img-thumbnail" src="farm1.jpg">
+                </div>
+                <div class="d-flex flex-column justify-content-between">
+                    <p class="wcu-card-description">
+                        Experience fine dining at the comfort of your home. All our orders are carefully packed and arranged to give you the nothing less than perfect.
+                    </p>
+                    <div class="w3-light-grey w3-round-xlarge bar" style="overflow: hidden; position: relative;">
+                        <div class="w3-container green-bar" style="width: 60%; background-color: green; border-top-left-radius: 16px; border-bottom-left-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">60%</div>
+                        <div class="w3-container blue-bar" style="width: 15%; background-color: skyblue; border-top-right-radius: 16px; border-bottom-right-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">15%</div>
+                    </div>
+                    
+                    
+                    <div class="d-flex flex-row justify-content-around">
+                        <div>
+                            <p>Capital:</p>
+                            <div class="d-flex flex-row">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bank icon" viewBox="0 0 16 16">
+                                    <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.5.5 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72z"/>
+                                </svg>
+                                <p class="icon-title">Rs 4,50,000</p>
+                            </div>
+                        </div>
+                        <div>
+                            <p>Profit:</p>
+                            <div class="d-flex flex-row">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cash-stack icon" viewBox="0 0 16 16">
+                                    <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                                    <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                                </svg>
+                                <p class="icon-title">Rs 50,000</p>
+                            </div>
+                        </div>
+                        <div>
+                            <p>Estimated time:</p>
+                            <div class="d-flex flex-row">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock icon" viewBox="0 0 16 16">
+                                    <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                                </svg>
+                                <p class="icon-title">3 months</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <p class="text-end">By Ram Kishan</p>
+                    <button class="btn btn-warning butt" data-toggle="modal" data-target="#investModal">Invest</button>
+                </div>
+              </div>
             </div>
         </div>
+        </div>
+      </div>
     </div>
-</header>
-
-<!--=======content================================-->
-<div class="content">
-    <div class="container_16">
-        <div class="row">
-            <div class="grid_16">
-                <h2 class="p4">featured products</h2>
+    <!-- Modal -->
+    <div class="modal fade" id="investModal" tabindex="-1" role="dialog" aria-labelledby="investModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="investModalLabel">Invest in Mirchi Crop in Guntur</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-        </div>
-        <div class="row">
-            <div class="gallery-1 clearfix">
-                <div class="grid_4">
-                    <div class="maxheight">
-                        <div class="bg-5">
-                            <a href="{% static 'images/page-3_img-1-b.jpg' %}" class="magnifier"><img src="{% static 'images/page-3_img-1.jpg' %}" alt="" class="wrapper"></a>
-                            <div><a href="#" class="a-hov">Consectetur adipisci velit, sed quia non numquam eiu.</a></div>
-                        </div>
-                    </div>
+            <div class="modal-body">
+              <form id="investmentForm">
+                <div class="form-group row">
+                  <label for="investmentAmount" class="col-sm-4 col-form-label text-right">Amount to Invest (₹):</label>
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="investmentAmount" name="investmentAmount" min="0" step="1000" required placeholder="Enter amount in ₹">
+                    <small class="form-text text-muted">Enter the amount you would like to invest.</small>
+                  </div>
                 </div>
-                <div class="grid_4">
-                    <div class="maxheight">
-                        <div class="bg-5">
-                            <a href="{% static 'images/page-3_img-2-b.jpg' %}" class="magnifier"><img src="{% static 'images/page-3_img-2.jpg' %}" alt="" class="wrapper"></a>
-                            <div><a href="#" class="a-hov">Consectetur adipisci velit, sed quia non numquam eiu.</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid_4">
-                    <div class="maxheight">
-                        <div class="bg-5">
-                            <a href="{% static 'images/page-3_img-3-b.jpg' %}" class="magnifier"><img src="{% static 'images/page-3_img-3.jpg' %}" alt="" class="wrapper"></a>
-                            <div><a href="#" class="a-hov">Consectetur adipisci velit, sed quia non numquam eiu.</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid_4">
-                    <div class="maxheight">
-                        <div class="bg-5">
-                            <a href="{% static 'images/page-3_img-4-b.jpg' %}" class="magnifier"><img src="{% static 'images/page-3_img-4.jpg' %}" alt="" class="wrapper"></a>
-                            <div><a href="#" class="a-hov">Consectetur adipisci velit, sed quia non numquam eiu.</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid_4">
-                    <div class="maxheight">
-                        <div class="bg-5">
-                            <a href="{% static 'images/page-3_img-5-b.jpg' %}" class="magnifier"><img src="{% static 'images/page-3_img-5.jpg' %}" alt="" class="wrapper"></a>
-                            <div><a href="#" class="a-hov">Consectetur adipisci velit, sed quia non numquam eiu.</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid_4">
-                    <div class="maxheight">
-                        <div class="bg-5">
-                            <a href="{% static 'images/page-3_img-6-b.jpg' %}" class="magnifier"><img src="{% static 'images/page-3_img-6.jpg' %}" alt="" class="wrapper"></a>
-                            <div><a href="#" class="a-hov">Consectetur adipisci velit, sed quia non numquam eiu.</a></div>
-                        </div>
-                    </div>
-                </div>
+              </form>
             </div>
-        </div>
-    </div>
-</div>
-
-<!--=======footer=================================-->
-<footer>
-    <div class="bg-4">
-        <div class="container_16">
-            <div class="row grid_16">
-                <div class="inside">
-                    <a href="{% url 'index' %}"><img src="{% static 'images/logo-foot.png' %}" alt=""></a>
-                    <span>&copy; 2013 &#8226; <a href="{% url 'privacy' %}" class="h-underline">Privacy policy</a></span>
-                </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" form="investmentForm" class="btn btn-success">Invest Now</button>
             </div>
+          </div>
         </div>
-    </div>
-</footer>
-
-</body>
+      </div>
+  
+      <script>
+        document.getElementById('investmentForm').addEventListener('submit', function(event) {
+          event.preventDefault();
+          const amount = document.getElementById('investmentAmount').value;
+          if (amount && amount > 0) {
+            console.log('Investment Amount Submitted:', { investmentAmount: amount });
+            alert(Successfully committed ₹${parseInt(amount).toLocaleString()} to Mirchi Crop in Guntur!);
+            $('#investModal').modal('hide'); // Hide modal using jQuery
+            this.reset(); // Reset form
+          } else {
+            alert('Please enter a valid investment amount.');
+          }
+        });
+      </script>
+  </body>
 </html>

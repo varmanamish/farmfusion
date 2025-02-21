@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [  
     'businessmodel',
-    'socialmedia',
     'accounts',
     'ecom',
     'django.contrib.admin',
