@@ -1,4 +1,4 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,135 +8,303 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/farmer.css' %}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+      /* Navbar Styling */
+      .custom-navbar {
+        background-color: #1a3c34;
+      }
+      .custom-navbar .nav-link {
+        color: #ffffff;
+      }
+      .custom-navbar .nav-link:hover {
+        color: #b3d9b1;
+      }
+
+      /* Toggle Button Styles */
+      .toggle-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        display: flex;
+        gap: 10px;
+      }
+
+      .toggle-btn {
+        margin-top: 50px;
+        background-color: #6c757d; /* Muted gray for unselected */
+        color: #ffffff;
+        border: none;
+        padding: 8px 16px; /* Smaller padding */
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 14px; /* Smaller text */
+        cursor: pointer;
+        transition: all 0.3s ease;
+        opacity: 0.7; /* Slightly faded */
+      }
+
+      .toggle-btn:hover {
+        background-color: #5a6268; /* Slightly lighter gray on hover */
+        opacity: 0.9;
+      }
+
+      .toggle-btn.active {
+        background-color: #4CAF50; /* Bright green for selected */
+        padding: 12px 24px; /* Larger padding */
+        font-size: 16px; /* Larger text */
+        font-weight: 700; /* Bolder text */
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.8); /* Glow effect */
+        opacity: 1; /* Fully opaque */
+        transform: scale(1.1); /* Slightly larger */
+      }
+
+      /* Investment Sections */
+      .investment-section {
+        display: none;
+      }
+
+      .investment-section.active {
+        display: block;
+      }
+
+      /* Modal Styling */
+      .modal-header {
+        background-color: #1a3c34;
+        color: #ffffff;
+      }
+
+      .btn-success {
+        background-color: #4CAF50;
+        border-color: #4CAF50;
+      }
+
+      .btn-success:hover {
+        background-color: #45a049;
+      }
+
+      .btn-secondary {
+        background-color: #6c757d;
+      }
+    </style>
   </head>
   <body>
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-        <a class="navbar-brand" href="#">
-            <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo" />
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link active" href="#">Home<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="{% url 'services' %}">Services</a>  
-                <a class="nav-item nav-link" href="{% url 'products' %}">Products</a>
-                <a class="nav-item nav-link" href="{% url 'partners' %}">Partners</a>
-                <a class="nav-item nav-link" href="{% url 'contacts' %}">Contacts</a>
-            </div>
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo" />
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ml-auto">
+          <a class="nav-item nav-link active" href="{% url 'index' %}">Home<span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="{% url 'services' %}">Services</a>  
+          <a class="nav-item nav-link" href="{% url 'products' %}">Products</a>
+          <a class="nav-item nav-link" href="{% url 'partners' %}">Partners</a>
+          <a class="nav-item nav-link" href="{% url 'contacts' %}">Contacts</a>
+          {% if user.is_authenticated %}
+            <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+          {% else %}
+            <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+          {% endif %}
         </div>
+      </div>
     </nav>
-    <div class="wcu-section pt-5 pb-5">
+
+    <!-- Toggle Button -->
+    <div class="toggle-container">
+      <button id="toggleMyInvestments" class="toggle-btn active">My Investments</button>
+      <button id="toggleAllInvestments" class="toggle-btn">All Investments</button>
+    </div>
+
+    <!-- My Investments Section -->
+    <div id="myInvestments" class="wcu-section pt-5 pb-5 investment-section active">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h1 class="wcu-section-heading">My Investments</h1>
+            <p class="wcu-section-description">
+              Here are the projects you have invested in.
+            </p>
+          </div>
+          {% if my_investments %}
+            {% for investment in my_investments %}
+              <div class="col-12">
+                <div class="wcu-card p-3 mb-3">
+                  <div class="d-flex flex-row justify-content-between">
+                    <div>
+                      <h1 class="wcu-card-title mt-3">{{ investment.investment_model.name }}
+</h1>
+                      <img class="img-thumbnail" src="{% static 'images/farm1.jpg' %}" alt="{{ investment.investment_model.name }}
+">
+                    </div>
+                    <div class="d-flex flex-column justify-content-between">
+                      <p class="wcu-card-description">
+                        You’ve invested ₹{{ investment.investment_amount }} in this project.
+                      </p>
+                      {% with total=investment.investment_model.farmer_share|add:investment.investment_model.working_share %}
+  <div class="w3-light-grey w3-round-xlarge bar" style="overflow: hidden; position: relative;">
+    <div class="w3-container green-bar" style="width: {{ investment.investment_model.farmer_share|default:0 }}%; background-color: green; border-top-left-radius: 16px; border-bottom-left-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">
+      {{ investment.investment_model.farmer_share }}%
+    </div>
+    <div class="w3-container blue-bar" style="width: {{ investment.investment_model.working_share|floatformat:2 }}%; background-color: skyblue; border-top-right-radius: 16px; border-bottom-right-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">
+      {{ investment.investment_model.working_share }}%
+    </div>
+  </div>
+{% endwith %}
+
+                      <div class="d-flex flex-row justify-content-around">
+                        <div>
+                          <p>Capital:</p>
+                          <div class="d-flex flex-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bank icon" viewBox="0 0 16 16">
+                              <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.5.5 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72z"/>
+                            </svg>
+                            <p class="icon-title">{{ investment.investment_model.capital }}</p>
+                          </div>
+                        </div>
+                        <div>
+                          <p>Estimated Time:</p>
+                          <div class="d-flex flex-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock icon" viewBox="0 0 16 16">
+                              <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                            </svg>
+                            <p class="icon-title">{{ investment.investment_model.estimated_time }}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="text-end">By {{ investment.investment_model.farmer.name }}</p>
+                      <button class="btn btn-warning butt">View Details</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="col-12">
+              <p class="text-center">You have not made any investments yet.</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- All Investments Section -->
+    <div id="allInvestments" class="wcu-section pt-5 pb-5 investment-section">
       <div class="container">
         <div class="row">
           <div class="col-12">
             <h1 class="wcu-section-heading">Want to invest?</h1>
             <p class="wcu-section-description">
-              We use both original recipes and classic versions of famous food
-              items.
+              We use both original recipes and classic versions of famous food items.
             </p>
           </div>
-          <div class="col-12">
-            <div class="wcu-card p-3 mb-3">
-              <div class="d-flex flex-row justify-content-between">
-                <div>
-                    <h1 class="wcu-card-title mt-3">Mirchi crop in Guntur</h1>
-                    <img class="img-thumbnail" src="farm1.jpg">
-                </div>
-                <div class="d-flex flex-column justify-content-between">
+          {% for model in all_investment_models %}
+            <div class="col-12">
+              <div class="wcu-card p-3 mb-3">
+                <div class="d-flex flex-row justify-content-between">
+                  <div>
+                    <h1 class="wcu-card-title mt-3">{{ model.name }}</h1>
+                    <img class="img-thumbnail" src="{% static 'images/farm1.jpg' %}" alt="{{ model.name }}">
+                  </div>
+                  <div class="d-flex flex-column justify-content-between">
                     <p class="wcu-card-description">
-                        Experience fine dining at the comfort of your home. All our orders are carefully packed and arranged to give you the nothing less than perfect.
+                      Experience fine dining at the comfort of your home. All our orders are carefully packed and arranged to give you nothing less than perfect.
                     </p>
-                    <div class="w3-light-grey w3-round-xlarge bar" style="overflow: hidden; position: relative;">
-                        <div class="w3-container green-bar" style="width: 60%; background-color: green; border-top-left-radius: 16px; border-bottom-left-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">60%</div>
-                        <div class="w3-container blue-bar" style="width: 15%; background-color: skyblue; border-top-right-radius: 16px; border-bottom-right-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">15%</div>
-                    </div>
-                    
-                    
+                    {% with total=model.farmer_share|add:model.working_share %}
+                      <div class="w3-light-grey w3-round-xlarge bar" style="overflow: hidden; position: relative;">
+                        <div class="w3-container green-bar" style="width: {{ model.farmer_share|default:0 }}%; background-color: green; border-top-left-radius: 16px; border-bottom-left-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">{{ model.farmer_share }}%</div>
+                        <div class="w3-container blue-bar" style="width: {{ model.working_share|floatformat:2 }}%; background-color: skyblue; border-top-right-radius: 16px; border-bottom-right-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">{{ model.working_share }}%</div>
+                      </div>
+                    {% endwith %}
                     <div class="d-flex flex-row justify-content-around">
-                        <div>
-                            <p>Capital:</p>
-                            <div class="d-flex flex-row">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bank icon" viewBox="0 0 16 16">
-                                    <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.5.5 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72z"/>
-                                </svg>
-                                <p class="icon-title">Rs 4,50,000</p>
-                            </div>
+                      <div>
+                        <p>Capital:</p>
+                        <div class="d-flex flex-row">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bank icon" viewBox="0 0 16 16">
+                            <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.5.5 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72z"/>
+                          </svg>
+                          <p class="icon-title">{{ model.capital }}</p>
                         </div>
-                        <div>
-                            <p>Profit:</p>
-                            <div class="d-flex flex-row">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cash-stack icon" viewBox="0 0 16 16">
-                                    <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                                    <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
-                                </svg>
-                                <p class="icon-title">Rs 50,000</p>
-                            </div>
+                      </div>
+                      <div>
+                        <p>Estimated Time:</p>
+                        <div class="d-flex flex-row">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock icon" viewBox="0 0 16 16">
+                            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                          </svg>
+                          <p class="icon-title">{{ model.estimated_time }}</p>
                         </div>
-                        <div>
-                            <p>Estimated time:</p>
-                            <div class="d-flex flex-row">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock icon" viewBox="0 0 16 16">
-                                    <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
-                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
-                                </svg>
-                                <p class="icon-title">3 months</p>
-                            </div>
-                        </div>
-                        
+                      </div>
                     </div>
-                    <p class="text-end">By Ram Kishan</p>
-                    <button class="btn btn-warning butt" data-toggle="modal" data-target="#investModal">Invest</button>
+                    <p class="text-end">By {{ model.farmer.name }}</p>
+                    <button class="btn btn-warning butt" data-toggle="modal" data-target="#investModal{{ model.id }}">Invest</button>
+                  </div>
                 </div>
               </div>
             </div>
-        </div>
+
+            <!-- Modal for Investment -->
+            <div class="modal fade" id="investModal{{ model.id }}" tabindex="-1" role="dialog" aria-labelledby="investModalLabel{{ model.id }}" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="investModalLabel{{ model.id }}">Invest in {{ model.name }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="investmentForm{{ model.id }}" action="{% url 'invest' %}" method="post">
+                      {% csrf_token %}
+                      <div class="form-group row">
+                        <label for="investmentAmount{{ model.id }}" class="col-sm-4 col-form-label text-right">Amount to Invest (₹):</label>
+                        <div class="col-sm-8">
+                          <input type="number" class="form-control" id="investmentAmount{{ model.id }}" name="investamount" min="0" step="1000" required placeholder="Enter amount in ₹">
+                          <input type="hidden" name="modelid" value="{{ model.id }}">
+                          <small class="form-text text-muted">Enter the amount you would like to invest.</small>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" form="investmentForm{{ model.id }}" class="btn btn-success">Invest Now</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
         </div>
       </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="investModal" tabindex="-1" role="dialog" aria-labelledby="investModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="investModalLabel">Invest in Mirchi Crop in Guntur</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form id="investmentForm">
-                <div class="form-group row">
-                  <label for="investmentAmount" class="col-sm-4 col-form-label text-right">Amount to Invest (₹):</label>
-                  <div class="col-sm-8">
-                    <input type="number" class="form-control" id="investmentAmount" name="investmentAmount" min="0" step="1000" required placeholder="Enter amount in ₹">
-                    <small class="form-text text-muted">Enter the amount you would like to invest.</small>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" form="investmentForm" class="btn btn-success">Invest Now</button>
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <script>
-        document.getElementById('investmentForm').addEventListener('submit', function(event) {
-          event.preventDefault();
-          const amount = document.getElementById('investmentAmount').value;
-          if (amount && amount > 0) {
-            console.log('Investment Amount Submitted:', { investmentAmount: amount });
-            alert("Successfully committed ₹${parseInt(amount).toLocaleString()} to Mirchi Crop in Guntur!");
-            $('#investModal').modal('hide'); // Hide modal using jQuery
-            this.reset(); // Reset form
-          } else {
-            alert('Please enter a valid investment amount.');
-          }
-        });
-      </script>
+
+    <script>
+      // Toggle Button Functionality
+      const myInvestmentsBtn = document.getElementById('toggleMyInvestments');
+      const allInvestmentsBtn = document.getElementById('toggleAllInvestments');
+      const myInvestmentsSection = document.getElementById('myInvestments');
+      const allInvestmentsSection = document.getElementById('allInvestments');
+
+      myInvestmentsBtn.addEventListener('click', function() {
+        myInvestmentsSection.classList.add('active');
+        allInvestmentsSection.classList.remove('active');
+        myInvestmentsBtn.classList.add('active');
+        allInvestmentsBtn.classList.remove('active');
+      });
+
+      allInvestmentsBtn.addEventListener('click', function() {
+        allInvestmentsSection.classList.add('active');
+        myInvestmentsSection.classList.remove('active');
+        allInvestmentsBtn.classList.add('active');
+        myInvestmentsBtn.classList.remove('active');
+      });
+    </script>
   </body>
 </html>

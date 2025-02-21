@@ -7,8 +7,6 @@ from django.urls import reverse
 from .models import Farmer, Investor ,InvestmentModel , Investment
 from accounts.models import CustomUser,Wallet
 # Create your views here.
-def myinvestment(request):
-    return render(request,"myinvestment.html")
 
 def myprojects(request):
     return render(request,"myprojects.html")
@@ -51,42 +49,76 @@ def showpreviousproj(request):
     cards = InvestmentModel.objects.filter(user=request.user)
     return render(request,"myprojects.html",context={cards})
 
+from django.http import JsonResponse
+from businessmodel.models import Investment, InvestmentModel, Investor
+from accounts.models import Wallet
+
 def invest(request):
-    if request.method=="POST":
-        investamount = request.POST.get("investamount").strip()
-        modelid=request.POST.get("modeilid").strip()
-        wallet = Wallet.objects.get(user=request.user)
-        if(investamount<=wallet.wallet_amount):
-            wallet.wallet_amount=wallet-investamount
+    if request.method == "POST":
+        try:
+            # Retrieve form data
+            investamount = int(request.POST.get("investamount", 0))
+            modelid = int(request.POST.get("modelid", 0))
+
+            # Validate input
+            if investamount <= 0 or modelid <= 0:
+                return JsonResponse({"error": "Invalid investment amount or model ID"}, status=400)
+
+            # Fetch the investment model
+            try:
+                mlid = InvestmentModel.objects.get(id=modelid)
+            except InvestmentModel.DoesNotExist:
+                return JsonResponse({"error": "Investment model not found"}, status=404)
+
+            # Fetch the investor and wallet
+            try:
+                wallet = Wallet.objects.get(user=request.user)
+                inv = Investor.objects.get(user=request.user)
+            except Wallet.DoesNotExist:
+                return JsonResponse({"error": "Wallet not found"}, status=404)
+            except Investor.DoesNotExist:
+                return JsonResponse({"error": "Investor profile not found"}, status=404)
+
+            # Check if the user has enough funds
+            if investamount > wallet.wallet_amount:
+                return JsonResponse({"error": "Insufficient funds in wallet"}, status=400)
+
+            # Deduct funds from the wallet
+            wallet.wallet_amount -= investamount
             wallet.save()
-            Investment.objects.create(
-            investment_model = modelid,
-            investor = request.user.investor,
-            investment_amount = investamount,
+
+            # Create the investment
+            investment = Investment.objects.create(
+                investment_model=mlid,
+                investor=inv,
+                investment_amount=investamount
             )
-        
-def showinvestments(request):
-    investor = request.user.investor  # Get the logged-in investor
 
-    # Fetch all investments made by the investor
-    investments_made = Investment.objects.filter(investor=investor)
+            return JsonResponse({"message": "Investment successful", "investment_id": investment.id}, status=200)
 
-    # Get only the InvestmentModels that the investor has invested in
-    invested_model_ids = investments_made.values_list("investment_model_id", flat=True)  # Extract IDs
-    invested_models = InvestmentModel.objects.filter(id__in=invested_model_ids)  # Fetch models
+        except ValueError:
+            return JsonResponse({"error": "Invalid input data"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
 
-    return render(request, "investor_dashboard.html", {
-        "invested_models": invested_models,
-        "investments_made": investments_made
-    })
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
 
 
 def showallmodels(request):
-    investor = request.user.investor  # Get the logged-in investor
-    all_investment_models = InvestmentModel.objects.all()  # Fetch all investment opportunities
-    investments_made = Investment.objects.filter(investor=investor)  # Fetch investments by this investor
-
-    return render(request, "investor_dashboard.html", {
-        "all_investment_models": all_investment_models,
-        "investments_made": investments_made
+    print("request")
+    investor = request.user.id # Get the logged-in investor
+    model = InvestmentModel.objects.all()  # Fetch all investment opportunities
+    inv=Investor.objects.get(user_id=investor)  # Fetch investments by this investor
+    print(model) 
+    my_investments = Investment.objects.select_related('investment_model').filter(investor_id=inv.id)
+    
+    print(my_investments)   
+    return render(request, "myinvestment.html", {
+        "all_investment_models": model,
+        "my_investments": my_investments,
+       
     })
+
+def myinvestments(request):
+    return render (request, "myinvestment.html")

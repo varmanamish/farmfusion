@@ -135,11 +135,12 @@ def profile(request):
 @login_required
 def addmoney(request):
     if request.method == "POST":
+        error="no error"
         pin = request.POST.get("wallet_pin").strip()
         amount = request.POST.get("amount").strip()
 
         if not amount.isdigit() or int(amount) <= 0:
-            messages.error(request, "Invalid amount.")
+            error = "Invalid amount."
             return redirect("profile")
 
         amount = int(amount)
@@ -148,15 +149,15 @@ def addmoney(request):
             wallet = Wallet.objects.get(user=request.user)
 
             if wallet.wallet_pin != pin:
-                messages.error(request, "Incorrect PIN.")
+                error = "Incorrect PIN."
                 return redirect("profile")
 
             wallet.wallet_amount += amount
             wallet.save()
 
-            messages.success(request, f"Successfully added ${amount} to your wallet.")
+            print( f"Successfully added ${amount} to your wallet.")
         except Wallet.DoesNotExist:
-            messages.error(request, "No wallet found.")
+            error = "No wallet found."
     
     return redirect("profile")
 
@@ -164,11 +165,12 @@ def addmoney(request):
 @login_required
 def withdraw(request):
     if request.method == "POST":
+        error=""
         pin = request.POST.get("wallet_pin").strip()
         amount = request.POST.get("amount").strip()
 
         if not amount.isdigit() or int(amount) <= 0:
-            messages.error(request, "Invalid amount.")
+            error = "Invalid amount."
             return redirect("profile")
 
         amount = int(amount)
@@ -177,19 +179,19 @@ def withdraw(request):
             wallet = Wallet.objects.get(user=request.user)
 
             if wallet.wallet_pin != pin:
-                messages.error(request, "Incorrect PIN.")
+                error = "Incorrect PIN."
                 return redirect("profile")
 
             if wallet.wallet_amount < amount:
-                messages.error(request, "Insufficient balance.")
+                error = "Insufficient balance."
                 return redirect("profile")
 
             wallet.wallet_amount -= amount
             wallet.save()
 
-            messages.success(request, f"Successfully withdrew ${amount} from your wallet.")
+            print( f"Successfully withdrew ${amount} from your wallet.")
         except Wallet.DoesNotExist:
-            messages.error(request, "No wallet found.")
+            error = "No wallet found."
 
     return redirect("profile")
 
