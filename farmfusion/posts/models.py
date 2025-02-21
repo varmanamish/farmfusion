@@ -21,3 +21,16 @@ class Follow(models.Model):
 
     def __str__(self):
         return f"{self.follower.username} follows {self.following.username}"
+
+
+
+class Like(models.Model):
+    user = models.ForeignKey('accounts.CustomUser', on_delete=models.CASCADE)
+    post = models.ForeignKey(PostDetails, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'post')  # Ensures that a user can only like a post once
+
+    def __str__(self):
+        return f'{self.user.username} likes {self.post.id}'

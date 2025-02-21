@@ -6,6 +6,10 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import Wallet
+from django.http import JsonResponse
+import requests
+from django.conf import settings
+
 # Create your views here.
 def login_view(request):
     if request.method == "POST":
@@ -186,3 +190,23 @@ def createwallet(request):
             walletc.save()
             return redirect('profile')
         return redirect('profile')
+
+
+
+def get_user_location(request):
+    ip_address = request.META.get('REMOTE_ADDR')  # Get the user's IP
+    api_key = settings.IPSTACK_API_KEY  # Store your API key in settings.py
+    url = f'http://api.ipstack.com/{ip_address}?access_key={api_key}'
+    response = requests.get(url)
+    location_data = response.json()
+
+    if location_data and location_data.get('city'):
+        # Store the city, region, or any other part of the location
+        city = location_data.get('city')
+        # Update the user's location field
+        user = request.user
+        user.location = city
+        user.save()
+        return JsonResponse({'location': city})
+    else:
+        return JsonResponse({'error': 'Location not found'})

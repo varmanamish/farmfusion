@@ -3,9 +3,17 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from .models import Product, Order, OrderItem
 
+@login_required
 def shop(request):
+    # Fetch all products from the Product model
     products = Product.objects.all()
-    return render(request, 'ecommerce/shop.html', {'products': products})
+    
+    # Fetch the user's orders (if any)
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+
+    # Render the shop template, passing both products and orders
+    return render(request, 'ecommerce/shop.html', {'products': products, 'orders': orders})
+
 
 def add_to_cart(request):
     if request.method == "POST":
@@ -67,3 +75,11 @@ def checkout(request):
         return JsonResponse({"message": "Checkout successful!", "order_id": order.id})
     
     return JsonResponse({"message": "Invalid request"}, status=400)
+
+@login_required
+def order_history(request):
+    # Fetch all orders for the logged-in user
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+
+    # Pass the orders and order items to the template
+    return render(request, 'ecommerce/shop.html/', {'orders': orders})

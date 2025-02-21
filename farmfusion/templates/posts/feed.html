@@ -4,10 +4,11 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta name="csrf-token" content="{{ csrf_token }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="{% static 'css/feed.css' %}" />
-        <link href="https://cdn.jsdelivr.net/npm/@icon/unicons@3.0.6-alpha.0/unicons.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@icon/unicons@3.0.6-alpha.0/unicons.min.css" rel="stylesheet" />
         <style>
             /* Create Post Popup styling */
             .modal {
@@ -89,9 +90,7 @@
                 <div class="left">
                     <a class="profile">
                         <div class="profile-pic">
-                            <img
-                                src="https://res.cloudinary.com/freecodez/image/upload/v1698067298/images/fy8azbqxhgdrbbijhipe.webp"
-                            />
+                            <img src="https://res.cloudinary.com/freecodez/image/upload/v1698067298/images/fy8azbqxhgdrbbijhipe.webp" />
                         </div>
                         <div class="handle">
                             <h4>Freecodez</h4>
@@ -109,66 +108,44 @@
                         </a>
                         <a class="menu-item" id="notifications">
                             <span
-                                ><i class="uil uil-bell"
-                                    ><small class="notification-count"
-                                        >9+</small
-                                    ></i
-                                ></span
+                                ><i class="uil uil-bell"><small class="notification-count">9+</small></i></span
                             >
                             <h3>Notifications</h3>
                             <div class="notifications-popup">
                                 <div>
                                     <div class="profile-pic">
-                                        <img
-                                            src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                                        />
+                                        <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
                                     </div>
                                     <div class="notification-body">
-                                        <b>Abigail Willey</b> accepted your
-                                        friend request
-                                        <small class="text-muted"
-                                            >2 DAYS AGO</small
-                                        >
+                                        <b>Abigail Willey</b> accepted your friend request
+                                        <small class="text-muted">2 DAYS AGO</small>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="profile-pic">
-                                        <img
-                                            src="https://i.pinimg.com/474x/e1/d6/32/e1d632b7d8ba9ffd34318a09ddf1b275.jpg"
-                                        />
+                                        <img src="https://i.pinimg.com/474x/e1/d6/32/e1d632b7d8ba9ffd34318a09ddf1b275.jpg" />
                                     </div>
                                     <div class="notification-body">
                                         <b>Varun Nair</b> commented on your post
-                                        <small class="text-muted"
-                                            >1 HOUR AGO</small
-                                        >
+                                        <small class="text-muted">1 HOUR AGO</small>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="profile-pic">
-                                        <img
-                                            src="https://i.pinimg.com/280x280_RS/60/72/af/6072af5d0841567c677a9e7597501563.jpg"
-                                        />
+                                        <img src="https://i.pinimg.com/280x280_RS/60/72/af/6072af5d0841567c677a9e7597501563.jpg" />
                                     </div>
                                     <div class="notification-body">
-                                        <b>Marry Opmong</b> and 210 other liked
-                                        your post
-                                        <small class="text-muted"
-                                            >4 MINUTES AGO</small
-                                        >
+                                        <b>Marry Opmong</b> and 210 other liked your post
+                                        <small class="text-muted">4 MINUTES AGO</small>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="profile-pic">
-                                        <img
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx7jXK7iCNJK_u4XvbwTkXPx140LlR1qh2XoihxvkMgM2ZvViJaIxaPFleTUJ7SBp9xBw&usqp=CAU"
-                                        />
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx7jXK7iCNJK_u4XvbwTkXPx140LlR1qh2XoihxvkMgM2ZvViJaIxaPFleTUJ7SBp9xBw&usqp=CAU" />
                                     </div>
                                     <div class="notification-body">
                                         <b>Wilson Fisk</b> started following you
-                                        <small class="text-muted">
-                                            11 HOURS AGO</small
-                                        >
+                                        <small class="text-muted"> 11 HOURS AGO</small>
                                     </div>
                                 </div>
                             </div>
@@ -198,9 +175,7 @@
                             <h3>Settings</h3>
                         </a>
 
-                        <label class="btn btn-primary" id="create-post-button"
-                            >+</label
-                        >
+                        <label class="btn btn-primary" id="create-post-button">+</label>
                     </div>
                 </div>
                 <div class="middle">
@@ -229,17 +204,11 @@
                             <div class="head"></div>
                             <div class="user">
                                 <div class="profile-pic">
-                                    <img
-                                        src="{{ post.user.profile_pic.url }}"
-                                        alt="Profile Picture"
-                                    />
+                                    <img src="{{ post.user.profile_pic.url }}" alt="Profile Picture" />
                                 </div>
                                 <div class="info">
                                     <h3>{{ post.user.username }}</h3>
-                                    <small>
-                                        {{ post.location }}, {{post.created_at}}
-                                        ago
-                                    </small>
+                                    <small>{{ post.location }}, {{ post.created_at }} ago</small>
                                 </div>
                                 <span class="edit">
                                     <i class="uil uil-ellipsis-h"></i>
@@ -247,46 +216,79 @@
                             </div>
 
                             <div class="photo">
-                                <img
-                                    src="{{ post.post_image.url }}"
-                                    alt="Post Image"
-                                />
+                                <img src="{{ post.post_image.url }}" alt="Post Image" />
                             </div>
 
                             <div class="action-button">
                                 <div class="interaction-button">
-                                    <span
-                                        ><i class="uil uil-thumbs-up"></i
-                                    ></span>
+                                    <span class="like-btn" data-post-id="{{ post.id }}">
+                                        <i class="uil uil-thumbs-up"></i>
+                                    </span>
                                     <span><i class="uil uil-comment"></i></span>
                                     <span><i class="uil uil-share"></i></span>
                                 </div>
                                 <div class="bookmark">
-                                    <span
-                                        ><i class="uil uil-bookmark"></i
-                                    ></span>
+                                    <span><i class="uil uil-bookmark"></i></span>
                                 </div>
                             </div>
 
                             <div class="liked-by">
-                                <p>
-                                    Liked by
-                                    <b>{{ post.likes_count }} others</b>
-                                </p>
+                                <p>Liked by <b>{{ post.likes_count }} others</b></p>
                             </div>
 
                             <div class="caption">
-                                <p>
-                                    <b>{{ post.username }}</b>
-                                    {{ post.caption }}
-                                </p>
+                                <p><b>{{ post.username }}</b> {{ post.caption }}</p>
                             </div>
-                            <div class="comments text-muted">
-                                View all comments
-                            </div>
+                            <div class="comments text-muted">View all comments</div>
                         </div>
                         {% endfor %}
                     </div>
+
+                    <!-- Add JavaScript for AJAX -->
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            // Add event listener to each like button
+                            document.querySelectorAll('.like-btn').forEach(button => {
+                                button.addEventListener('click', function () {
+                                    const postId = this.getAttribute('data-post-id');
+                    
+                                    // Send AJAX request to like the post
+                                    fetch('/posts/like_post/', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                            'X-CSRFToken': getCSRFToken(),
+                                        },
+                                        body: `post_id=${postId}`
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.likes_count) {
+                                            // Update the likes count in the UI
+                                            const likesText = this.closest('.feed').querySelector('.liked-by b');
+                                            likesText.textContent = `${data.likes_count} others`;
+                                        } else if (data.error) {
+                                            // Handle the error (e.g., user already liked the post)
+                                            alert(data.error);  // You can show a more custom error message if needed
+                                        }
+                                    })
+                                    .catch(error => console.error('Error:', error));
+                                });
+                            });
+                        });
+                    
+                        function getCSRFToken() {
+                            let tokenElement = document.querySelector("meta[name='csrf-token']");
+                            return tokenElement ? tokenElement.getAttribute("content") : null;
+                        }
+                    </script>
+                    
+
+                        function getCSRFToken() {
+                            let tokenElement = document.querySelector("meta[name='csrf-token']");
+                            return tokenElement ? tokenElement.getAttribute("content") : null;
+                        }
+                    </script>
                 </div>
                 <div class="right">
                     <div class="messages">
@@ -297,61 +299,54 @@
 
                         <div class="search-bar">
                             <span><i class="uil uil-search"></i></span>
-                            <input
-                                type="text"
-                                placeholder="Search Messages"
-                                id="message-search"
-                            />
+                            <input type="text" placeholder="Search Messages" id="message-search" />
                         </div>
 
                         <div class="category">
                             <h6 class="active" onclick="showTab('followers')">Followers</h6>
                             <h6 onclick="showTab('following')">Following</h6>
                         </div>
-                        
+
                         <!-- Followers Section -->
                         <div id="followers" class="tab-content active">
                             {% for follow in followers %}
-                                <div class="user">
-                                    <div class="profile-pic">
-                                        <img src="{{ follow.follower.profile_pic.url }}" alt="Profile Picture">
-                                    </div>
-                                    <div class="user-body">
-                                        <h5>{{ follow.follower.username }}</h5>
-                                        <p class="text-muted">Following you</p>
-                                    </div>
+                            <div class="user">
+                                <div class="profile-pic">
+                                    <img src="{{ follow.follower.profile_pic.url }}" alt="Profile Picture" />
                                 </div>
+                                <div class="user-body">
+                                    <h5>{{ follow.follower.username }}</h5>
+                                    <p class="text-muted">Following you</p>
+                                </div>
+                            </div>
                             {% empty %}
-                                <p class="text-muted">No followers yet.</p>
+                            <p class="text-muted">No followers yet.</p>
                             {% endfor %}
                         </div>
-                        
+
                         <!-- Following Section -->
                         <div id="following" class="tab-content">
                             {% for follow in following %}
-                                <div class="user">
-                                    <div class="profile-pic">
-                                        <img src="{{ follow.following.profile_pic.url }}" alt="Profile Picture">
-                                    </div>
-                                    <div class="user-body">
-                                        <h5>{{ follow.following.username }}</h5>
-                                        <p class="text-muted">You're following</p>
-                                    </div>
+                            <div class="user">
+                                <div class="profile-pic">
+                                    <img src="{{ follow.following.profile_pic.url }}" alt="Profile Picture" />
                                 </div>
+                                <div class="user-body">
+                                    <h5>{{ follow.following.username }}</h5>
+                                    <p class="text-muted">You're following</p>
+                                </div>
+                            </div>
                             {% empty %}
-                                <p class="text-muted">You're not following anyone yet.</p>
+                            <p class="text-muted">You're not following anyone yet.</p>
                             {% endfor %}
                         </div>
-                        
                     </div>
                     <div class="friend-requests">
                         <h4>Requests</h4>
                         <div class="request">
                             <div class="info">
                                 <div class="profile-pic">
-                                    <img
-                                        src="https://i.pinimg.com/736x/6d/4b/de/6d4bde9293ac23d4711c828859af20e4.jpg"
-                                    />
+                                    <img src="https://i.pinimg.com/736x/6d/4b/de/6d4bde9293ac23d4711c828859af20e4.jpg" />
                                 </div>
                                 <div>
                                     <h5>Wilson Fisk</h5>
@@ -366,9 +361,7 @@
                         <div class="request">
                             <div class="info">
                                 <div class="profile-pic">
-                                    <img
-                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx7jXK7iCNJK_u4XvbwTkXPx140LlR1qh2XoihxvkMgM2ZvViJaIxaPFleTUJ7SBp9xBw&usqp=CAU"
-                                    />
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx7jXK7iCNJK_u4XvbwTkXPx140LlR1qh2XoihxvkMgM2ZvViJaIxaPFleTUJ7SBp9xBw&usqp=CAU" />
                                 </div>
                                 <div>
                                     <h5>Srishti Tirkey</h5>
@@ -383,9 +376,7 @@
                         <div class="request">
                             <div class="info">
                                 <div class="profile-pic">
-                                    <img
-                                        src="https://i.pinimg.com/550x/91/7b/a7/917ba7b03ab2aa2fab7b1b3a83a00be3.jpg"
-                                    />
+                                    <img src="https://i.pinimg.com/550x/91/7b/a7/917ba7b03ab2aa2fab7b1b3a83a00be3.jpg" />
                                 </div>
                                 <div>
                                     <h5>Christ Kahea</h5>
@@ -407,11 +398,7 @@
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <h2>Create a Post</h2>
-                <form
-                    action="{% url 'add_post' %}"
-                    method="POST"
-                    enctype="multipart/form-data"
-                >
+                <form action="{% url 'add_post' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
 
                     <label>Location:</label>
@@ -427,12 +414,7 @@
                     <textarea name="caption" rows="3"></textarea>
 
                     <label>Likes Count:</label>
-                    <input
-                        type="number"
-                        name="likes_count"
-                        value="0"
-                        readonly
-                    />
+                    <input type="number" name="likes_count" value="0" readonly />
 
                     <button type="submit" class="submit-btn">Post</button>
                 </form>
@@ -441,12 +423,9 @@
         <script src="{% static 'js/feed.js' %}"></script>
 
         <script>
-            document
-                .getElementById("create-post-button")
-                .addEventListener("click", function () {
-                    document.getElementById("postModal").style.display =
-                        "block";
-                });
+            document.getElementById("create-post-button").addEventListener("click", function () {
+                document.getElementById("postModal").style.display = "block";
+            });
 
             function closeModal() {
                 document.getElementById("postModal").style.display = "none";
@@ -462,22 +441,21 @@
 
             function showTab(tabId) {
                 // Remove 'active' class from all tab contents
-                document.querySelectorAll('.tab-content').forEach(tab => {
-                    tab.classList.remove('active');
+                document.querySelectorAll(".tab-content").forEach((tab) => {
+                    tab.classList.remove("active");
                 });
-            
+
                 // Remove 'active' class from all tab buttons
-                document.querySelectorAll('.category h6').forEach(tab => {
-                    tab.classList.remove('active');
+                document.querySelectorAll(".category h6").forEach((tab) => {
+                    tab.classList.remove("active");
                 });
-            
+
                 // Add 'active' class to the selected tab content
-                document.getElementById(tabId).classList.add('active');
-            
+                document.getElementById(tabId).classList.add("active");
+
                 // Add 'active' class to the clicked tab button
-                document.querySelector(`.category h6[onclick="showTab('${tabId}')"]`).classList.add('active');
+                document.querySelector(`.category h6[onclick="showTab('${tabId}')"]`).classList.add("active");
             }
-            
         </script>
     </body>
 </html>
