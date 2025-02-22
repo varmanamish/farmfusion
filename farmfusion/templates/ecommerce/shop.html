@@ -272,12 +272,12 @@
                                         <h6 class="my-0">{{ item.name }}</h6>
                                         <small class="text-body-secondary">Qty: {{ item.quantity }}</small>
                                     </div>
-                                    <span class="text-body-secondary">${{ item.cost }}</span>
+                                    <span class="text-body-secondary">Rs. {{ item.cost }}</span>
                                 </li>
                                 {% endfor %}
                                 <li class="list-group-item d-flex justify-content-between">
-                                    <span>Total (USD)</span>
-                                    <strong>${{ total }}</strong>
+                                    <span>Total (Rupees)</span>
+                                    <strong>Rs. {{ total }}</strong>
                                 </li>
                             </ul>
                             <button class="w-100 btn btn-primary btn-lg btn-perform-transaction">Continue to checkout</button>
@@ -300,10 +300,10 @@
                                 <li class="list-group-item">
                                     <h6>Order #{{ order.id }}</h6>
                                     <p>Date: {{ order.created_at }}</p>
-                                    <p>Total: ${{ order.total_amount }}</p>
+                                    <p>Total: Rs. {{ order.total_amount }}</p>
                                     <ul>
                                         {% for item in order.items.all %}
-                                        <li><strong>{{ item.product.name }}</strong> - Quantity: {{ item.quantity }} - Price: ${{ item.price }}</li>
+                                        <li><strong>{{ item.product.name }}</strong> - Quantity: {{ item.quantity }} - Price: Rs. {{ item.price }}</li>
                                         {% endfor %}
                                     </ul>
                                     <hr />
@@ -540,8 +540,8 @@
                                                 </div>
 
                                                 <div class="d-flex justify-content-center align-items-center gap-2">
-                                                    <del>$24.00</del>
-                                                    <span class="text-dark fw-semibold">${{product.cost}}</span>
+                                                    <!--<del>Rs. 24.00</del>-->
+                                                    <span class="text-dark fw-semibold">Rs. {{product.cost}}</span>
                                                     <span class="badge border border-dark-subtle rounded-0 fw-normal px-1 fs-7 lh-1 text-body-tertiary">10% OFF</span>
                                                 </div>
                                                 <div class="button-area p-3 pt-0">
