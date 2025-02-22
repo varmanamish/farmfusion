@@ -23,6 +23,7 @@ class InvestmentModel(models.Model):
     farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE, related_name="investments")
     capital = models.BigIntegerField()
     farmer_share = models.IntegerField()
+    requiredamount = models.BigIntegerField(default=0)
     working_share = models.BigIntegerField()
     estimated_time = models.CharField()
     is_disbursed = models.BooleanField(default=False)

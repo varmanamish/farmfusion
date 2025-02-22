@@ -123,3 +123,6 @@ def showallmodels(request):
 
 def myinvestments(request):
     return render (request, "myinvestment.html")
+
+def mlforms(request):
+    return render (request, "mlforms.html")
