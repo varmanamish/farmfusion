@@ -339,9 +339,8 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-auto">
                 <a class="nav-item nav-link active" href="{% url 'index' %}">Home<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="{% url 'services' %}">Services</a>  
-                <a class="nav-item nav-link" href="{% url 'products' %}">Products</a>
-                <a class="nav-item nav-link" href="{% url 'partners' %}">Partners</a>
+                <a class="nav-item nav-link" href="{% url 'shop' %}">E-Commerce</a>  
+                <a class="nav-item nav-link" href="{% url 'feed' %}">Community</a>  
                 <a class="nav-item nav-link" href="{% url 'contacts' %}">Contacts</a>
                 {% if user.is_authenticated %}
                     <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
@@ -392,6 +391,9 @@
                 <div class="wallet-section mt-3">
                     {% if wallet.wallet_pin %}
                         <h5><i class="fas fa-wallet me-2"></i>Wallet Balance: ${{ wallet.wallet_amount }}</h5>
+                        {% if user.is_farmer %}
+                        <h5><i class="fas fa-wallet me-2"></i>Safe Wallet Balance: ${{ wallet.free_amount }}</h5>
+                        {% endif %}
                         <button class="btn btn-light action-btn mt-2" onclick="openAddMoneyPopup()">Add Money</button>
                         <button class="btn btn-light action-btn mt-2" onclick="openWithdrawPopup()">Withdraw</button>
                     {% else %}
@@ -425,7 +427,7 @@
                     <div class="info-item">
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
-                            <strong>Address:</strong> Bay Area, San Francisco, CA
+                            <strong>Address:</strong> {{profile.location}}
                         </div>
                     </div>
                     <a class="btn btn-info action-btn mt-3" href="#" style="background-color: #4CAF50; border-color: #4CAF50;">Edit Profile</a>
@@ -450,7 +452,7 @@
     <!-- Popups -->
     <div class="overlay" id="overlay" onclick="closeAllPopups()"></div>
 
-    <div class="popup" id="addMoneyPopup">
+    <div class="popup" id="addMoneyPopup" style="color: black">
         <h2><i class="fas fa-money-bill-wave me-2"></i>Add Money</h2>
         <form method="POST" action="{% url 'addmoney' %}">
             {% csrf_token %}
@@ -463,7 +465,7 @@
         </form>
     </div>
 
-    <div class="popup" id="withdrawPopup">
+    <div class="popup" id="withdrawPopup" style="color: black">
         <h2><i class="fas fa-money-check-alt me-2"></i>Withdraw Money</h2>
         <form method="POST" action="{% url 'withdraw' %}">
             {% csrf_token %}
@@ -476,7 +478,7 @@
         </form>
     </div>
 
-    <div class="popup" id="createWalletPopup">
+    <div class="popup" id="createWalletPopup" style="color: black">
         <h2><i class="fas fa-wallet me-2"></i>Create Wallet</h2>
         <form method="POST" action="{% url 'createwallet' %}">
             {% csrf_token %}
