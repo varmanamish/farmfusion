@@ -7,149 +7,333 @@
     <meta name="format-detection" content="telephone=no" />
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/superfish.css' %}">
-    <link rel="stylesheet" href="{% static 'css/contacts.css' %}">
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'js/jquery-migrate-1.1.1.js' %}"></script>
-    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-    <script src="{% static 'js/script.js' %}"></script>
-    <script src="{% static 'js/jquery.equalheights.js' %}"></script>
-    <script src="{% static 'js/superfish.js' %}"></script>
-    <script src="{% static 'js/jquery.mobilemenu.js' %}"></script>
-    <script src="{% static 'js/forms.js' %}"></script>
-    <script src="{% static 'js/jquery.ui.totop.js' %}"></script>
-    <script>
-        $(window).load(function() {
-            $().UItoTop({ easingType: 'easeOutQuart' });
-            $('form').forms({
-                ownerEmail: '#'
-            });
-        });
-    </script>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <!-- Your custom CSS files -->
+    <link rel="stylesheet" href="{% static 'css/myproj.css' %}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Inline CSS for theme -->
+    <style>
+        /* Theme Styling */
+        body {
+            background: #e1e0df; /* Light background */
+            color: #333; /* Dark text for contrast */
+            font-family: 'Arial', sans-serif;
+        }
 
-    <!--[if lt IE 8]>
-    <div style='clear: both; text-align:center; position: relative;'>
-        <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-            <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
-        </a>
-    </div>
-    <![endif]-->
-    <!--[if lt IE 9]>
-    <script src="{% static 'js/html5shiv.js' %}"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/ie.css' %}">
-    <![endif]-->
+        /* Navbar Styling */
+        .custom-navbar {
+            background-color: #023D54; /* Deep blue-green */
+            padding: 15px 20px 15px 20px; /* Consistent padding */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 180px; /* Space for fixed elements */
+        }
+
+        .custom-navbar .navbar-brand {
+            margin-right: auto; /* Logo to the left */
+        }
+
+        .custom-navbar .navbar-brand img {
+            height: 50px; /* Logo size */
+        }
+
+        .custom-navbar .navbar-nav {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .custom-navbar .nav-item {
+            position: relative;
+        }
+
+        .custom-navbar .nav-link {
+            color: #FFFF66; /* Bright yellow text */
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 15px;
+            transition: color 0.3s ease;
+        }
+
+        .custom-navbar .nav-link:hover,
+        .custom-navbar .nav-link:focus {
+            color: #94DEA5; /* Light green hover */
+        }
+
+        .custom-navbar .navbar-toggler {
+            border-color: #FFFF66; /* Yellow border */
+        }
+
+        .custom-navbar .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23FFFF66' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .custom-navbar .navbar-collapse {
+            flex-grow: 0;
+            justify-content: flex-end;
+        }
+
+        @media (max-width: 991px) {
+            .custom-navbar .navbar-nav {
+                gap: 10px;
+                padding: 10px;
+                text-align: center;
+            }
+            .custom-navbar .nav-link {
+                padding: 8px 10px;
+            }
+            .custom-navbar .navbar-collapse {
+                justify-content: center;
+            }
+        }
+
+        /* Content Styling */
+        .content {
+            padding: 60px 0;
+        }
+
+        h2 {
+            color: #023D54; /* Deep blue-green */
+            font-size: 36px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .map_wrapper {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .map_wrapper iframe {
+            width: 100%;
+            height: 300px;
+            border: 0;
+        }
+
+        .adress dt {
+            color: #023D54;
+            font-weight: 600;
+        }
+
+        .adress dd {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .adress .e-mail a {
+            color: #4CAF50; /* Green for email link */
+            text-decoration: none;
+        }
+
+        .adress .e-mail a:hover {
+            color: #45a049;
+        }
+
+        #contact-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #contact-form input,
+        #contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #contact-form .success {
+            color: #4CAF50;
+            display: none;
+        }
+
+        #contact-form .error,
+        #contact-form .empty {
+            color: #dc3545;
+            font-size: 12px;
+            display: none;
+        }
+
+        .form_buttons .btn-2 {
+            background: #4CAF50; /* Green button */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .form_buttons .btn-2:hover {
+            background: #45a049;
+        }
+
+        /* Footer Styling */
+        footer {
+            background: #023D54;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer img {
+            height: 40px;
+        }
+
+        footer span {
+            color: #FFFF66;
+        }
+
+        footer a {
+            color: #94DEA5;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #FFFF66;
+        }
+    </style>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
-<!--==============================header=================================-->
-<header>
-    <div class="container_16">
-        <div class="row">
-            <div class="grid_16">
-                <h1><a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="agro united"></a></h1>
-                <nav>
-                    <ul class="sf-menu">
-                        <li><a href="{% url 'index' %}">About us</a>
-                            <ul>
-                                <li><a href="#">History</a></li>
-                                <li><a href="#">Offers</a></li>
-                                <li><a href="#">News</a>
-                                    <ul>
-                                        <li><a href="#">Fresh</a></li>
-                                        <li><a href="#">Archive</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="{% url 'services' %}">Services</a></li>
-                        <li><a href="{% url 'products' %}">Products</a></li>
-                        <li><a href="{% url 'partners' %}">Partners</a></li>
-                        <li class="last"><a href="{% url 'contacts' %}">Contacts</a></li>
-                    </ul>
-                </nav>
-            </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <!-- Logo on the left -->
+        <a class="navbar-brand mr-auto" href="{% url 'index' %}">
+            <img class="logo" src="{% static 'images/logo.png' %}" alt="FarmFusion" />
+        </a>
+
+        <!-- Toggler for mobile -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menu items on the right -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">About us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'services' %}">E-Commerce</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'products' %}">Community</a>
+                </li>
+                {% if user.is_farmer %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'myprojects' %}">My Projects</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'showallmodels' %}">My Investments</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contacts' %}">Contacts</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-    </div>
-</header>
+    </nav>
 
-<!--=======content================================-->
-<div class="content">
-    <div class="container_16">
-        <div class="row">
-            <div class="map_wrapper grid_5 suffix_1">
-                <h2>Contact Info</h2>
-                
-                <iframe 
-    id="map_canvas" 
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.2551378755416!2d78.3648484!3d17.5203481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91f76541dc95%3A0x54ab715fa4f2e735!2sGokaraju%20Rangaraju%20Institute%20of%20Engineering%20%26%20Technology!5e0!3m2!1sen!2sin!4v1707891234567"
-    width="600" 
-    height="450" 
-    style="border:0;" 
-    allowfullscreen="" 
-    loading="lazy" 
-    referrerpolicy="no-referrer-when-downgrade">
-</iframe>
-
-                 <dl class="adress">
-                    <dt class="color-1">8901 Marmora Road,<br>
-                    Glasgow, D04 89GR.</dt>
-                    <dd><span>Freephone:</span>+1 800 559 6580</dd>
-                    <dd><span>Telephone:</span>+1 800 603 6035</dd>
-                    <dd><span>FAX:</span>+1 800 889 9898</dd>
-                    <dd><span class="e-mail">E-mail: <a href="#" class="demo color-1">mail@demolink.org</a></span></dd>
-                </dl>
-            </div>
-            <article class="grid_10">
-                <h2>Get In Touch</h2>
-                <form id="contact-form">
-                    <div class="success">Contact form submitted!<br>
-                        <strong>We will be in touch soon.</strong>
-                    </div>
-                    <fieldset>
-                        <label class="name">
-                            <input type="text" value="Name:">
-                            <span class="error">*This is not a valid name.</span> 
-                            <span class="empty">*This field is required.</span>
-                        </label>
-                        <label class="email">
-                            <input type="email" value="E-mail:">
-                            <span class="error">*This is not a valid email address.</span> 
-                            <span class="empty">*This field is required.</span>
-                        </label>
-                        <label class="phone">
-                            <input type="tel" value="Phone:">
-                            <span class="error">*This is not a valid phone number.</span> 
-                            <span class="empty">*This field is required.</span>
-                        </label>
-                        <label class="message">
-                            <textarea>Message:</textarea>
-                            <span class="error">*The message is too short.</span> 
-                            <span class="empty">*This field is required.</span>
-                        </label>
-                        <div class="form_buttons">
-                            <a href="#" class="btn-2" data-type="reset">Clear</a>
-                            <a href="#" class="btn-2" data-type="submit">submit</a>
+    <!-- Content -->
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 map_wrapper">
+                    <h2>Contact Info</h2>
+                    <iframe 
+                        id="map_canvas" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.2551378755416!2d78.3648484!3d17.5203481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91f76541dc95%3A0x54ab715fa4f2e735!2sGokaraju%20Rangaraju%20Institute%20of%20Engineering%20%26%20Technology!5e0!3m2!1sen!2sin!4v1707891234567"
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <dl class="adress">
+                        <dt class="color-1">8901 Marmora Road,<br>Glasgow, D04 89GR.</dt>
+                        <dd><span>Freephone:</span>+1 800 559 6580</dd>
+                        <dd><span>Telephone:</span>+1 800 603 6035</dd>
+                        <dd><span>FAX:</span>+1 800 889 9898</dd>
+                        <dd><span class="e-mail">E-mail: <a href="#" class="demo">mail@demolink.org</a></span></dd>
+                    </dl>
+                </div>
+                <div class="col-md-7">
+                    <h2>Get In Touch</h2>
+                    <form id="contact-form">
+                        <div class="success">Contact form submitted!<br>
+                            <strong>We will be in touch soon.</strong>
                         </div>
-                    </fieldset>
-                </form>
-            </article>
-        </div>
-    </div>
-</div>
-
-<!--=======footer=================================-->
-<footer>
-    <div class="bg-4">
-        <div class="container_16">
-            <div class="row grid_16">
-                <div class="inside">
-                    <a href="{% url 'index' %}"><img src="{% static 'images/logo-foot.png' %}" alt=""></a>
-                    <span>&copy; 2013 &#8226; <a href="{% url 'privacy' %}" class="h-underline">Privacy policy</a></span>
+                        <fieldset>
+                            <label class="name">
+                                <input type="text" value="Name:" onfocus="if(this.value=='Name:')this.value=''" onblur="if(this.value=='')this.value='Name:'">
+                                <span class="error">*This is not a valid name.</span> 
+                                <span class="empty">*This field is required.</span>
+                            </label>
+                            <label class="email">
+                                <input type="email" value="E-mail:" onfocus="if(this.value=='E-mail:')this.value=''" onblur="if(this.value=='')this.value='E-mail:'">
+                                <span class="error">*This is not a valid email address.</span> 
+                                <span class="empty">*This field is required.</span>
+                            </label>
+                            <label class="phone">
+                                <input type="tel" value="Phone:" onfocus="if(this.value=='Phone:')this.value=''" onblur="if(this.value=='')this.value='Phone:'">
+                                <span class="error">*This is not a valid phone number.</span> 
+                                <span class="empty">*This field is required.</span>
+                            </label>
+                            <label class="message">
+                                <textarea onfocus="if(this.value=='Message:')this.value=''" onblur="if(this.value=='')this.value='Message:'">Message:</textarea>
+                                <span class="error">*The message is too short.</span> 
+                                <span class="empty">*This field is required.</span>
+                            </label>
+                            <div class="form_buttons">
+                                <a href="#" class="btn-2" data-type="reset">Clear</a>
+                                <a href="#" class="btn-2" data-type="submit">Submit</a>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</footer>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url 'index' %}"><img src="{% static 'images/logo-foot.png' %}" alt=""></a>
+                    <span>© {% now "Y" %} • <a href="{% url 'privacy' %}" class="h-underline">Privacy policy</a></span>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>

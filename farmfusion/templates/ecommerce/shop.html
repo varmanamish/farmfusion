@@ -317,58 +317,71 @@
                 </div>
 
                 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-                    <a class="navbar-brand" href="#">
-                        <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo" />
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <!-- Logo on the left -->
+                    <div class="navbar-brand">
+                        <a href="{% url 'index' %}">
+                            <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo" />
+                        </a>
+                    </div>
+                
+                    <!-- Toggler for mobile view -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav ml-auto">
-                            <a class="nav-item nav-link active" href="#">Home<span class="sr-only">(current)</span></a>
-                            <a class="nav-item nav-link" href="{% url 'services' %}">Services</a>
-                            <a class="nav-item nav-link" href="{% url 'products' %}">Products</a>
+                
+                    <!-- Navigation content on the right -->
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                        <!-- Menu items -->
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link active" href="{% url 'index' %}">Home<span class="sr-only"></span></a>
+                            <a class="nav-item nav-link" href="{% url 'services' %}">E-Commerce</a>
+                            <a class="nav-item nav-link" href="{% url 'products' %}">Community</a>
+                            {% if user.is_farmer %}
+                                <a class="nav-item nav-link" href="{% url 'myprojects' %}">My Projects</a>
+                            {% else %}
+                                <a class="nav-item nav-link" href="{% url 'showallmodels' %}">My Investments</a>
+                            {% endif %}
                             <a class="nav-item nav-link" href="{% url 'partners' %}">Partners</a>
                             <a class="nav-item nav-link" href="{% url 'contacts' %}">Contacts</a>
                         </div>
-                    </div>
-
-                    <div class="col-sm-8 col-lg-2 d-flex gap-5 align-items-center justify-content-center justify-content-sm-end">
-                        <ul class="d-flex justify-content-end list-unstyled m-0">
-                            <li>
-                                <a href="#" class="p-2 mx-1">
-                                    <svg width="24" height="24">
-                                        <use xlink:href="#user"></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'order_history' %}" class="p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWishlist" aria-controls="offcanvasWishlist">
-                                    <svg width="24" height="24">
-                                        <use xlink:href="#wishlist "></use>
-                                    </svg>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                                    <svg width="24" height="24">
-                                        <use xlink:href="#shopping-bag"></use>
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
+                
+                        <!-- Icons -->
+                        <div class="d-flex align-items-center ms-3">
+                            <ul class="d-flex list-unstyled m-0">
+                                <li>
+                                    <a href="#" class="p-2 mx-1">
+                                        <svg width="24" height="24">
+                                            <use xlink:href="#user"></use>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'order_history' %}" class="p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWishlist" aria-controls="offcanvasWishlist">
+                                        <svg width="24" height="24">
+                                            <use xlink:href="#wishlist"></use>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                                        <svg width="24" height="24">
+                                            <use xlink:href="#shopping-bag"></use>
+                                        </svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </nav>
                 <style>
                     .custom-navbar {
-                        background-color: #281807;
+                        background-color: #023D54;
                     }
                     .custom-navbar .nav-link {
                         color: #ffffff;
                     }
                     .custom-navbar .nav-link:hover {
-                        color: #cccccc; /* Lighter shade for hover effect */
+                        color: #94DEA5; /* Lighter shade for hover effect */
                     }
 
                     .modal-content {

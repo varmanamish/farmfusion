@@ -11,39 +11,154 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
       /* Navbar Styling */
-      .custom-navbar {
-        background-color: #1a3c34;
-      }
-      .custom-navbar .nav-link {
-        color: #ffffff;
-      }
-      .custom-navbar .nav-link:hover {
-        color: #b3d9b1;
-      }
+.custom-navbar {
+  background-color: #023D54; /* Deep blue-green */
+  padding: 15px 20px 15px 20px; /* Consistent padding, left and right */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    display: flex;
+    justify-content: space-between; /* Ensures left-right split */
+    align-items: center;
+    padding-right: 180px;
+}
 
-      /* Toggle Button Styles */
-      .toggle-container {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1001; /* Above other content but below modal */
-        display: flex;
-        gap: 10px;
-      }
+.custom-navbar .navbar-brand {
+  margin-right: auto; /* Pushes logo to the left */
+}
 
-      .toggle-btn {
-        margin-top: 70px;
-        background-color: #6c757d; /* Muted gray for unselected */
-        color: #ffffff;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-weight: 500;
-        font-size: 14px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        opacity: 0.7;
-      }
+.custom-navbar .navbar-brand img {
+  height: 50px; /* Logo size */
+}
+
+/* Menu items */
+.custom-navbar .navbar-nav {
+  list-style: none;
+  display: flex;
+  gap: 20px; /* Space between items */
+  margin: 0;
+  padding: 0;
+}
+
+.custom-navbar .nav-item {
+  position: relative;
+}
+
+.custom-navbar .nav-link {
+  color: #FFFF66; /* Bright yellow text */
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 15px;
+  transition: color 0.3s ease;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link:focus {
+  color: #94DEA5; /* Light green hover */
+}
+
+/* Toggler styling */
+.custom-navbar .navbar-toggler {
+  border-color: #FFFF66; /* Bright yellow border */
+}
+
+.custom-navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23FFFF66' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Ensure collapse aligns to right */
+.custom-navbar .navbar-collapse {
+  flex-grow: 0; /* Prevents collapse from stretching */
+  justify-content: flex-end; /* Explicitly aligns to right */
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .custom-navbar .navbar-nav {
+      gap: 10px; /* Reduced gap on mobile */
+      padding: 10px; /* Padding when collapsed */
+      text-align: center; /* Center items when collapsed */
+  }
+  .custom-navbar .nav-link {
+      padding: 8px 10px; /* Smaller padding on mobile */
+  }
+  .custom-navbar .navbar-collapse {
+      justify-content: center; /* Center content when collapsed */
+  }
+}
+
+.custom-navbar .navbar-toggler {
+  border-color: #FFFF66; /* Bright yellow border */
+}
+
+.custom-navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23FFFF66' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Ensure collapse aligns to right */
+.custom-navbar .navbar-collapse {
+  flex-grow: 0; /* Prevents collapse from stretching */
+  justify-content: flex-end; /* Explicitly aligns to right */
+}
+
+/* Toggle Button Styles */
+.toggle-container {
+  position: fixed;
+  top: 80px; /* Moved down to avoid navbar overlap (navbar height ~60px + padding) */
+  right: 20px;
+  z-index: 1001; /* Above other content but below modal */
+  display: flex;
+  gap: 10px;
+}
+
+.toggle-btn {
+  background-color: #6c757d; /* Muted gray for unselected */
+  color: #ffffff;
+  border: none;
+  margin: 20px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.toggle-btn:hover {
+  background-color: #5a6268;
+  opacity: 0.9;
+}
+
+.toggle-btn.active {
+  background-color: #4CAF50; /* Bright green for selected */
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.8);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Floating Button Styles */
+.float-btn {
+  position: fixed;
+  top: 130px; /* Moved down further to avoid toggle buttons (80px + toggle height ~40px) */
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  padding: 0;
+  z-index: 1000;
+}
 
       .toggle-btn:hover {
         background-color: #5a6268;
@@ -61,26 +176,6 @@
       }
 
       /* Floating Button Styles */
-      .float-btn {
-        position: fixed;
-        top: 150px;
-        right: 20px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        overflow: hidden;
-        padding: 0;
-        z-index: 1000;
-      }
 
       .float-btn i {
         font-size: 24px;
@@ -159,29 +254,58 @@
   <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-      <a class="navbar-brand" href="{% url 'index' %}">
-        <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo" />
+      <!-- Logo on the left -->
+      <a class="navbar-brand mr-auto" href="{% url 'index' %}">
+          <img class="logo" src="{% static 'images/logo.png' %}" alt="FarmFusion" />
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+  
+      <!-- Toggler for mobile -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav ml-auto">
-          <a class="nav-item nav-link active" href="{% url 'index' %}">Home<span class="sr-only">(current)</span></a>
-          <a class="nav-item nav-link" href="{% url 'services' %}">Services</a>
-          <a class="nav-item nav-link" href="{% url 'products' %}">Products</a>
-          <a class="nav-item nav-link" href="{% url 'partners' %}">Partners</a>
-          <a class="nav-item nav-link" href="{% url 'contacts' %}">Contacts</a>
-          {% if user.is_authenticated %}
-            <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-          {% else %}
-            <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-          {% endif %}
-        </div>
+  
+      <!-- Menu items on the right -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a class="nav-link active" href="{% url 'index' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'services' %}">E-Commerce</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'products' %}">Community</a>
+              </li>
+              {% if user.is_farmer %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'myprojects' %}">My Projects</a>
+                  </li>
+              {% else %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'showallmodels' %}">My Investments</a>
+                  </li>
+              {% endif %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contacts' %}">Contacts</a>
+              </li>
+              {% if user.is_authenticated %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                  </li>
+              {% else %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'register' %}">Register</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'login' %}">Login</a>
+                  </li>
+              {% endif %}
+          </ul>
       </div>
-    </nav>
+  </nav>
 
     <!-- Toggle Button -->
     <div class="toggle-container">

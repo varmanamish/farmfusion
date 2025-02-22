@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #023D54 0%, #94DEA5 100%); /* Deep blue-green to light green */
+            background: #e1e0df; /* Deep blue-green to light green */
             color: #fff;
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
@@ -106,7 +106,7 @@
             text-align: center;
             font-size: 36px;
             margin-bottom: 40px;
-            color: #FFFF66; /* Bright yellow */
+            color: #000000; /* Bright yellow */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             animation: fadeIn 1s ease-in;
         }
@@ -114,7 +114,7 @@
         /* E-commerce Store */
         .ecommerce-card {
             margin-top: 20px;
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, #023D54 0%, #94DEA5 100%);
             border-radius: 15px;
             padding: 20px;
             text-align: center;
@@ -154,7 +154,7 @@
 
         /* Social Media Tweets */
         .tweet-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: linear-gradient(135deg, #023D54 0%, #94DEA5 100%);
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
@@ -231,6 +231,113 @@
             color: #FFFF66; /* Bright yellow hover */
         }
 
+        /*Carousel*/
+        /* Carousel Styling */
+.carousel-container {
+    padding: 20px; /* Padding from all sides */
+    background-color: #f8f9fa; /* Light background for contrast */
+    margin-top: 20px; /* Space below navbar */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 1200px; /* Max width to prevent it from stretching too wide */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .carousel-inner {
+    border-radius: 10px; /* Rounded corners for images */
+    overflow: hidden; /* Ensures images don't spill out */
+  }
+  
+  .carousel-item img {
+    object-fit: cover; /* Ensures images scale nicely */
+    height: 500px; /* Fixed height for consistency */
+    width: 100%;
+  }
+  
+  .carousel-caption {
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    padding: 15px 25px;
+    border-radius: 10px;
+    bottom: 20px; /* Adjusted positioning */
+    text-align: center;
+  }
+  
+  .carousel-caption h5 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+  
+  .carousel-caption p {
+    font-size: 1rem;
+    color: #e0e0e0;
+    margin-bottom: 0;
+  }
+  
+  /* Customizing Indicators */
+  .carousel-indicators {
+    bottom: -40px; /* Move indicators below carousel */
+  }
+  
+  .carousel-indicators li {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #6c757d; /* Gray for inactive */
+    border: none;
+  }
+  
+  .carousel-indicators .active {
+    background-color: #4CAF50; /* Green for active */
+  }
+  
+  /* Customizing Controls */
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 5%; /* Narrower controls */
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+  
+  .carousel-control-prev:hover,
+  .carousel-control-next:hover {
+    opacity: 1;
+  }
+  
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-size: 100%, 100%;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    border-radius: 50%;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .carousel-item img {
+      height: 300px; /* Smaller height on mobile */
+    }
+  
+    .carousel-caption {
+      padding: 10px 15px;
+    }
+  
+    .carousel-caption h5 {
+      font-size: 1.2rem;
+    }
+  
+    .carousel-caption p {
+      font-size: 0.9rem;
+    }
+  
+    .carousel-container {
+      padding: 10px; /* Reduced padding on mobile */
+    }
+  }
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
@@ -252,20 +359,9 @@
                     <h1><a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="FarmFusion"></a></h1>
                     <nav>
                         <ul class="sf-menu">
-                            <li class="current"><a href="{% url 'index' %}">About us</a>
-                                <ul>
-                                    <li><a href="#">History</a></li>
-                                    <li><a href="#">Offers</a></li>
-                                    <li><a href="#">News</a>
-                                        <ul>
-                                            <li><a href="#">Fresh</a></li>
-                                            <li><a href="#">Archive</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="{% url 'services' %}">Services</a></li>
-                            <li><a href="{% url 'products' %}">Products</a></li>
+                            <li class="current"><a href="{% url 'index' %}">Home</a></li>
+                            <li><a href="{% url 'services' %}">E-Commerce</a></li>
+                            <li><a href="{% url 'products' %}">Community</a></li>
                             {% if user.is_farmer %}
                             <li><a href="{% url 'myprojects' %}">My Projects</a></li>
                             {% else %}
@@ -286,12 +382,67 @@
         </div>
     </header>
 
+    <!-- Carousel -->
+<div class="carousel-container">
+    <div id="farmCarousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#farmCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#farmCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#farmCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#farmCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        </div>
+
+        <!-- Slides -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'images/organic.webp' %}" class="d-block w-100" alt="Organic Farming">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Organic Farming</h5>
+                    <p>Sustainable agriculture for a healthier planet.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/mirchi.webp' %}" class="d-block w-100" alt="Mirchi Fields">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Mirchi Fields</h5>
+                    <p>Spicing up the world, one crop at a time.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/fresh.webp' %}" class="d-block w-100" alt="Fruit Orchards">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Fruit Orchards</h5>
+                    <p>Freshness from tree to table.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/comm_garden.jpg' %}" class="d-block w-100" alt="Community Gardens">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Community Gardens</h5>
+                    <p>Growing together for a better tomorrow.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#farmCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#farmCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
     <!-- Content -->
     <div class="content">
         <!-- Section 1: E-commerce Store -->
         <section class="section">
             <div class="container_16">
-                <h2 class="section-title">E-commerce Store</h2>
+                <h2 class="section-title">Best Sellers</h2>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="ecommerce-card">
@@ -350,7 +501,7 @@
         <!-- Section 2: Social Media Tweets -->
         <section class="section" style="background: rgba(255, 255, 255, 0.05);">
             <div class="container_16">
-                <h2 class="section-title">Latest Tweets</h2>
+                <h2 class="section-title">Trending</h2>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="tweet-card">
