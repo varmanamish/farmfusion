@@ -133,10 +133,17 @@ select {
                 <label for="rainfall1">Rainfall (mm):</label>
                 <input type="number" id="rainfall1" name="rainfall" required>
             </div>
-            <div>
+            <divdiv>
                 <label for="soil_colour">Soil Colour:</label>
-                <input type="text" id="soil_colour" name="soil_colour" required>
-            </div>
+                <select id="soil_colour" name="soil_colour" required>
+                    <option value="black">Black</option>
+                    <option value="red">Red</option>
+                    <option value="dark brown">Dark Brown</option>
+                    <option value="reddish brown">Reddish Brown</option>
+                    <option value="light brown">Light Brown</option>
+                    <option value="medium-brown">Medium Brown</option>
+                </select>           
+            </divdiv>
             <div>
                 <label for="nitrogen">Nitrogen (kg/ha):</label>
                 <input type="number" id="nitrogen" name="nitrogen" required>
@@ -155,8 +162,26 @@ select {
             </div>
             <div>
                 <label for="crop">Crop Name:</label>
-                <input type="text" id="crop" name="crop" required>
+                <select id="crop" name="crop" required>
+                    <option value="sugarcane">Sugarcane</option>
+                    <option value="beet">Beet</option>
+                    <option value="cotton">Cotton</option>
+                    <option value="jowar">Jowar</option>
+                    <option value="maize">Maize</option>
+                    <option value="rice">Rice</option>
+                    <option value="groundnut">Groundnut</option>
+                    <option value="tur">Tur</option>
+                    <option value="ginger">Ginger</option>
+                    <option value="grapes">Grapes</option>
+                    <option value="urad">Urad</option>
+                    <option value="moong">Moong</option>
+                    <option value="gram">Gram</option>
+                    <option value="turmeric">Turmeric</option>
+                    <option value="soyabean">Soyabean</option>
+                    <option value="masoor">Masoor</option>
+                </select>
             </div>
+            
             <button type="submit">Submit Form 1</button>
         </form>
     </div>
@@ -191,12 +216,34 @@ select {
             </div>
             <div>
                 <label for="soil_type">Soil Type:</label>
-                <input type="text" id="soil_type" name="soil_type" required>
+                <select id="soil_type" name="soil_type" required>
+                    <option value="sandy">Sandy</option>
+                    <option value="loam">Loam</option>
+                    <option value="chalky">Chalky</option>
+                    <option value="silt">Silt</option>
+                    <option value="clay">Clay</option>
+                    <option value="peaty">Peaty</option>
+                </select>
             </div>
             <div>
                 <label for="crop">Crop Name:</label>
-                <input type="text" id="crop" name="crop" required>
+                <select id="crop" name="crop" required>
+                    <option value="rice">Rice</option>
+                    <option value="wheat">Wheat</option>
+                    <option value="maize">Maize</option>
+                    <option value="barley">Barley</option>
+                    <option value="cotton">Cotton</option>
+                    <option value="soyabean">Soyabean</option>
+                    <option value="jute">Jute</option>
+                    <option value="oilseeds">Oilseeds</option>
+                    <option value="tea">Tea</option>
+                    <option value="coffee">Coffee</option>
+                    <option value="jowar">Jowar</option>
+                    <option value="rapeseed-mustard">Rapeseed-Mustard</option>
+                    <option value="sunflower">Sunflower</option>
+                </select>
             </div>
+            
             <div>
                 <label for="fertilizer_used">Fertilizer Used (True/False):</label>
                 <select id="fertilizer_used" name="fertilizer_used" required>
