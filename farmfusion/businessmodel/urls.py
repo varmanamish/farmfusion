@@ -6,4 +6,5 @@ urlpatterns = [
     path('createinvestment/', views.createinvestmentmodel, name='createinvestmentmodel'), 
     path('showallmodels/', views.showallmodels, name='showallmodels'),
     path('invest/', views.invest, name='invest'),
+    path("mlforms/", views.mlforms,name='mlforms')
 ]

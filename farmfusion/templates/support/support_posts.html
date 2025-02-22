@@ -1,91 +1,86 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Investment Support</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .slider-container {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-    .slider-popup {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      width: 300px;
-    }
-  </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/farmer.css' %}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
-    <h1 style="margin-top: 40px;">Investments</h1>
-  <div class="container my-5">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      {% for support_post in support_posts %}
-        <div class="col">
-          <div class="card">
-            <img src="{{ support_post.investmodel.image.url }}" class="card-img-top" alt="Investment Image">
-            <div class="card-body">
-              <h5 class="card-title">{{ support_post.investmodel.name }}</h5>
-              <p class="card-text">Capital: ${{ support_post.investmodel.capital }}</p>
-              <p class="card-text">Farmer: {{ support_post.investmodel.farmer.username }}</p>
-              <p class="card-text"><small class="text-muted">Estimated Time: {{ support_post.investmodel.estimated_time }}</small></p>
-              <button class="btn btn-primary support-btn" data-investment="{{ support_post.id }}">Support</button>
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo" />
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link active" href="{% url 'index' %}">Home</a>
+                <a class="nav-item nav-link" href="{% url 'services' %}">Services</a>
+                <a class="nav-item nav-link" href="{% url 'products' %}">Products</a>
+                <a class="nav-item nav-link" href="{% url 'partners' %}">Partners</a>
+                <a class="nav-item nav-link" href="{% url 'contacts' %}">Contacts</a>
+                {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                {% endif %}
             </div>
-          </div>
         </div>
-      {% endfor %}
+    </nav>
+
+    <!-- Investment Section -->
+    <div id="allInvestments" class="wcu-section pt-5 pb-5 investment-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="wcu-section-heading">Support Someone</h1>
+                    <p class="wcu-section-description">Contribute to the investment model you are interested in.</p>
+                </div>
+
+                {% for model in all_investment_models %}
+                    <div class="col-12">
+                        <div class="wcu-card p-3 mb-3">
+                            <div class="d-flex flex-row justify-content-between">
+                                <div>
+                                    <h1 class="wcu-card-title mt-3">{{ model.name }}</h1>
+                                    <img class="img-thumbnail" src="{% static 'images/farm1.jpg' %}" alt="{{ model.name }}">
+                                </div>
+                                <div class="d-flex flex-column justify-content-between">
+                                    <p class="wcu-card-description">
+                                        Support this investment with your contribution. Your support will help improve the project.
+                                    </p>
+
+                                    <!-- Form to contribute to the investment -->
+                                    <form method="post" action="{% url 'support_posts' %}">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="investingAmount">Amount to Contribute (₹):</label>
+                                            <input type="number" name="investingamount" class="form-control" required placeholder="Enter amount in ₹" min="1">
+                                            <input type="hidden" name="modelid" value="{{ model.id }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Contribute Now</button>
+                                    </form>
+
+                                    <!-- Show existing support posts -->
+                                    <h5>Existing Supporters:</h5>
+                                    {% for support_post in model.support_posts.all %}
+                                        <div class="support-post">
+                                            <p>{{ support_post.user.username }} contributed ₹{{ support_post.amount }}.</p>
+                                        </div>
+                                    {% empty %}
+                                        <p>No one has contributed yet.</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-  </div>
-
-  <div class="slider-container" id="slider-container">
-    <div class="slider-popup">
-      <h4>Support Amount</h4>
-      <input type="range" class="form-range" id="support-slider" min="0" max="10000" step="100" value="0">
-      <p>Amount: <span id="slider-value">0</span></p>
-      <button class="btn btn-secondary" id="close-slider-btn">Close</button>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-
-  <script>
-    // Open slider modal for setting support amount
-    document.querySelectorAll('.support-btn').forEach(button => {
-      button.addEventListener('click', function() {
-        const supportPostId = this.getAttribute('data-investment');
-        const sliderContainer = document.getElementById('slider-container');
-        const slider = document.getElementById('support-slider');
-        const sliderValue = document.getElementById('slider-value');
-
-        // Show the slider modal
-        sliderContainer.style.display = 'flex';
-
-        // Update the slider value and display it
-        slider.addEventListener('input', function() {
-          sliderValue.textContent = slider.value;
-        });
-
-        // Handle saving the support amount when the slider is updated
-        
-      });
-    });
-
-    // Close the slider modal
-    document.getElementById('close-slider-btn').addEventListener('click', function() {
-      document.getElementById('slider-container').style.display = 'none';
-    });
-  </script>
 </body>
 </html>
