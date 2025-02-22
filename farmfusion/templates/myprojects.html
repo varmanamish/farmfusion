@@ -8,23 +8,64 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/myproj.css' %}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <!-- Bootstrap Icons for the Add Icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <!-- Bootstrap Icons for the Add Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
+      /* Navbar Styling */
+      .custom-navbar {
+        background-color: #1a3c34;
+      }
+      .custom-navbar .nav-link {
+        color: #ffffff;
+      }
+      .custom-navbar .nav-link:hover {
+        color: #b3d9b1;
+      }
+
+      /* Toggle Button Styles */
+      .toggle-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1001; /* Above other content but below modal */
+        display: flex;
+        gap: 10px;
+      }
+
+      .toggle-btn {
+        margin-top: 70px;
+        background-color: #6c757d; /* Muted gray for unselected */
+        color: #ffffff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        opacity: 0.7;
+      }
+
+      .toggle-btn:hover {
+        background-color: #5a6268;
+        opacity: 0.9;
+      }
+
+      .toggle-btn.active {
+        background-color: #4CAF50; /* Bright green for selected */
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: 700;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.8);
+        opacity: 1;
+        transform: scale(1.1);
+      }
+
       /* Floating Button Styles */
       .float-btn {
         position: fixed;
-        top: 80px; /* Changed from bottom to top */
+        top: 150px;
         right: 20px;
-        background-color: #4CAF50; /* Green from previous designs */
+        background-color: #4CAF50;
         color: white;
         border: none;
         width: 50px;
@@ -38,7 +79,7 @@
         transition: all 0.3s ease;
         overflow: hidden;
         padding: 0;
-        z-index: 1000; /* Ensures it stays above navbar */
+        z-index: 1000;
       }
 
       .float-btn i {
@@ -52,7 +93,7 @@
       }
 
       .float-btn:hover {
-        width: 150px; /* Expands to fit text */
+        width: 150px;
         border-radius: 25px;
         background-color: #45a049;
       }
@@ -60,354 +101,428 @@
       .float-btn:hover .btn-text {
         display: inline;
       }
-    </style>
-    <style>
-      /* Floating Button Styles */
-      .float-btn {
-        position: fixed;
-        top: 80px; /* Changed from bottom to top */
-        right: 20px;
-        background-color: #4CAF50; /* Green from previous designs */
-        color: white;
-        border: none;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        overflow: hidden;
-        padding: 0;
-        z-index: 1000; /* Ensures it stays above navbar */
+
+      /* Modal Styling */
+      .modal-header {
+        background-color: #1a3c34;
+        color: #ffffff;
       }
 
-      .float-btn i {
-        font-size: 24px;
+      .modal-body form .d-flex {
+        margin-bottom: 15px;
       }
 
-      .float-btn .btn-text {
+      .modal-body label {
+        flex: 1;
+        margin-right: 10px;
+      }
+
+      .modal-body .input-container {
+        flex: 1;
+      }
+
+      .modal-body input[type="number"],
+      .modal-body input[type="text"] {
+        width: 100%;
+        padding: 5px;
+      }
+
+      .modal-body small {
+        display: block;
+        color: #666;
+        font-size: 12px;
+      }
+
+      .modal-body .radio-group label {
+        margin-right: 15px;
+      }
+
+      .btn-success {
+        background-color: #4CAF50;
+        border-color: #4CAF50;
+      }
+
+      .btn-success:hover {
+        background-color: #45a049;
+      }
+
+      /* Project Sections */
+      .project-section {
         display: none;
-        margin-left: 10px;
-        font-size: 16px;
       }
 
-      .float-btn:hover {
-        width: 150px; /* Expands to fit text */
-        border-radius: 25px;
-        background-color: #45a049;
-      }
-
-      .float-btn:hover .btn-text {
-        display: inline;
+      .project-section.active {
+        display: block;
       }
     </style>
   </head>
   <body>
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-        <a class="navbar-brand" href="#">
-            <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo" />
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link active" href="#">Home<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">Services</a>
-                <a class="nav-item nav-link" href="#">Products</a>
-                <a class="nav-item nav-link" href="#">Partners</a>
-                <a class="nav-item nav-link" href="#">Contacts</a>
-            </div>
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo" />
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ml-auto">
+          <a class="nav-item nav-link active" href="{% url 'index' %}">Home<span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="{% url 'services' %}">Services</a>
+          <a class="nav-item nav-link" href="{% url 'products' %}">Products</a>
+          <a class="nav-item nav-link" href="{% url 'partners' %}">Partners</a>
+          <a class="nav-item nav-link" href="{% url 'contacts' %}">Contacts</a>
+          {% if user.is_authenticated %}
+            <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+          {% else %}
+            <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+          {% endif %}
         </div>
+      </div>
     </nav>
-    <div class="wcu-section pt-5 pb-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h1 class="wcu-section-heading">Previous Projects</h1>
-            <p class="wcu-section-description">
-            </p>
-          </div>
-          <div class="col-12">
-            <div class="wcu-card p-3 mb-3">
-              <div class="d-flex flex-row justify-content-between">
-                <div>
-                  <h1 class="wcu-card-title mt-3">Mirchi crop in Guntur</h1>
-                  <img class="img-thumbnail" src="farm1.jpg" alt="Mirchi Crop">
+
+    <!-- Toggle Button -->
+    <div class="toggle-container">
+      <button id="togglePreviousProjects" class="toggle-btn active">Current Projects</button>
+      <button id="toggleCurrentProjects" class="toggle-btn"> Previous Projects</button>
+    </div>
+
+    <!-- Previous Projects Section -->
+<div id="previousProjects" class="wcu-section pt-5 pb-5 project-section active">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="wcu-section-heading">Current Projects</h1>
+        <p class="wcu-section-description"></p>
+      </div>
+      {% for project in previous_projects %}
+        <div class="col-12">
+          <div class="wcu-card p-3 mb-3">
+            <div class="d-flex flex-row justify-content-between">
+              <div>
+                <h1 class="wcu-card-title mt-3">{{ project.name }}</h1>
+                <img class="img-thumbnail" src="{% static 'images/farm1.jpg' %}" alt="{{ project.name }}">
+              </div>
+              <div class="d-flex flex-column justify-content-between">
+                <p class="wcu-card-description">{{ project.description }}</p>
+                <div class="w3-light-grey w3-round-xlarge bar" style="overflow: hidden; position: relative;">
+                  <div class="w3-container green-bar" style="width: {{ project.farmer_share|default:60 }}%; background-color: green; border-top-left-radius: 16px; border-bottom-left-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">{{ project.farmer_share|default:60 }}%</div>
+                  <div class="w3-container blue-bar" style="width: {{ project.working_share|default:15 }}%; background-color: skyblue; border-top-right-radius: 16px; border-bottom-right-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">{{ project.working_share|default:15 }}%</div>
                 </div>
-                <div class="d-flex flex-column justify-content-between">
-                  <p class="wcu-card-description">
-                    Experience fine dining at the comfort of your home. All our orders are carefully packed and arranged to give you nothing less than perfect.
-                  </p>
-                  <div class="w3-light-grey w3-round-xlarge bar" style="overflow: hidden; position: relative;">
-                    <div class="w3-container green-bar" style="width: 60%; background-color: green; border-top-left-radius: 16px; border-bottom-left-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">60%</div>
-                    <div class="w3-container blue-bar" style="width: 15%; background-color: skyblue; border-top-right-radius: 16px; border-bottom-right-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">15%</div>
-                  </div>
-                  <div class="d-flex flex-row justify-content-around">
-                    <div>
-                      <p>Capital:</p>
-                      <div class="d-flex flex-row">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bank icon" viewBox="0 0 16 16">
-                          <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.5.5 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72z"/>
-                        </svg>
-                        <p class="icon-title">Rs 4,50,000</p>
-                      </div>
-                    </div>
-                    <div>
-                      <p>Profit:</p>
-                      <div class="d-flex flex-row">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cash-stack icon" viewBox="0 0 16 16">
-                          <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                          <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
-                        </svg>
-                        <p class="icon-title">Rs 50,000</p>
-                      </div>
-                    </div>
-                    <div>
-                      <p>Estimated time:</p>
-                      <div class="d-flex flex-row">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock icon" viewBox="0 0 16 16">
-                          <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
-                          <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
-                        </svg>
-                        <p class="icon-title">3 months</p>
-                      </div>
+                <div class="d-flex flex-row justify-content-around">
+                  <div>
+                    <p>Capital:</p>
+                    <div class="d-flex flex-row">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bank icon" viewBox="0 0 16 16">
+                        <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.5.5 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72z"/>
+                      </svg>
+                      <p class="icon-title">Rs {{ project.capital|default:"4,50,000" }}</p>
                     </div>
                   </div>
-                  <p class="text-end">Funds raised: </p>
-                  <button class="btn btn-warning butt" data-toggle="modal" data-target="#investModal">View Investors</button>
+                  <div>
+                    <p>Profit:</p>
+                    <div class="d-flex flex-row">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cash-stack icon" viewBox="0 0 16 16">
+                        <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                        <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                      </svg>
+                      <p class="icon-title">Rs {{ project.profit|default:"50,000" }}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p>Estimated time:</p>
+                    <div class="d-flex flex-row">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock icon" viewBox="0 0 16 16">
+                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                      </svg>
+                      <p class="icon-title">{{ project.estimated_time|default:"3 months" }}</p>
+                    </div>
+                  </div>
                 </div>
+                <p class="text-end">Funds raised:</p>
+                <button class="btn btn-warning butt" data-toggle="modal" data-target="#investModal{{ project.id }}">View Investors</button>
               </div>
             </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <p>No current projects available.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- Current Projects Section -->
+<div id="currentProjects" class="wcu-section pt-5 pb-5 project-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="wcu-section-heading">Previous Projects</h1>
+        <p class="wcu-section-description"></p>
+      </div>
+      {% for project in current_projects %}
+        <div class="col-12">
+          <div class="wcu-card p-3 mb-3">
+            <div class="d-flex flex-row justify-content-between">
+              <div>
+                <h1 class="wcu-card-title mt-3">{{ project.name }}</h1>
+                <img class="img-thumbnail" src="{% static 'images/farm1.jpg' %}" alt="{{ project.name }}">
+              </div>
+              <div class="d-flex flex-column justify-content-between">
+                <p class="wcu-card-description">{{ project.description }}</p>
+                <div class="w3-light-grey w3-round-xlarge bar" style="overflow: hidden; position: relative;">
+                  <div class="w3-container green-bar" style="width: {{ project.farmer_share|default:60 }}%; background-color: green; border-top-left-radius: 16px; border-bottom-left-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">{{ project.farmer_share|default:60 }}%</div>
+                  <div class="w3-container blue-bar" style="width: {{ project.working_share|default:15 }}%; background-color: skyblue; border-top-right-radius: 16px; border-bottom-right-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">{{ project.working_share|default:15 }}%</div>
+                </div>
+                <div class="d-flex flex-row justify-content-around">
+                  <div>
+                    <p>Capital:</p>
+                    <div class="d-flex flex-row">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bank icon" viewBox="0 0 16 16">
+                        <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.5.5 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72z"/>
+                      </svg>
+                      <p class="icon-title">Rs {{ project.capital|default:"4,50,000" }}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p>Profit:</p>
+                    <div class="d-flex flex-row">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cash-stack icon" viewBox="0 0 16 16">
+                        <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                        <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                      </svg>
+                      <p class="icon-title">Rs {{ project.profit|default:"50,000" }}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p>Estimated time:</p>
+                    <div class="d-flex flex-row">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock icon" viewBox="0 0 16 16">
+                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                      </svg>
+                      <p class="icon-title">{{ project.estimated_time|default:"3 months" }}</p>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-end">Funds raised:</p>
+                <button class="btn btn-warning butt" data-toggle="modal" data-target="#investModal{{ project.id }}">View Investors</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <p>No previous projects available.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Investors -->
+{% for project in previous_projects %}
+  <div class="modal fade" id="investModal{{ project.id }}" tabindex="-1" role="dialog" aria-labelledby="investModalLabel{{ project.id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="investModalLabel{{ project.id }}">Investors in {{ project.name }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Investor Name</th>
+                <th scope="col">Invested Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for investor in project.investors.all %}
+                <tr>
+                  <td>{{ investor.name }}</td>
+                  <td>₹{{ investor.amount }}</td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="2">No investors yet.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% for project in current_projects %}
+  <div class="modal fade" id="investModal{{ project.id }}" tabindex="-1" role="dialog" aria-labelledby="investModalLabel{{ project.id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="investModalLabel{{ project.id }}">Investors in {{ project.name }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Investor Name</th>
+                <th scope="col">Invested Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for investor in project.investors.all %}
+                <tr>
+                  <td>{{ investor.name }}</td>
+                  <td>₹{{ investor.amount }}</td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="2">No investors yet.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+    <!-- Modal for Create Project Form -->
+    <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="createProjectModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createProjectModalLabel">Create a Farm Investment Proposal</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="projectForm" action="{% url 'createinvestmentmodel' %}" method="post">
+              {% csrf_token %}
+              <fieldset>
+                <legend>Farm Investment Details</legend>
+                
+                <div class="d-flex flex-row justify-content-between">
+                  <label for="name">Project Name:</label>
+                  <div class="input-container">
+                    <input type="text" id="name" name="name" required>
+                  </div>
+                </div>
+                <div class="d-flex flex-row justify-content-between">
+                  <label for="capital">Total Capital Required ($):</label>
+                  <div class="input-container">
+                    <input type="number" id="capital" name="capital" min="0" step="1000" required>
+                  </div>
+                </div>
+                <div class="d-flex flex-row justify-content-between">
+                  <label for="farmerShare">Farmer Share (%):</label>
+                  <small>Percentage of total capital contributed by the farmer</small>
+                  <div class="input-container">
+                    <input type="number" id="farmerShare" name="farmerShare" min="0" max="100" step="0.1" required>
+                  </div>
+                </div>
+                <div class="d-flex flex-row justify-content-around">
+                  <label for="workingShare">Working Share (%):</label>
+                  <small>Percentage of operational effort or equity for investors</small>
+                  <div class="input-container">
+                    <input type="number" id="workingShare" name="workingShare" min="0" max="100" step="0.1" required>
+                  </div>
+                </div>
+                <div class="d-flex flex-row justify-content-between">
+                  <label>Estimated Time to Profitability:</label>
+                  <div class="input-container">
+                    <div class="radio-group">
+                      <label><input type="radio" id="time1" name="estimatedTime" value="1-2 years" required> 1-2 Years</label>
+                      <label><input type="radio" id="time3" name="estimatedTime" value="3-5 years"> 3-5 Years</label>
+                      <label><input type="radio" id="time5" name="estimatedTime" value="5+ years"> 5+ Years</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex flex-row justify-content-between">
+                  <label for="roi">Expected Return on Investment (%):</label>
+                  <div class="input-container">
+                    <input type="number" id="roi" name="roi" min="0" step="0.1" required>
+                    <small>Annual ROI expected for investors</small>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" form="projectForm" class="btn btn-success">Submit Proposal</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="wcu-section pt-5 pb-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-              <h1 class="wcu-section-heading">Current Projects</h1>
-              <p class="wcu-section-description">
-              </p>
-            </div>
-            <div class="col-12">
-              <div class="wcu-card p-3 mb-3">
-                <div class="d-flex flex-row justify-content-between">
-                  <div>
-                    <h1 class="wcu-card-title mt-3">Mirchi crop in Guntur</h1>
-                    <img class="img-thumbnail" src="farm1.jpg" alt="Mirchi Crop">
-                  </div>
-                  <div class="d-flex flex-column justify-content-between">
-                    <p class="wcu-card-description">
-                      Experience fine dining at the comfort of your home. All our orders are carefully packed and arranged to give you nothing less than perfect.
-                    </p>
-                    <div class="w3-light-grey w3-round-xlarge bar" style="overflow: hidden; position: relative;">
-                      <div class="w3-container green-bar" style="width: 60%; background-color: green; border-top-left-radius: 16px; border-bottom-left-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">60%</div>
-                      <div class="w3-container blue-bar" style="width: 15%; background-color: skyblue; border-top-right-radius: 16px; border-bottom-right-radius: 16px; height: 24px; float: left; color: white; text-align: center; line-height: 24px; font-weight: bold;">15%</div>
-                    </div>
-                    <div class="d-flex flex-row justify-content-around">
-                      <div>
-                        <p>Capital:</p>
-                        <div class="d-flex flex-row">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bank icon" viewBox="0 0 16 16">
-                            <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.5.5 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72z"/>
-                          </svg>
-                          <p class="icon-title">Rs 4,50,000</p>
-                        </div>
-                      </div>
-                      <div>
-                        <p>Profit:</p>
-                        <div class="d-flex flex-row">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cash-stack icon" viewBox="0 0 16 16">
-                            <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                            <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
-                          </svg>
-                          <p class="icon-title">Rs 50,000</p>
-                        </div>
-                      </div>
-                      <div>
-                        <p>Estimated time:</p>
-                        <div class="d-flex flex-row">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock icon" viewBox="0 0 16 16">
-                            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
-                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
-                          </svg>
-                          <p class="icon-title">3 months</p>
-                        </div>
-                      </div>
-                    </div>
-                    <p class="text-end">Funds raised:</p>
-                    <button class="btn btn-warning butt" data-toggle="modal" data-target="#investModal">View Investors</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- Floating Create Project Button -->
+    <button class="float-btn" title="Create a Project" data-toggle="modal" data-target="#createProjectModal">
+      <i class="bi bi-plus"></i>
+      <span class="btn-text">Create</span>
+    </button>
 
-      <!-- Modal for Investors -->
-      <div class="modal fade" id="investModal" tabindex="-1" role="dialog" aria-labelledby="investModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="investModalLabel">Investors in Mirchi Crop in Guntur</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-striped table-bordered">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Investor Name</th>
-                                <th scope="col">Invested Amount (₹)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Sample Data -->
-                            <tr>
-                                <td>Ram Kishan</td>
-                                <td>₹1,50,000</td>
-                            </tr>
-                            <tr>
-                                <td>Sita Devi</td>
-                                <td>₹75,000</td>
-                            </tr>
-                            <tr>
-                                <td>Rajesh Kumar</td>
-                                <td>₹2,00,000</td>
-                            </tr>
-                            <tr>
-                                <td>Priya Sharma</td>
-                                <td>₹50,000</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-      </div>
+    <script>
+      // Toggle Button Functionality
+      const previousProjectsBtn = document.getElementById('togglePreviousProjects');
+      const currentProjectsBtn = document.getElementById('toggleCurrentProjects');
+      const previousProjectsSection = document.getElementById('previousProjects');
+      const currentProjectsSection = document.getElementById('currentProjects');
 
-      <!-- Modal for Create Project Form -->
-      <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="createProjectModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createProjectModalLabel">Create a Farm Investment Proposal</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="projectForm">
-                      {% csrf_token %}
-                        <fieldset>
-                            <legend>Farm Investment Details</legend>
-                            
-                            <div class="d-flex flex-row justify-content-between">
-                              <label for="name">Project Name:</label>
-                              <div class="input-container">
-                                  <input type="text" id="name" name="name" min="0" step="1000" required>
-                              </div>
-                          </div>
-                            <!-- Capital -->
-                            <div class="d-flex flex-row justify-content-between">
-                                <label for="capital">Total Capital Required ($):</label>
-                                <div class="input-container">
-                                    <input type="number" id="capital" name="capital" min="0" step="1000" required>
-                                </div>
-                            </div>
+      previousProjectsBtn.addEventListener('click', function() {
+        previousProjectsSection.classList.add('active');
+        currentProjectsSection.classList.remove('active');
+        previousProjectsBtn.classList.add('active');
+        currentProjectsBtn.classList.remove('active');
+      });
 
-                            <!-- Farmer Share -->
-                            <div class="d-flex flex-row justify-content-between">
-                                <label for="farmerShare">Farmer Share (%):</label>
-                                <small>Percentage of total capital contributed by the farmer</small>
-                                <div class="input-container">
-                                    <input type="number" id="farmerShare" name="farmerShare" min="0" max="100" step="0.1" required>
-                                </div>
-                            </div>
+      currentProjectsBtn.addEventListener('click', function() {
+        currentProjectsSection.classList.add('active');
+        previousProjectsSection.classList.remove('active');
+        currentProjectsBtn.classList.add('active');
+        previousProjectsBtn.classList.remove('active');
+      });
 
-                            <!-- Working Share -->
-                            <div class="d-flex flex-row justify-content-around">
-                                <label for="workingShare">Working Share (%):</label>
-                                <small>Percentage of operational effort or equity for investors</small>
-                                <div class="input-container">
-                                    <input type="number" id="workingShare" name="workingShare" min="0" max="100" step="0.1" required>
-                                </div>
-                            </div>
-
-                            <!-- Estimated Time -->
-                            <div class="d-flex flex-row justify-content-between">
-                                <label>Estimated Time to Profitability:</label>
-                                <div class="input-container">
-                                    <div class="radio-group">
-                                        <label><input type="radio" id="time1" name="estimatedTime" value="1-2 years" required> 1-2 Years</label>
-                                        <label><input type="radio" id="time3" name="estimatedTime" value="3-5 years"> 3-5 Years</label>
-                                        <label><input type="radio" id="time5" name="estimatedTime" value="5+ years"> 5+ Years</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Return on Investment -->
-                            <div class="d-flex flex-row justify-content-between">
-                                <label for="roi">Expected Return on Investment (%):</label>
-                                <div class="input-container">
-                                    <input type="number" id="roi" name="roi" min="0" step="0.1" required>
-                                    <small>Annual ROI expected for investors</small>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <!-- Floating Submit Button -->
-                        <button type="submit" class="float-btn">Submit Proposal</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-      </div>
-
-      <!-- Floating Create Project Button -->
-      <button class="float-btn" title="Create a Project" data-toggle="modal" data-target="#createProjectModal">
-        <i class="bi bi-plus"></i>
-        <span class="btn-text">Create</span>
-      </button>
-  </body>
-  <script>
-    document.getElementById("projectForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-  
-      let formData = new FormData(this);
-  
-      fetch("{% url 'createinvestmentmodel' %}", {
+      // Project Form Submission
+      document.getElementById("projectForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let formData = new FormData(this);
+        fetch("{% url 'createinvestmentmodel' %}", {
           method: "POST",
           body: formData,
           headers: {
-              "X-CSRFToken": "{{ csrf_token }}",
+            "X-CSRFToken": "{{ csrf_token }}",
           }
-      })
-      .then(response => response.json())
-      .then(data => {
+        })
+        .then(response => response.json())
+        .then(data => {
           if (data.error) {
-              alert("Error: " + data.error);
+            alert("Error: " + data.error);
           } else {
-              alert("Investment proposal created successfully!");
-              location.reload();
+            alert("Investment proposal created successfully!");
+            location.reload();
           }
-      })
-      .catch(error => console.error("Error:", error));
-  });
-  
-  </script>
+        })
+        .catch(error => console.error("Error:", error));
+      });
+    </script>
+  </body>
 </html>
