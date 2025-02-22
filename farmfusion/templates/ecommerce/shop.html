@@ -334,8 +334,8 @@
                         <!-- Menu items -->
                         <div class="navbar-nav">
                             <a class="nav-item nav-link active" href="{% url 'index' %}">Home<span class="sr-only"></span></a>
-                            <a class="nav-item nav-link" href="{% url 'services' %}">E-Commerce</a>
-                            <a class="nav-item nav-link" href="{% url 'products' %}">Community</a>
+                            <a class="nav-item nav-link" href="{% url 'shop' %}">E-Commerce</a>
+                            <a class="nav-item nav-link" href="{% url 'feed' %}">Community</a>
                             {% if user.is_farmer %}
                                 <a class="nav-item nav-link" href="{% url 'myprojects' %}">My Projects</a>
                             {% else %}
