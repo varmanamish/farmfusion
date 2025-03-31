@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "support",
     'posts',
     'ecom',
+    'cycle',
     'ecommerce',
     'django.contrib.admin',
     'django.contrib.auth',
