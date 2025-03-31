@@ -345,16 +345,7 @@
                       <p class="icon-title">Rs {{ project.capital|default:"4,50,000" }}</p>
                     </div>
                   </div>
-                  <div>
-                    <p>Profit:</p>
-                    <div class="d-flex flex-row">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cash-stack icon" viewBox="0 0 16 16">
-                        <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                        <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
-                      </svg>
-                      <p class="icon-title">Rs {{ project.profit|default:"50,000" }}</p>
-                    </div>
-                  </div>
+                  
                   <div>
                     <p>Estimated time:</p>
                     <div class="d-flex flex-row">
@@ -405,24 +396,16 @@
                 </div>
                 <div class="d-flex flex-row justify-content-around">
                   <div>
-                    <p>Capital:</p>
+                    <p>pCapital:</p>
                     <div class="d-flex flex-row">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bank icon" viewBox="0 0 16 16">
                         <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.5.5 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72z"/>
                       </svg>
                       <p class="icon-title">Rs {{ project.capital|default:"4,50,000" }}</p>
                     </div>
+                    
                   </div>
-                  <div>
-                    <p>Profit:</p>
-                    <div class="d-flex flex-row">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cash-stack icon" viewBox="0 0 16 16">
-                        <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                        <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
-                      </svg>
-                      <p class="icon-title">Rs {{ project.profit|default:"50,000" }}</p>
-                    </div>
-                  </div>
+                  
                   <div>
                     <p>Estimated time:</p>
                     <div class="d-flex flex-row">
@@ -469,16 +452,16 @@
               </tr>
             </thead>
             <tbody>
-              {% for investor in project.investors.all %}
-                <tr>
-                  <td>{{ investor.name }}</td>
-                  <td>₹{{ investor.amount }}</td>
-                </tr>
-              {% empty %}
-                <tr>
-                  <td colspan="2">No investors yet.</td>
-                </tr>
-              {% endfor %}
+              {% for investment in project.investments.all %}
+              <tr>
+                <td>{{ investment.investor.user.username }}</td>
+                <td>₹{{ investment.investment_amount }}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="2">No investors yet.</td>
+              </tr>
+            {% endfor %}
             </tbody>
           </table>
         </div>
@@ -508,16 +491,16 @@
               </tr>
             </thead>
             <tbody>
-              {% for investor in project.investors.all %}
-                <tr>
-                  <td>{{ investor.name }}</td>
-                  <td>₹{{ investor.amount }}</td>
-                </tr>
-              {% empty %}
-                <tr>
-                  <td colspan="2">No investors yet.</td>
-                </tr>
-              {% endfor %}
+              {% for investment in project.investments.all %}
+              <tr>
+                <td>{{ investment.investor.user.username }}</td>
+                <td>₹{{ investment.investment_amount }}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="2">No investors yet.</td>
+              </tr>
+            {% endfor %}
             </tbody>
           </table>
         </div>

@@ -12,7 +12,8 @@ def myprojects(request):
         far = Farmer.objects.get(user_id=request.user.id)
         previous_projects = InvestmentModel.objects.filter(farmer=far)
         print(previous_projects)
-        return render(request,"myprojects.html",context={"previous_projects": previous_projects})
+        
+        return render(request,"myprojects.html",context={"previous_projects": previous_projects })
 
 
 @login_required
@@ -72,31 +73,49 @@ def invest(request):
                 return JsonResponse({"error": "Investment model not found"}, status=404)
 
             # Fetch the investor and wallet
-            try:
-                wallet = Wallet.objects.get(user=request.user)
-                inv = Investor.objects.get(user=request.user)
-            except Wallet.DoesNotExist:
-                return JsonResponse({"error": "Wallet not found"}, status=404)
-            except Investor.DoesNotExist:
-                return JsonResponse({"error": "Investor profile not found"}, status=404)
+            try :
+                alp = Investment.objects.get(investment_model=mlid,investor = Investor.objects.get(user=request.user))
+                if(alp):
+                    investment = Investment.objects.get(investment_model=mlid)
+                
+                    if(investment.investment_amount+investamount <= mlid.requiredamount):
+                        investment.investment_amount+=investamount
+                        investment.save()
+                        mlid.requiredamount-=investamount
+                        mlid.save()
+                        return JsonResponse({"message": "Investment successful", "investment_id": investment.id}, status=200)
+                    else:
+                        return JsonResponse({"error": "Investment amount exeeded"}, status=404)
+                
+            except Exception as e:
+               
+                    try:
+                        wallet = Wallet.objects.get(user=request.user)
+                        inv = Investor.objects.get(user=request.user)
+                    except Wallet.DoesNotExist:
+                        return JsonResponse({"error": "Wallet not found"}, status=404)
+                    except Investor.DoesNotExist:
+                        return JsonResponse({"error": "Investor profile not found"}, status=404)
 
-            # Check if the user has enough funds
-            if investamount > wallet.wallet_amount:
-                return JsonResponse({"error": "Insufficient funds in wallet"}, status=400)
+                    # Check if the user has enough funds
+                    if investamount > wallet.wallet_amount:
+                        return JsonResponse({"error": "Insufficient funds in wallet"}, status=400)
 
-            # Deduct funds from the wallet
-            wallet.wallet_amount -= investamount
-            wallet.save()
-
-            # Create the investment
-            investment = Investment.objects.create(
-                investment_model=mlid,
-                investor=inv,
-                investment_amount=investamount
-            )
-
-            return JsonResponse({"message": "Investment successful", "investment_id": investment.id}, status=200)
-
+                    # Deduct funds from the wallet
+                    if(investamount>mlid.requiredamount) :
+                        return JsonResponse({"error": "Exceeded required limit"}, status=400)
+                    else:
+                        wallet.wallet_amount -= investamount
+                        wallet.save()
+                        mlid.requiredamount-=investamount
+                        mlid.save()
+                        # Create the investment
+                        investment = Investment.objects.create(
+                            investment_model=mlid,
+                            investor=inv,
+                            investment_amount=investamount
+                        )
+                        return JsonResponse({"message": "Investment successful", "investment_id": investment.id}, status=200)
         except ValueError:
             return JsonResponse({"error": "Invalid input data"}, status=400)
         except Exception as e:
