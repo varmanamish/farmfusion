@@ -128,7 +128,7 @@ def invest(request):
 def showallmodels(request):
     print("request")
     investor = request.user.id # Get the logged-in investor
-    model = InvestmentModel.objects.all()  # Fetch all investment opportunities
+    model = InvestmentModel.objects.filter(is_disbursed = False)  # Fetch all investment opportunities
     inv=Investor.objects.get(user_id=investor)  # Fetch investments by this investor
     print(model) 
     my_investments = Investment.objects.select_related('investment_model').filter(investor_id=inv.id)
