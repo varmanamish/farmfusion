@@ -129,6 +129,8 @@
 
         .ecommerce-card img {
             max-width: 100%;
+            width: 200px;
+            height : 200px;
             border-radius: 10px;
             border: 2px solid #9A6735; /* Earthy brown border */
         }
@@ -519,47 +521,168 @@
         </section>
 
         <!-- Section 3: Fundraising Projects -->
+
         <section class="section">
             <div class="container_16">
                 <h2 class="section-title">Fundraising Projects</h2>
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="project-card">
-                            <h3>Solar-Powered Irrigation</h3>
-                            <p>Goal: Rs. 10,000</p>
-                            <p>Raised: Rs. 6,500</p>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%</div>
+                    {% for proj in top%}
+                        <div class="col-md-12">
+                            <div class="project-card">
+                                <h3>{{ proj.name }}</h3>
+                                <p>Goal: Rs.{{ proj.capital }}</p>
+                                <p>Raised: Rs.{{ proj.requiredamount }}</p>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" 
+                                         style="width: {{ proj.progress }}%;" 
+                                         aria-valuenow="{{ proj.progress }}" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="100">
+                                        {{ proj.progress }}%
+                                    </div>
+                                </div>
+                                <a href="{% url 'support' %}" class="btn mt-3">Contribute</a>
                             </div>
-                            <a href="#" class="btn mt-3">Contribute</a>
                         </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="project-card">
-                            <h3>Organic Farm Expansion</h3>
-                            <p>Goal: Rs. 15,000</p>
-                            <p>Raised: Rs. 9,000</p>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
-                            </div>
-                            <a href="#" class="btn mt-3">Contribute</a>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="project-card">
-                            <h3>Community Garden</h3>
-                            <p>Goal: Rs. 5,000</p>
-                            <p>Raised: Rs. 4,200</p>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 84%;" aria-valuenow="84" aria-valuemin="0" aria-valuemax="100">84%</div>
-                            </div>
-                            <a href="#" class="btn mt-3">Contribute</a>
-                        </div>
-                    </div>
+                    {% empty %}
+                        <p>No projects yet.</p>
+                    {% endfor %}
                 </div>
             </div>
         </section>
+        <!-- Testimonial Section -->
+<section class="py-5" style="background: #fff;">
+    <div class="container">
+      <h2 class="text-center text-dark mb-4">What Our Partners Say</h2>
+      <div class="row justify-content-center">
+        <!-- Testimonial Card 1 -->
+        <div class="col-md-4 mb-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <p class="card-text fst-italic">
+                "Farm Fusion has revolutionized our farming techniques. With accurate demand predictions and fair pricing, our profits have soared!"
+              </p>
+              <h5 class="card-title mt-3">- Anjali Verma</h5>
+              <p class="card-subtitle text-muted">Organic Farmer, Maharashtra</p>
+            </div>
+          </div>
+        </div>
+        <!-- Testimonial Card 2 -->
+        <div class="col-md-4 mb-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <p class="card-text fst-italic">
+                "I never imagined technology could blend so seamlessly with agriculture. Farm Fusion empowers us to make informed decisions and grow sustainably."
+              </p>
+              <h5 class="card-title mt-3">- Deepak Singh</h5>
+              <p class="card-subtitle text-muted">Agribusiness Investor</p>
+            </div>
+          </div>
+        </div>
+        <!-- Testimonial Card 3 -->
+        <div class="col-md-4 mb-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <p class="card-text fst-italic">
+                "Farm Fusion connects us directly with global markets. Their ML-powered demand forecasting has been a game-changer for our farm."
+              </p>
+              <h5 class="card-title mt-3">- Meera Patel</h5>
+              <p class="card-subtitle text-muted">Farm Owner, Gujarat</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+  
+    
+   
+   <!-- FAQ Section -->
+<section class="py-5" style="background: #f8f9fa;">
+    <div class="container">
+      <h2 class="text-center text-dark mb-4">Frequently Asked Questions</h2>
+      <div class="accordion" id="faqAccordion">
+        <!-- FAQ Item 1 -->
+        <div class="accordion-item border-0">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              What is Farm Fusion?
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+            <div class="accordion-body bg-light text-dark">
+              Farm Fusion is an innovative, ML-powered platform that connects farmers with global markets. It aims to predict demand accurately, ensure fair pricing, promote organic practices, and enhance the professional status of farmers.
+            </div>
+          </div>
+        </div>
+        <!-- FAQ Item 2 -->
+        <div class="accordion-item border-0">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              How does Farm Fusion address market volatility?
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+            <div class="accordion-body bg-light text-dark">
+              By leveraging advanced machine learning and comprehensive data collection from global markets, the platform forecasts demand with precision. This enables farmers to better align their production, reduce waste, and mitigate risks from unpredictable pricing.
+            </div>
+          </div>
+        </div>
+        <!-- FAQ Item 3 -->
+        <div class="accordion-item border-0">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              What benefits do farmers gain by using Farm Fusion?
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+            <div class="accordion-body bg-light text-dark">
+              Farmers receive equitable compensation through fair pricing, gain incentives for adopting organic and sustainable practices, and enjoy enhanced professional recognition. This holistic approach helps improve income stability and fosters long-term growth.
+            </div>
+          </div>
+        </div>
+        <!-- FAQ Item 4 -->
+        <div class="accordion-item border-0">
+          <h2 class="accordion-header" id="headingFour">
+            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+              How does the ML-powered demand prediction work?
+            </button>
+          </h2>
+          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+            <div class="accordion-body bg-light text-dark">
+              Farm Fusion collects real-time demand data from global markets and processes it using machine learning algorithms. This results in accurate forecasts that help farmers adjust production levels, ensuring supply meets market demand effectively.
+            </div>
+          </div>
+        </div>
+        <!-- FAQ Item 5 -->
+        <div class="accordion-item border-0">
+          <h2 class="accordion-header" id="headingFive">
+            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+              How does Farm Fusion promote sustainable agriculture?
+            </button>
+          </h2>
+          <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+            <div class="accordion-body bg-light text-dark">
+              The platform encourages organic farming by offering incentives for sustainable practices. It promotes healthier, eco-friendly produce while helping to maintain soil health and reduce environmental impact, connecting consumers with genuinely sustainable agriculture.
+            </div>
+          </div>
+        </div>
+        <!-- FAQ Item 6 -->
+        <div class="accordion-item border-0">
+          <h2 class="accordion-header" id="headingSix">
+            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+              How can I partner with Farm Fusion?
+            </button>
+          </h2>
+          <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#faqAccordion">
+            <div class="accordion-body bg-light text-dark">
+              Whether you're a farmer, investor, or advocate for sustainable agriculture, Farm Fusion offers multiple partnership opportunities. You can invest in the platform, collaborate by sharing expertise, or promote fair trade practices to help drive the future of agriculture.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
     <!-- Footer -->
     <footer>

@@ -1,7 +1,7 @@
 from django.urls import path
-from . import views
+from ecom.views  import index
 from ecommerce.views import shop
 from posts.views import feed
 urlpatterns=[
-    path('',views.index,name="index"),  
+    path('',index,name="index"),  
 ]
