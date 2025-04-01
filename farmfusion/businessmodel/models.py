@@ -3,9 +3,10 @@ from accounts.models import CustomUser
 
 class Farmer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="farmer")
-    land_area = models.BigIntegerField()
-    soil_type = models.CharField(max_length=255)
-    crop_type = models.CharField(max_length=255,null=True)
+    land_area = models.BigIntegerField(default = 0)
+    soil_type = models.CharField(max_length=255,null=True,default=0)
+    crop_type = models.CharField(max_length=255,null=True,default=0)
+    farm_type = models.CharField(max_length=255,null=True,default="farmer")
     def __str__(self):
         return f"Farmer: {self.user.username}"
     

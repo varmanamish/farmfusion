@@ -9,13 +9,14 @@ from accounts.models import CustomUser,Wallet
 # Create your views here.
 
 def myprojects(request):
-        far = Farmer.objects.get(user_id=request.user.id)
-        previous_projects = InvestmentModel.objects.filter(farmer=far)
-        print(previous_projects)
-        
-        return render(request,"myprojects.html",context={"previous_projects": previous_projects })
-
-
+        try :
+            far = Farmer.objects.get(user_id=request.user.id)
+            previous_projects = InvestmentModel.objects.filter(farmer=far)
+            print(previous_projects)
+            
+            return render(request,"myprojects.html",context={"previous_projects": previous_projects })
+        except:
+            return render(request,"myprojects.html")
 @login_required
 def createinvestmentmodel(request):
     if request.method == "POST":

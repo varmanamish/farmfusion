@@ -6,23 +6,29 @@
     <meta charset="utf-8">
     <meta name="format-detection" content="telephone=no" />
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* Global Styles */
         body {
-            background: #e1e0df; /* Deep blue-green to light green */
-            color: #fff;
+            background: #f5f5f5;
+            color: #333;
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
+            transition: background 0.3s ease;
         }
 
+        /* Header */
         header {
-            background: #023D54; /* Deep blue-green navbar */
+            background: #2c3e50;
             padding: 15px 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .container_16 {
@@ -48,6 +54,7 @@
             height: 50px;
         }
 
+        /* Navigation */
         nav .sf-menu {
             list-style: none;
             display: flex;
@@ -61,15 +68,16 @@
         }
 
         nav .sf-menu a {
-            color: #FFFF66; /* Bright yellow text */
+            color: #ecf0f1;
             text-decoration: none;
             font-weight: 600;
             padding: 10px 15px;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.3s ease;
         }
 
         nav .sf-menu a:hover {
-            color: #94DEA5; /* Light green hover */
+            color: #e74c3c;
+            transform: scale(1.05);
         }
 
         nav .sf-menu ul {
@@ -77,11 +85,11 @@
             position: absolute;
             top: 100%;
             left: 0;
-            background: #023D54;
+            background: #2c3e50;
             list-style: none;
             padding: 10px;
             border-radius: 5px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         nav .sf-menu li:hover > ul {
@@ -97,6 +105,71 @@
             left: 100%;
         }
 
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 120px 20px;
+            text-align: center;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            z-index: 1;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero .btn {
+            background: #e74c3c;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            color: #fff;
+            transition: background 0.3s ease, transform 0.3s ease;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero .btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Section Styles */
         .section {
             padding: 60px 0;
@@ -104,251 +177,302 @@
 
         .section-title {
             text-align: center;
-            font-size: 36px;
+            font-size: 32px;
             margin-bottom: 40px;
-            color: #000000; /* Bright yellow */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1s ease-in;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: #e74c3c;
+            display: block;
+            margin: 10px auto 0;
+            border-radius: 3px;
         }
 
         /* E-commerce Store */
         .ecommerce-card {
             margin-top: 20px;
-            background: linear-gradient(135deg, #023D54 0%, #94DEA5 100%);
-            border-radius: 15px;
+            background: #fff;
+            border-radius: 10px;
             padding: 20px;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #94DEA5; /* Light green border */
+            border: 1px solid #ddd;
         }
 
         .ecommerce-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .ecommerce-card img {
             max-width: 100%;
             width: 200px;
-            height : 200px;
+            height: 200px;
             border-radius: 10px;
-            border: 2px solid #9A6735; /* Earthy brown border */
+            border: 1px solid #ccc;
         }
 
         .ecommerce-card h3 {
             margin: 15px 0;
-            color: #94DEA5; /* Light green */
+            color: #27ae60;
         }
 
         .ecommerce-card .btn {
-            background: #9A6735; /* Earthy brown */
+            background: #27ae60;
             border: none;
             padding: 10px 20px;
             border-radius: 25px;
-            color: #FFFF66; /* Bright yellow text */
+            color: #fff;
             transition: all 0.3s ease;
         }
 
         .ecommerce-card .btn:hover {
-            background: #7A532A; /* Darker brown */
-            transform: scale(1.05);
+            background: #1e8449;
         }
 
         /* Social Media Tweets */
         .tweet-card {
-            background: linear-gradient(135deg, #023D54 0%, #94DEA5 100%);
-            border-radius: 15px;
+            background: #fff;
+            border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
-            animation: slideIn 0.5s ease-in;
-            border: 1px solid #FFFF66; /* Bright yellow border */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+            transition: transform 0.3s ease;
+        }
+
+        .tweet-card:hover {
+            transform: translateY(-3px);
         }
 
         .tweet-card i {
-            color: #94DEA5; /* Light green */
+            color: #27ae60;
             margin-right: 10px;
         }
 
         .tweet-card .username {
-            color: #FFFF66; /* Bright yellow */
+            color: #e74c3c;
             font-weight: 600;
         }
 
         /* Fundraising Projects */
         .project-card {
             margin: 20px;
-            background: linear-gradient(45deg, #9A6735, #94DEA5); /* Brown to light green */
-            border-radius: 15px;
+            background: #fff;
+            border-radius: 10px;
             padding: 20px;
-            color: #fff;
+            color: #333;
             transition: transform 0.3s ease;
+            border: 1px solid #ddd;
         }
 
         .project-card:hover {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
 
         .project-card h3 {
             margin-bottom: 15px;
-            color: #FFFF66; /* Bright yellow */
+            color: #e74c3c;
         }
 
         .progress {
             height: 20px;
-            background: rgba(255, 255, 255, 0.2);
+            background: #ecf0f1;
             border-radius: 10px;
         }
 
         .progress-bar {
-            background: #023D54; /* Deep blue-green */
+            background: #27ae60;
         }
 
-        .project-card .btn {
-            background: #FFFF66; /* Bright yellow */
-            color: #023D54; /* Deep blue-green text */
+        /* Carousel */
+        .carousel-container {
+            padding: 20px;
+            background-color: #fff;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .carousel-inner {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .carousel-item img {
+            object-fit: cover;
+            height: 500px;
+            width: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item img:hover {
+            transform: scale(1.02);
+        }
+
+        .carousel-caption {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px 25px;
+            border-radius: 10px;
+            bottom: 20px;
+            text-align: center;
+        }
+
+        .carousel-caption h5 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .carousel-caption p {
+            font-size: 1rem;
+            color: #e0e0e0;
+        }
+
+        .carousel-indicators {
+            bottom: -40px;
+        }
+
+        .carousel-indicators li {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #6c757d;
             border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
         }
 
-        .project-card .btn:hover {
-            background: #E6E65C; /* Slightly darker yellow */
-            transform: scale(1.05);
+        .carousel-indicators .active {
+            background-color: #27ae60;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            opacity: 1;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-size: 100%, 100%;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+        }
+
+        /* Testimonial Section */
+        .testimonial-section {
+            padding: 60px 0;
+            background: #f9f9f9;
+        }
+
+        .testimonial-section h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            font-size: 32px;
+        }
+
+        .testimonial-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial-card .card-text {
+            font-style: italic;
+            color: #555;
+        }
+
+        .testimonial-card .card-title {
+            margin-top: 15px;
+            color: #e74c3c;
+        }
+
+        .testimonial-card .card-subtitle {
+            color: #888;
+        }
+
+        /* FAQ Section */
+        .accordion-button {
+            background: #fff;
+            color: #2c3e50;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-button:not(.collapsed) {
+            color: #e74c3c;
+            background: #f1f1f1;
+        }
+
+        .accordion-body {
+            background: #fff;
+            color: #555;
+            border-top: 1px solid #ddd;
         }
 
         /* Footer */
         footer {
-            background: #023D54; /* Deep blue-green */
+            background: #2c3e50;
             padding: 20px 0;
             text-align: center;
         }
 
         footer a {
-            color: #94DEA5; /* Light green */
+            color: #27ae60;
             text-decoration: none;
+            transition: color 0.3s ease;
         }
 
         footer a:hover {
-            color: #FFFF66; /* Bright yellow hover */
+            color: #e74c3c;
         }
 
-        /*Carousel*/
-        /* Carousel Styling */
-.carousel-container {
-    padding: 20px; /* Padding from all sides */
-    background-color: #f8f9fa; /* Light background for contrast */
-    margin-top: 20px; /* Space below navbar */
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    max-width: 1200px; /* Max width to prevent it from stretching too wide */
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .carousel-inner {
-    border-radius: 10px; /* Rounded corners for images */
-    overflow: hidden; /* Ensures images don't spill out */
-  }
-  
-  .carousel-item img {
-    object-fit: cover; /* Ensures images scale nicely */
-    height: 500px; /* Fixed height for consistency */
-    width: 100%;
-  }
-  
-  .carousel-caption {
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
-    padding: 15px 25px;
-    border-radius: 10px;
-    bottom: 20px; /* Adjusted positioning */
-    text-align: center;
-  }
-  
-  .carousel-caption h5 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 10px;
-  }
-  
-  .carousel-caption p {
-    font-size: 1rem;
-    color: #e0e0e0;
-    margin-bottom: 0;
-  }
-  
-  /* Customizing Indicators */
-  .carousel-indicators {
-    bottom: -40px; /* Move indicators below carousel */
-  }
-  
-  .carousel-indicators li {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #6c757d; /* Gray for inactive */
-    border: none;
-  }
-  
-  .carousel-indicators .active {
-    background-color: #4CAF50; /* Green for active */
-  }
-  
-  /* Customizing Controls */
-  .carousel-control-prev,
-  .carousel-control-next {
-    width: 5%; /* Narrower controls */
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-  
-  .carousel-control-prev:hover,
-  .carousel-control-next:hover {
-    opacity: 1;
-  }
-  
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    background-size: 100%, 100%;
-    width: 30px;
-    height: 30px;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    border-radius: 50%;
-  }
-  
-  /* Responsive Adjustments */
-  @media (max-width: 768px) {
-    .carousel-item img {
-      height: 300px; /* Smaller height on mobile */
-    }
-  
-    .carousel-caption {
-      padding: 10px 15px;
-    }
-  
-    .carousel-caption h5 {
-      font-size: 1.2rem;
-    }
-  
-    .carousel-caption p {
-      font-size: 0.9rem;
-    }
-  
-    .carousel-container {
-      padding: 10px; /* Reduced padding on mobile */
-    }
-  }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(-20px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .carousel-item img {
+                height: 300px;
+            }
+        
+            .carousel-caption {
+                padding: 10px 15px;
+            }
+        
+            .carousel-caption h5 {
+                font-size: 1.2rem;
+            }
+        
+            .carousel-caption p {
+                font-size: 0.9rem;
+            }
+        
+            .carousel-container {
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -384,60 +508,69 @@
         </div>
     </header>
 
+    <!-- Hero Section -->
+    <section class="hero" style="background-image:url({% static 'bgs/bg3.jpg' %}); background-repeat:no-repeat; background-size: 100% 100%;">
+        <div class="container" style="width:100%;  height:53vh; ">
+            <h1 style="font-family: serif;">Empowering Farms, Enriching Lives</h1>
+            <p style="font-family: sans-serif;">FarmFusion connects farmers to global markets, predicts demand with advanced machine learning, and promotes sustainable organic agriculture for a brighter future.</p>
+            <a href="#learn-more" class="btn">Learn More</a>
+        </div>
+    </section>
+
     <!-- Carousel -->
-<div class="carousel-container">
-    <div id="farmCarousel" class="carousel slide" data-bs-ride="carousel">
-        <!-- Indicators -->
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#farmCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#farmCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#farmCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            <button type="button" data-bs-target="#farmCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-        </div>
+    <div class="carousel-container">
+        <div id="farmCarousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- Indicators -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#farmCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#farmCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#farmCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#farmCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            </div>
 
-        <!-- Slides -->
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{% static 'images/organic.webp' %}" class="d-block w-100" alt="Organic Farming">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Organic Farming</h5>
-                    <p>Sustainable agriculture for a healthier planet.</p>
+            <!-- Slides -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'images/organic.webp' %}" class="d-block w-100" alt="Organic Farming">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Organic Farming</h5>
+                        <p>Sustainable agriculture for a healthier planet.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/mirchi.webp' %}" class="d-block w-100" alt="Mirchi Fields">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Mirchi Fields</h5>
+                        <p>Spicing up the world, one crop at a time.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/fresh.webp' %}" class="d-block w-100" alt="Fruit Orchards">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Fruit Orchards</h5>
+                        <p>Freshness from tree to table.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/comm_garden.jpg' %}" class="d-block w-100" alt="Community Gardens">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Community Gardens</h5>
+                        <p>Growing together for a better tomorrow.</p>
+                    </div>
                 </div>
             </div>
-            <div class="carousel-item">
-                <img src="{% static 'images/mirchi.webp' %}" class="d-block w-100" alt="Mirchi Fields">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Mirchi Fields</h5>
-                    <p>Spicing up the world, one crop at a time.</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'images/fresh.webp' %}" class="d-block w-100" alt="Fruit Orchards">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Fruit Orchards</h5>
-                    <p>Freshness from tree to table.</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'images/comm_garden.jpg' %}" class="d-block w-100" alt="Community Gardens">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Community Gardens</h5>
-                    <p>Growing together for a better tomorrow.</p>
-                </div>
-            </div>
-        </div>
 
-        <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#farmCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#farmCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+            <!-- Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#farmCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#farmCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
     </div>
-</div>
 
     <!-- Content -->
     <div class="content">
@@ -521,12 +654,11 @@
         </section>
 
         <!-- Section 3: Fundraising Projects -->
-
         <section class="section">
             <div class="container_16">
                 <h2 class="section-title">Fundraising Projects</h2>
                 <div class="row">
-                    {% for proj in top%}
+                    {% for proj in top %}
                         <div class="col-md-12">
                             <div class="project-card">
                                 <h3>{{ proj.name }}</h3>
@@ -541,7 +673,7 @@
                                         {{ proj.progress }}%
                                     </div>
                                 </div>
-                                <a href="{% url 'support' %}" class="btn mt-3">Contribute</a>
+                                <a href="{% url 'support' %}" class="btn mt-3" style="background-color: #d7d3d3;">Contribute</a>
                             </div>
                         </div>
                     {% empty %}
@@ -550,139 +682,124 @@
                 </div>
             </div>
         </section>
+
         <!-- Testimonial Section -->
-<section class="py-5" style="background: #fff;">
-    <div class="container">
-      <h2 class="text-center text-dark mb-4">What Our Partners Say</h2>
-      <div class="row justify-content-center">
-        <!-- Testimonial Card 1 -->
-        <div class="col-md-4 mb-4">
-          <div class="card border-0 shadow-sm">
-            <div class="card-body">
-              <p class="card-text fst-italic">
-                "Farm Fusion has revolutionized our farming techniques. With accurate demand predictions and fair pricing, our profits have soared!"
-              </p>
-              <h5 class="card-title mt-3">- Anjali Verma</h5>
-              <p class="card-subtitle text-muted">Organic Farmer, Maharashtra</p>
+        <section class="testimonial-section">
+            <div class="container">
+                <h2 class="text-center mb-4">What Our Partners Say</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-4 mb-4">
+                        <div class="testimonial-card">
+                            <p class="card-text fst-italic">
+                                "Farm Fusion has revolutionized our farming techniques. With accurate demand predictions and fair pricing, our profits have soared!"
+                            </p>
+                            <h5 class="card-title mt-3">- Anjali Verma</h5>
+                            <p class="card-subtitle text-muted">Organic Farmer, Maharashtra</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="testimonial-card">
+                            <p class="card-text fst-italic">
+                                "I never imagined technology could blend so seamlessly with agriculture. Farm Fusion empowers us to make informed decisions and grow sustainably."
+                            </p>
+                            <h5 class="card-title mt-3">- Deepak Singh</h5>
+                            <p class="card-subtitle text-muted">Agribusiness Investor</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="testimonial-card">
+                            <p class="card-text fst-italic">
+                                "Farm Fusion connects us directly with global markets. Their ML-powered demand forecasting has been a game-changer for our farm."
+                            </p>
+                            <h5 class="card-title mt-3">- Meera Patel</h5>
+                            <p class="card-subtitle text-muted">Farm Owner, Gujarat</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <!-- Testimonial Card 2 -->
-        <div class="col-md-4 mb-4">
-          <div class="card border-0 shadow-sm">
-            <div class="card-body">
-              <p class="card-text fst-italic">
-                "I never imagined technology could blend so seamlessly with agriculture. Farm Fusion empowers us to make informed decisions and grow sustainably."
-              </p>
-              <h5 class="card-title mt-3">- Deepak Singh</h5>
-              <p class="card-subtitle text-muted">Agribusiness Investor</p>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-5" style="background: #f8f9fa;">
+            <div class="container">
+                <h2 class="text-center text-dark mb-4">Frequently Asked Questions</h2>
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item border-0">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                What is Farm Fusion?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Farm Fusion is an innovative, ML-powered platform that connects farmers with global markets. It aims to predict demand accurately, ensure fair pricing, promote organic practices, and enhance the professional status of farmers.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                How does Farm Fusion address market volatility?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                By leveraging advanced machine learning and comprehensive data collection from global markets, the platform forecasts demand with precision. This enables farmers to better align their production, reduce waste, and mitigate risks from unpredictable pricing.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                What benefits do farmers gain by using Farm Fusion?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Farmers receive equitable compensation through fair pricing, gain incentives for adopting organic and sustainable practices, and enjoy enhanced professional recognition. This holistic approach helps improve income stability and fosters long-term growth.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                How does the ML-powered demand prediction work?
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Farm Fusion collects real-time demand data from global markets and processes it using machine learning algorithms. This results in accurate forecasts that help farmers adjust production levels, ensuring supply meets market demand effectively.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0">
+                        <h2 class="accordion-header" id="headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                How does Farm Fusion promote sustainable agriculture?
+                            </button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                The platform encourages organic farming by offering incentives for sustainable practices. It promotes healthier, eco-friendly produce while helping to maintain soil health and reduce environmental impact, connecting consumers with genuinely sustainable agriculture.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0">
+                        <h2 class="accordion-header" id="headingSix">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                How can I partner with Farm Fusion?
+                            </button>
+                        </h2>
+                        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Whether you're a farmer, investor, or advocate for sustainable agriculture, Farm Fusion offers multiple partnership opportunities. You can invest in the platform, collaborate by sharing expertise, or promote fair trade practices to help drive the future of agriculture.
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <!-- Testimonial Card 3 -->
-        <div class="col-md-4 mb-4">
-          <div class="card border-0 shadow-sm">
-            <div class="card-body">
-              <p class="card-text fst-italic">
-                "Farm Fusion connects us directly with global markets. Their ML-powered demand forecasting has been a game-changer for our farm."
-              </p>
-              <h5 class="card-title mt-3">- Meera Patel</h5>
-              <p class="card-subtitle text-muted">Farm Owner, Gujarat</p>
-            </div>
-          </div>
-        </div>
-      </div>
+        </section>
     </div>
-  </section>
-  
-    
-   
-   <!-- FAQ Section -->
-<section class="py-5" style="background: #f8f9fa;">
-    <div class="container">
-      <h2 class="text-center text-dark mb-4">Frequently Asked Questions</h2>
-      <div class="accordion" id="faqAccordion">
-        <!-- FAQ Item 1 -->
-        <div class="accordion-item border-0">
-          <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-              What is Farm Fusion?
-            </button>
-          </h2>
-          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
-            <div class="accordion-body bg-light text-dark">
-              Farm Fusion is an innovative, ML-powered platform that connects farmers with global markets. It aims to predict demand accurately, ensure fair pricing, promote organic practices, and enhance the professional status of farmers.
-            </div>
-          </div>
-        </div>
-        <!-- FAQ Item 2 -->
-        <div class="accordion-item border-0">
-          <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              How does Farm Fusion address market volatility?
-            </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
-            <div class="accordion-body bg-light text-dark">
-              By leveraging advanced machine learning and comprehensive data collection from global markets, the platform forecasts demand with precision. This enables farmers to better align their production, reduce waste, and mitigate risks from unpredictable pricing.
-            </div>
-          </div>
-        </div>
-        <!-- FAQ Item 3 -->
-        <div class="accordion-item border-0">
-          <h2 class="accordion-header" id="headingThree">
-            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              What benefits do farmers gain by using Farm Fusion?
-            </button>
-          </h2>
-          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
-            <div class="accordion-body bg-light text-dark">
-              Farmers receive equitable compensation through fair pricing, gain incentives for adopting organic and sustainable practices, and enjoy enhanced professional recognition. This holistic approach helps improve income stability and fosters long-term growth.
-            </div>
-          </div>
-        </div>
-        <!-- FAQ Item 4 -->
-        <div class="accordion-item border-0">
-          <h2 class="accordion-header" id="headingFour">
-            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-              How does the ML-powered demand prediction work?
-            </button>
-          </h2>
-          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
-            <div class="accordion-body bg-light text-dark">
-              Farm Fusion collects real-time demand data from global markets and processes it using machine learning algorithms. This results in accurate forecasts that help farmers adjust production levels, ensuring supply meets market demand effectively.
-            </div>
-          </div>
-        </div>
-        <!-- FAQ Item 5 -->
-        <div class="accordion-item border-0">
-          <h2 class="accordion-header" id="headingFive">
-            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-              How does Farm Fusion promote sustainable agriculture?
-            </button>
-          </h2>
-          <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
-            <div class="accordion-body bg-light text-dark">
-              The platform encourages organic farming by offering incentives for sustainable practices. It promotes healthier, eco-friendly produce while helping to maintain soil health and reduce environmental impact, connecting consumers with genuinely sustainable agriculture.
-            </div>
-          </div>
-        </div>
-        <!-- FAQ Item 6 -->
-        <div class="accordion-item border-0">
-          <h2 class="accordion-header" id="headingSix">
-            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-              How can I partner with Farm Fusion?
-            </button>
-          </h2>
-          <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#faqAccordion">
-            <div class="accordion-body bg-light text-dark">
-              Whether you're a farmer, investor, or advocate for sustainable agriculture, Farm Fusion offers multiple partnership opportunities. You can invest in the platform, collaborate by sharing expertise, or promote fair trade practices to help drive the future of agriculture.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
     <!-- Footer -->
     <footer>

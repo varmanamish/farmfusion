@@ -260,10 +260,19 @@
 
             <!-- Farmer-specific fields -->
             <div id="farmer-fields">
-                <p>Soil Type <span>*</span></p>
-                <input type="text" name="soil_type" placeholder="Enter soil type" maxlength="50" class="box">
+                <p>Farmer Type <span>*</span></p>
+                <select name="farm_type" id="farm_type" class="box" onchange="toggleFarFields()" >
+                    <option value="farmer">Farmer</option>
+                    <option value="fisherman">Fisher man</option>
+                    <option value="poultry">Poultry Farmer</option>
+                </select>
                 <p>Land Area (in acres) <span>*</span></p>
                 <input type="number" name="land_area" placeholder="Enter land area" min="0.1" step="0.1" class="box">
+                <div id="farmer-sub-fields">
+                <p>Soil Type <span>*</span></p>
+                <input type="text" name="soil_type" placeholder="Enter soil type" maxlength="50" class="box">
+                
+                </div>
             </div>
 
             <p>Select Profile Picture <span>*</span></p>
@@ -292,6 +301,20 @@
 
         window.onload = function() {
             toggleFarmerFields();
+        };
+        function toggleFarFields() {
+            var userType = document.getElementById("farm_type").value;
+            var farmerFields = document.getElementById("farmer-sub-fields");
+            
+            if (userType === "farmer") {
+                farmerFields.style.display = "block";
+            } else {
+                
+                farmerFields.style.display = "none";
+            }
+        }
+        window.onload = function() {
+            toggleFarFields();
         };
     </script>
 

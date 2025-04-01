@@ -44,7 +44,7 @@ def register(request):
         is_farmer = request.POST.get("is_farmer") == "T"
         phno = request.POST["phone"]
         dob = request.POST["dob"]
-
+        
         print(f"Received POST data: {request.POST}")
 
         # Check if user already exists
@@ -68,40 +68,52 @@ def register(request):
                     password=password,
                     profile_pic=profile_img,
                     is_farmer=is_farmer,
+                    
                     phno=phno,
                     dob=dob
                 )
-                print(f"User {user.username} created successfully, is_farmer: {is_farmer}")
+                #print(f"User {user.username} created successfully, is_farmer: {is_farmer}")
 
                 # If user is a farmer, create a Farmer object explicitly
                 if is_farmer:
+                    farm_type = request.POST.get("farm_type")
                     land_area = request.POST.get("land_area", "").strip()
-                    soil_type = request.POST.get("soil_type", "").strip()
+                    print(farm_type)
+                    if farm_type == "farmer" :
+                        
+                        soil_type = request.POST.get("soil_type", "").strip()
 
-                    print(f"DEBUG: Received land_area='{land_area}', soil_type='{soil_type}'")
+                        print(f"DEBUG: Received land_area='{land_area}', soil_type='{soil_type}'")
 
-                    if not land_area:
-                        return render(request, "register.html", {"error": "Land area is required for farmers."})
+                        if not land_area:
+                            return render(request, "register.html", {"error": "Land area is required for farmers."})
 
-                    try:
-                        land_area = int(land_area)  # Convert to integer
-                        if land_area <= 0:
-                            raise ValueError("Land area must be positive")
-                    except ValueError as e:
-                        print(f"DEBUG: Land area conversion error: {e}")
-                        return render(request, "register.html", {"error": "Invalid land area value."})
+                        try:
+                            land_area = int(land_area)  # Convert to integer
+                            if land_area <= 0:
+                                raise ValueError("Land area must be positive")
+                        except ValueError as e:
+                            print(f"DEBUG: Land area conversion error: {e}")
+                            return render(request, "register.html", {"error": "Invalid land area value."})
 
-                    if not soil_type:
-                        return render(request, "register.html", {"error": "Soil type is required for farmers."})
+                        if not soil_type:
+                            return render(request, "register.html", {"error": "Soil type is required for farmers."})
 
-                    # Create Farmer manually
-                    farmer = Farmer.objects.create(
-                        user=user,
-                        land_area=land_area,
-                        soil_type=soil_type
-                    )
-                    print(f"Farmer created: {farmer}")
+                        # Create Farmer manually
+                        farmer = Farmer.objects.create(
 
+                            user=user,
+                            farm_type=farm_type,
+                            land_area=land_area,
+                            soil_type=soil_type
+                        )
+                        print(f"Farmer created: {farmer}")
+                    else:
+                        farmer = Farmer.objects.create(
+                                user=user,
+                                farm_type=farm_type,
+                                land_area =land_area,
+                            )
         except IntegrityError as e:
             print(f"Database error: {str(e)}")
             return render(request, "register.html", {"error": f"Database error: {str(e)}"})
