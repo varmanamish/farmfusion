@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-import requests
+import requests 
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
