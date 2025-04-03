@@ -20,14 +20,102 @@
                 <meta name="description" content="" />
 
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
+                <!-- Bootstrap CSS -->
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                <!-- Bootstrap JS Bundle with Popper -->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
                 <link rel="stylesheet" type="text/css" href="{% static 'css/vendor.css' %}" />
                 <link rel="stylesheet" type="text/css" href="{% static 'css/shop.css' %}" />
 
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
                 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+                <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
             </head>
+            <style>
+                body {
+                    background: #f5f5f5;
+                    color: #333;
+                    font-family: 'Poppins', sans-serif;
+                    min-height: 100vh;
+                    overflow-x: hidden;
+                    transition: background 0.3s ease;
+                }
+                
+                .container_16 {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                }
+        
+                .row {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                }
+        
+                .grid_16 {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+        
+                h1 img {
+                    height: 50px;
+                }
+        
+                /* Navigation */
+                nav .sf-menu {
+                    list-style: none;
+                    display: flex;
+                    gap: 20px;
+                    margin: 0;
+                    padding: 0;
+                }
+        
+                nav .sf-menu li {
+                    position: relative;
+                }
+        
+                nav .sf-menu a {
+                    color: #ecf0f1;
+                    text-decoration: none;
+                    font-weight: 600;
+                    padding: 10px 15px;
+                    transition: color 0.3s ease, transform 0.3s ease;
+                }
+        
+                nav .sf-menu a:hover {
+                    color: #e74c3c;
+                    transform: scale(1.05);
+                }
+        
+                nav .sf-menu ul {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    background: #2c3e50;
+                    list-style: none;
+                    padding: 10px;
+                    border-radius: 5px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                }
+        
+                nav .sf-menu li:hover > ul {
+                    display: block;
+                }
+        
+                nav .sf-menu ul li {
+                    width: 150px;
+                }
+        
+                nav .sf-menu ul ul {
+                    top: 0;
+                    left: 100%;
+                }
+            </style>
             <body>
                 <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
                     <defs>
@@ -315,64 +403,145 @@
                         </div>
                     </div>
                 </div>
-
-                <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-                    <!-- Logo on the left -->
-                    <div class="navbar-brand">
-                        <a href="{% url 'index' %}">
-                            <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo" />
+                <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNavbar">
+                    <div class="container">
+                        <a class="navbar-brand" href="{% url 'index' %}">
+                            <img src="{% static 'images/logo.png' %}" alt="FarmFusion" height="40">
                         </a>
-                    </div>
-                
-                    <!-- Toggler for mobile view -->
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                
-                    <!-- Navigation content on the right -->
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                        <!-- Menu items -->
-                        <div class="navbar-nav">
-                            <a class="nav-item nav-link active" href="{% url 'index' %}">Home<span class="sr-only"></span></a>
-                            <a class="nav-item nav-link" href="{% url 'shop' %}">E-Commerce</a>
-                            <a class="nav-item nav-link" href="{% url 'feed' %}">Community</a>
-                            {% if user.is_farmer %}
-                                <a class="nav-item nav-link" href="{% url 'myprojects' %}">My Projects</a>
-                            {% else %}
-                                <a class="nav-item nav-link" href="{% url 'showallmodels' %}">My Investments</a>
-                            {% endif %}
-                            <a class="nav-item nav-link" href="{% url 'profile' %}">profile</a>
-                            <a class="nav-item nav-link" href="{% url 'contacts' %}">Contacts</a>
-                        </div>
-                
-                        <!-- Icons -->
-                        <div class="d-flex align-items-center ms-3">
-                            <ul class="d-flex list-unstyled m-0">
-                                <li>
-                                    <a href="#" class="p-2 mx-1">
-                                        <svg width="24" height="24">
-                                            <use xlink:href="#user"></use>
-                                        </svg>
-                                    </a>
+                        
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav me-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'index' %}">Home</a>
                                 </li>
-                                <li>
-                                    <a href="{% url 'order_history' %}" class="p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWishlist" aria-controls="offcanvasWishlist">
-                                        <svg width="24" height="24">
-                                            <use xlink:href="#wishlist"></use>
-                                        </svg>
-                                    </a>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/shop/' %}active{% endif %}" href="{% url 'shop' %}">E-Commerce</a>
                                 </li>
-                                <li>
-                                    <a href="#" class="p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                                        <svg width="24" height="24">
-                                            <use xlink:href="#shopping-bag"></use>
-                                        </svg>
-                                    </a>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/feed/' %}active{% endif %}" href="{% url 'feed' %}">Community</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/support/' %}active{% endif %}" href="{% url 'support' %}">Fund Raise</a>
+                                </li>
+                                {% if not user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/contacts/' %}active{% endif %}" href="{% url 'contacts' %}">Contacts</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                            
+                            <ul class="navbar-nav">
+                                {% if user.is_authenticated %}
+                                    {% if user.is_farmer %}
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if request.path == '/myprojects/' %}active{% endif %}" href="{% url 'myprojects' %}">My Projects</a>
+                                    </li>
+                                    {% else %}
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if request.path == '/showallmodels/' %}active{% endif %}" href="{% url 'showallmodels' %}">My investments</a>
+                                    </li>
+                                    {% endif %}
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if request.path == '/profile/' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                                    </li>
+                                {% else %}
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Login</a>
+                                    </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
                 </nav>
+                
+                <style>
+                    #mainNavbar {
+                        transition: transform 0.3s ease-in-out;
+                    }
+                    
+                    #mainNavbar.hide {
+                        transform: translateY(-100%);
+                    }
+                    
+                    body {
+                        padding-top: 56px; /* To account for fixed navbar height */
+                    }
+                </style>
+                
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const navbar = document.getElementById('mainNavbar');
+                        let lastScroll = 0;
+                        
+                        window.addEventListener('scroll', function() {
+                            const currentScroll = window.pageYOffset;
+                            
+                            if (currentScroll <= 0) {
+                                // At top of page - always show navbar
+                                navbar.classList.remove('hide');
+                                return;
+                            }
+                            
+                            if (currentScroll > lastScroll && !navbar.classList.contains('hide')) {
+                                // Scrolling down - hide navbar
+                                navbar.classList.add('hide');
+                            } else if (currentScroll < lastScroll && navbar.classList.contains('hide')) {
+                                // Scrolling up - show navbar
+                                navbar.classList.remove('hide');
+                            }
+                            
+                            lastScroll = currentScroll;
+                        });
+                    });
+                </script>
+                
+                <style>
+                    #mainNavbar {
+                        transition: transform 0.3s ease-in-out;
+                    }
+                    
+                    #mainNavbar.hide {
+                        transform: translateY(-100%);
+                    }
+                    
+                    body {
+                        padding-top: 56px; /* To account for fixed navbar height */
+                    }
+                </style>
+                
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const navbar = document.getElementById('mainNavbar');
+                        let lastScroll = 0;
+                        
+                        window.addEventListener('scroll', function() {
+                            const currentScroll = window.pageYOffset;
+                            
+                            if (currentScroll <= 0) {
+                                // At top of page - always show navbar
+                                navbar.classList.remove('hide');
+                                return;
+                            }
+                            
+                            if (currentScroll > lastScroll && !navbar.classList.contains('hide')) {
+                                // Scrolling down - hide navbar
+                                navbar.classList.add('hide');
+                            } else if (currentScroll < lastScroll && navbar.classList.contains('hide')) {
+                                // Scrolling up - show navbar
+                                navbar.classList.remove('hide');
+                            }
+                            
+                            lastScroll = currentScroll;
+                        });
+                    });
+                </script>
                 <style>
                     .custom-navbar {
                         background-color: #023D54;

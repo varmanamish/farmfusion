@@ -533,35 +533,104 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <div class="container_16">
-            <div class="row">
-                <div class="grid_16">
-                    <h1><a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="FarmFusion"></a></h1>
-                    <nav>
-                        <ul class="sf-menu">
-                            <li class="current"><a href="{% url 'index' %}">Home</a></li>
-                            <li><a href="{% url 'shop' %}">E-Commerce</a></li>
-                            <li><a href="{% url 'feed' %}">Community</a></li>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNavbar">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="FarmFusion" height="40">
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'index' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/shop/' %}active{% endif %}" href="{% url 'shop' %}">E-Commerce</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/feed/' %}active{% endif %}" href="{% url 'feed' %}">Community</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/support/' %}active{% endif %}" href="{% url 'support' %}">Fund Raise</a>
+                        </li>
+                        {% if not user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/contacts/' %}active{% endif %}" href="{% url 'contacts' %}">Contacts</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
                             {% if user.is_farmer %}
-                            <li><a href="{% url 'myprojects' %}">My Projects</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/myprojects/' %}active{% endif %}" href="{% url 'myprojects' %}">My Projects</a>
+                            </li>
                             {% else %}
-                            <li><a href="{% url 'showallmodels' %}">My investments</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/showallmodels/' %}active{% endif %}" href="{% url 'showallmodels' %}">My investments</a>
+                            </li>
                             {% endif %}
-                            <li><a href="{% url 'contacts' %}">Contacts</a></li>
-                            {% if user.is_authenticated %}
-                                <li><a href="{% url 'profile' %}">Profile</a></li>
-                                <li><a href="{% url 'logout' %}">Logout</a></li>
-                            {% else %}
-                                <li><a href="{% url 'register' %}">Register</a></li>
-                                <li class="last"><a href="{% url 'login' %}">Login</a></li>
-                            {% endif %}
-                        </ul>
-                    </nav>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/profile/' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Login</a>
+                            </li>
+                        {% endif %}
+                    </ul>
                 </div>
             </div>
-        </div>
-    </header>
+        </nav>
+    
+    <style>
+        #mainNavbar {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        #mainNavbar.hide {
+            transform: translateY(-100%);
+        }
+        
+        body {
+            padding-top: 56px; /* To account for fixed navbar height */
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.getElementById('mainNavbar');
+            let lastScroll = 0;
+            
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll <= 0) {
+                    // At top of page - always show navbar
+                    navbar.classList.remove('hide');
+                    return;
+                }
+                
+                if (currentScroll > lastScroll && !navbar.classList.contains('hide')) {
+                    // Scrolling down - hide navbar
+                    navbar.classList.add('hide');
+                } else if (currentScroll < lastScroll && navbar.classList.contains('hide')) {
+                    // Scrolling up - show navbar
+                    navbar.classList.remove('hide');
+                }
+                
+                lastScroll = currentScroll;
+            });
+        });
+    </script>
 
     <!-- Hero Section -->
     <section class="hero" style="background-image:url({% static 'bgs/bg3.jpg' %}); background-repeat:no-repeat; background-size: 100% 100%;">

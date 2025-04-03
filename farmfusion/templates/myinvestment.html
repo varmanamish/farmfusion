@@ -8,6 +8,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/farmer.css' %}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>    
     <style>
       /* Navbar Styling */
 .custom-navbar {
@@ -190,59 +194,106 @@
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-      <!-- Logo on the left -->
-      <a class="navbar-brand mr-auto" href="{% url 'index' %}">
-          <img class="logo" src="{% static 'images/logo.png' %}" alt="FarmFusion" />
-      </a>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNavbar">
+          <div class="container">
+              <a class="navbar-brand" href="{% url 'index' %}">
+                  <img src="{% static 'images/logo.png' %}" alt="FarmFusion" height="40">
+              </a>
+              
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              
+              <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav me-auto">
+                      <li class="nav-item">
+                          <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'index' %}">Home</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link {% if request.path == '/shop/' %}active{% endif %}" href="{% url 'shop' %}">E-Commerce</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link {% if request.path == '/feed/' %}active{% endif %}" href="{% url 'feed' %}">Community</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link {% if request.path == '/support/' %}active{% endif %}" href="{% url 'support' %}">Fund Raise</a>
+                      </li>
+                      {% if not user.is_authenticated %}
+                      <li class="nav-item">
+                          <a class="nav-link {% if request.path == '/contacts/' %}active{% endif %}" href="{% url 'contacts' %}">Contacts</a>
+                      </li>
+                      {% endif %}
+                  </ul>
+                  
+                  <ul class="navbar-nav">
+                      {% if user.is_authenticated %}
+                          {% if user.is_farmer %}
+                          <li class="nav-item">
+                              <a class="nav-link {% if request.path == '/myprojects/' %}active{% endif %}" href="{% url 'myprojects' %}">My Projects</a>
+                          </li>
+                          {% else %}
+                          <li class="nav-item">
+                              <a class="nav-link {% if request.path == '/showallmodels/' %}active{% endif %}" href="{% url 'showallmodels' %}">My investments</a>
+                          </li>
+                          {% endif %}
+                          <li class="nav-item">
+                              <a class="nav-link {% if request.path == '/profile/' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                          </li>
+                      {% else %}
+                          <li class="nav-item">
+                              <a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Login</a>
+                          </li>
+                      {% endif %}
+                  </ul>
+              </div>
+          </div>
+      </nav>
+  </header>
   
-      <!-- Toggler for mobile -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
+  <style>
+      #mainNavbar {
+          transition: transform 0.3s ease-in-out;
+      }
+      
+      #mainNavbar.hide {
+          transform: translateY(-100%);
+      }
+      
+      body {
+          padding-top: 56px; /* To account for fixed navbar height */
+      }
+  </style>
   
-      <!-- Menu items on the right -->
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav">
-              <li class="nav-item">
-                  <a class="nav-link active" href="{% url 'index' %}">Home</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="{% url 'shop' %}">E-Commerce</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="{% url 'feed' %}">Community</a>
-              </li>
-              {% if user.is_farmer %}
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'myprojects' %}">My Projects</a>
-                  </li>
-              {% else %}
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'showallmodels' %}">My Investments</a>
-                  </li>
-              {% endif %}
-              <li class="nav-item">
-                  <a class="nav-link" href="{% url 'contacts' %}">Contacts</a>
-              </li>
-              {% if user.is_authenticated %}
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                  </li>
-              {% else %}
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'register' %}">Register</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'login' %}">Login</a>
-                  </li>
-              {% endif %}
-          </ul>
-      </div>
-  </nav>
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const navbar = document.getElementById('mainNavbar');
+          let lastScroll = 0;
+          
+          window.addEventListener('scroll', function() {
+              const currentScroll = window.pageYOffset;
+              
+              if (currentScroll <= 0) {
+                  // At top of page - always show navbar
+                  navbar.classList.remove('hide');
+                  return;
+              }
+              
+              if (currentScroll > lastScroll && !navbar.classList.contains('hide')) {
+                  // Scrolling down - hide navbar
+                  navbar.classList.add('hide');
+              } else if (currentScroll < lastScroll && navbar.classList.contains('hide')) {
+                  // Scrolling up - show navbar
+                  navbar.classList.remove('hide');
+              }
+              
+              lastScroll = currentScroll;
+          });
+      });
+  </script>
 
     <!-- Toggle Button -->
     <div class="toggle-container">
@@ -307,7 +358,7 @@
                           </div>
                         </div>
                       </div>
-                      <p class="text-end">By {{ investment.investment_model.farmer.name }}</p>
+                      <p class="text-start">By {{ investment.investment_model.farmer.name }}</p>
                       <button class="btn btn-warning butt">View Details</button>
                     </div>
                   </div>

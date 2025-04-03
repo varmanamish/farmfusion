@@ -6,386 +6,575 @@
         <meta charset="UTF-8" />
         <meta name="csrf-token" content="{{ csrf_token }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <link rel="stylesheet" href="{% static 'css/feed.css' %}" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-        <link href="https://cdn.jsdelivr.net/npm/@icon/unicons@3.0.6-alpha.0/unicons.min.css" rel="stylesheet" />
+        <title>FarmFusion Community</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap JS Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>    
         <style>
-            /* Create Post Popup styling */
-
-            /* Hide by default */
-.messages {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    width: 350px;
-    max-width: 90%;
-}
-
-/* Show when toggled */
-.messages.show {
-    display: block;
-}
-
-/* Optional: Overlay background when popup is open */
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-}
-
-/* Show overlay when messages popup is open */
-.messages.show + .overlay {
-    display: block;
-}
-/* Popup styles */
-.messages {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    width: 350px;
-    max-width: 90%;
-}
-
-/* Show when toggled */
-.messages.show {
-    display: block;
-}
-
-/* Close button */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #555;
-    transition: 0.3s;
-}
-
-.close-btn:hover {
-    color: black;
-}
-
-/* Overlay background */
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-}
-
-/* Show overlay when messages popup is open */
-.messages.show + .overlay {
-    display: block;
-}
-
-
-            .messages-popup {
-                display: none;
-                position: fixed;
-                z-index: 1000;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                width: 400px;
+            :root {
+                --primary-color: #023D54;
+                --secondary-color: #28a745;
+                --light-gray: #f8f9fa;
+                --dark-gray: #333;
+                --text-muted: #6c757d;
+            }
+            
+            body {
+                background-color: #f5f5f5;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                color: var(--dark-gray);
+                padding-top: 70px;
+                min-height: 100vh;
+            }
+            
+            /* Navbar */
+            .custom-navbar {
                 background-color: white;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            .custom-navbar .navbar-brand img {
+                height: 40px;
+            }
+            
+            .custom-navbar .nav-link {
+                color: var(--dark-gray);
+                font-weight: 500;
+                padding: 0.5rem 1rem;
+            }
+            
+            .custom-navbar .nav-link:hover {
+                color: var(--secondary-color);
+            }
+            
+            .custom-navbar .nav-link.active {
+                color: var(--secondary-color);
+            }
+            
+            /* Main content */
+            .main {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            
+            /* Posts */
+            .feed {
+                background: white;
                 border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-                padding: 15px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+                margin-bottom: 30px;
+                overflow: hidden;
             }
             
-            .messages {
-                max-height: 400px;
-                overflow-y: auto;
-            }
-            
-            #closeMessages {
-                cursor: pointer;
-                font-size: 18px;
-                float: right;
-            }
-            
-
-            .modal {
-                display: none;
-                position: fixed;
-                z-index: 1;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-            }
-            
-
-            .close {
-                position: absolute;
-                top: 10px;
-                right: 15px;
-                font-size: 20px;
-                cursor: pointer;
-            }
-
-            input,
-            textarea {
-                width: 100%;
-                padding: 8px;
-                margin: 8px 0;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-            }
-
-            .submit-btn {
-                background-color: #28a745;
-                color: white;
-                padding: 10px 15px;
-                border: none;
-                cursor: pointer;
-                margin-left:  45%;
-                margin-bottom: 20px;
-                border-radius: 20px;
-            }
-            .category h6 {
-                display: inline-block;
-                padding: 10px;
-                cursor: pointer;
-            }
-            .category h6.active {
-                font-weight: bold;
-                border-bottom: 2px solid #000;
-            }
-            .tab-content {
-                display: none;
-            }
-            .tab-content.active {
-                display: block;
-            }
             .user {
                 display: flex;
                 align-items: center;
-                padding: 10px;
+                padding: 15px;
             }
+            
             .profile-pic img {
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
-                margin-right: 10px;
+                object-fit: cover;
+                margin-right: 12px;
             }
-
-            .custom-navbar {
-                background-color: #023D54;
+            
+            .info h3 {
+                margin: 0;
+                font-size: 16px;
+                font-weight: 600;
             }
-            .custom-navbar .nav-link {
-                color: #ffffff;
+            
+            .info small {
+                color: var(--text-muted);
+                font-size: 13px;
             }
-            .custom-navbar .nav-link:hover {
-                color: #cccccc; /* Lighter shade for hover effect */
+            
+            .photo img {
+                width: 100%;
+                max-height: 500px;
+                object-fit: cover;
             }
-
-            .modal-content {
-                background-color: #ffffff;
-                border-radius: 10px;
+            
+            .action-button {
+                padding: 10px 15px;
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 1px solid #eee;
             }
-            .modal-header {
-                background-color: #281807;
-                color: #ffffff;
+            
+            .interaction-button span {
+                margin-right: 15px;
+                cursor: pointer;
+                font-size: 20px;
+                color: var(--dark-gray);
             }
-            .thead-dark {
-                background-color: #281807;
-                color: #ffffff;
+            
+            .interaction-button span:hover {
+                color: var(--secondary-color);
             }
-            .btn-secondary {
-                background-color: #4caf50; /* Green from previous designs */
+            
+            .liked-by {
+                padding: 0 15px 10px;
+                font-size: 14px;
+            }
+            
+            .caption {
+                padding: 0 15px 15px;
+                font-size: 15px;
+            }
+            
+            .comments {
+                padding: 0 15px 15px;
+                font-size: 14px;
+                color: var(--text-muted);
+                cursor: pointer;
+            }
+            
+            /* Create button */
+            .create-btn {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background-color: var(--secondary-color);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 24px;
+                box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
                 border: none;
+                cursor: pointer;
+                z-index: 100;
             }
-            .btn-secondary:hover {
-                background-color: #45a049;
+            
+            .create-btn:hover {
+                background-color: #218838;
+                transform: translateY(-2px);
+            }
+            
+            /* Modal */
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .modal-content {
+                background-color: white;
+                border-radius: 10px;
+                width: 100%;
+                max-width: 500px;
+                padding: 25px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            }
+            
+            .modal h2 {
+                margin-top: 0;
+                color: var(--dark-gray);
+                font-size: 22px;
+                font-weight: 600;
+            }
+            
+            .close {
+                position: absolute;
+                top: 15px;
+                right: 20px;
+                font-size: 24px;
+                color: var(--text-muted);
+                cursor: pointer;
+            }
+            
+            .close:hover {
+                color: var(--dark-gray);
+            }
+            
+            input, textarea, input[type="file"] {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 14px;
+            }
+            
+            textarea {
+                resize: vertical;
+                min-height: 100px;
+            }
+            
+            .submit-btn {
+                background-color: var(--secondary-color);
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-weight: 500;
+                cursor: pointer;
+                display: block;
+                margin: 20px auto 0;
+                transition: background-color 0.3s;
+            }
+            
+            .submit-btn:hover {
+                background-color: #218838;
+            }
+            
+            /* Profile popup */
+            .messages {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                width: 90%;
+                max-width: 400px;
+                border-radius: 10px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            
+            .messages.show {
+                display: block;
+            }
+            
+            .close-btn {
+                position: absolute;
+                top: 15px;
+                right: 20px;
+                font-size: 24px;
+                color: var(--text-muted);
+                cursor: pointer;
+            }
+            
+            .close-btn:hover {
+                color: var(--dark-gray);
+            }
+            
+            .category {
+                display: flex;
+                border-bottom: 1px solid #eee;
+                padding: 0 20px;
+            }
+            
+            .category h6 {
+                padding: 15px 0;
+                margin: 0 15px 0 0;
+                font-size: 15px;
+                font-weight: 500;
+                color: var(--text-muted);
+                cursor: pointer;
+                position: relative;
+            }
+            
+            .category h6.active {
+                color: var(--dark-gray);
+                font-weight: 600;
+            }
+            
+            .category h6.active:after {
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background-color: var(--secondary-color);
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .user-body h5 {
+                margin: 0;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            
+            .user-body p {
+                margin: 3px 0 0;
+                font-size: 13px;
+                color: var(--text-muted);
+            }
+            
+            /* Profile section */
+            #profile-container {
+                position: fixed;
+                bottom: 30px;
+                left: 30px;
+                cursor: pointer;
+            }
+            
+            #profile-container .profile {
+                display: flex;
+                align-items: center;
+                background: white;
+                padding: 10px 15px;
+                border-radius: 30px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            #profile-container .profile-pic img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            
+            #profile-container .handle {
+                margin-left: 10px;
+            }
+            
+            #profile-container h4 {
+                margin: 0;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            
+            #profile-container .text-muted {
+                font-size: 13px;
+                margin: 0;
             }
         </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-            <!-- Logo on the left -->
-            <a class="navbar-brand" href="{% url 'index' %}">
-                <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo" />
-            </a>
-        
-            <!-- Toggler for mobile -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        
-            <!-- Menu items on the right -->
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="{% url 'shop' %}">E-Commerce</a>  
-                    <a class="nav-item nav-link" href="{% url 'feed' %}">Community</a>  
-                    <a class="nav-item nav-link" href="{% url 'contacts' %}">Contacts</a>
-                    {% if user.is_authenticated %}
-                        <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                        <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                    {% else %}
-                        <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-                        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                    {% endif %}
+        <header>
+            <nav class="custom-navbar navbar navbar-expand-lg fixed-top" id="mainNavbar">
+                <div class="container">
+                    <a class="navbar-brand" href="{% url 'index' %}">
+                        <img src="{% static 'images/logo.png' %}" alt="FarmFusion">
+                    </a>
+                    
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    
+                    <div class="collapse navbar-collapse" id="navbarContent">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'index' %}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/shop/' %}active{% endif %}" href="{% url 'shop' %}">E-Commerce</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/feed/' %}active{% endif %}" href="{% url 'feed' %}">Community</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/support/' %}active{% endif %}" href="{% url 'support' %}">Fund Raise</a>
+                            </li>
+                            {% if not user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == '/contacts/' %}active{% endif %}" href="{% url 'contacts' %}">Contacts</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                        
+                        <ul class="navbar-nav">
+                            {% if user.is_authenticated %}
+                                {% if user.is_farmer %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/myprojects/' %}active{% endif %}" href="{% url 'myprojects' %}">My Projects</a>
+                                </li>
+                                {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/showallmodels/' %}active{% endif %}" href="{% url 'showallmodels' %}">My investments</a>
+                                </li>
+                                {% endif %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/profile/' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Login</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </header>
+        
         <main class="main">
-            <div class="container">
-                <div class="left">
-                    
-                    <div class="sidebar">
-                        <a class="menu-item active">
-                            <span><i class="uil uil-home"></i></span>
-                            <h3>Home</h3>
-                        </a>               
-                        <label class="btn btn-primary" id="create-post-button">+</label>
-                    </div>
-                </div>
-                <div class="middle">
-                    <div class="feeds">
-                        {% for post in posts %}
-                        <div class="feed">
-                            <div class="head"></div>
-                            <div class="user">
-                                <div class="profile-pic">
-                                    <img src="{{ post.user.profile_pic.url }}" alt="Profile Picture" />
-                                </div>
-                                <div class="info">
-                                    <h3>{{ post.user.username }}</h3>
-                                    <small>{{ post.location }}, {{ post.created_at }}</small>
-                                </div>
-                            </div>
-
-                            <div class="photo">
-                                <img src="{{ post.post_image.url }}" alt="Post Image" />
-                            </div>
-
-                            <div class="action-button">
-                                <div class="interaction-button">
-                                    <span class="like-btn" data-post-id="{{ post.id }}">
-                                        <i class="uil uil-thumbs-up"></i>
-                                    </span>
-                                    <span><i class="uil uil-comment"></i></span>
-                                    <span><i class="uil uil-share"></i></span>
-                                </div>
-                                <div class="bookmark">
-                                    <span><i class="uil uil-bookmark"></i></span>
-                                </div>
-                            </div>
-
-                            <div class="liked-by">
-                                <p>Liked by <b>{{ post.likes_count }} others</b></p>
-                            </div>
-
-                            <div class="caption">
-                                <p><b>{{ post.username }}</b> {{ post.caption }}</p>
-                            </div>
-                            <div class="comments text-muted">View all comments</div>
+            <div class="feeds">
+                {% for post in posts %}
+                <div class="feed">
+                    <div class="user">
+                        <div class="profile-pic">
+                            <img src="{{ post.user.profile_pic.url }}" alt="Profile Picture" />
                         </div>
-                        {% endfor %}
+                        <div class="info">
+                            <h3>{{ post.user.username }}</h3>
+                            <small>{{ post.location }}, {{ post.created_at }}</small>
+                        </div>
+                        {% if post.user != request.user %}
+                        <button class="follow-btn" data-user-id="{{ post.user.id }}">
+                            {% if post.user in following_users %}
+                                Following
+                            {% else %}
+                                Follow
+                            {% endif %}
+                        </button>
+                        {% endif %}
                     </div>
-
-                    <!-- Add JavaScript for AJAX -->
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            // Add event listener to each like button
-                            document.querySelectorAll(".like-btn").forEach((button) => {
-                                button.addEventListener("click", function () {
-                                    const postId = this.getAttribute("data-post-id");
-
-                                    // Send AJAX request to like the post
-                                    fetch("/posts/like_post/", {
-                                        method: "POST",
-                                        headers: {
-                                            "Content-Type": "application/x-www-form-urlencoded",
-                                            "X-CSRFToken": getCSRFToken(),
-                                        },
-                                        body: `post_id=${postId}`,
-                                    })
-                                        .then((response) => response.json())
-                                        .then((data) => {
-                                            if (data.likes_count) {
-                                                // Update the likes count in the UI
-                                                const likesText = this.closest(".feed").querySelector(".liked-by b");
-                                                likesText.textContent = `${data.likes_count} others`;
-                                                // Change the like button icon to filled thumbs-up
-                                                const likeIcon = this.querySelector("i");
-                                                likeIcon.classList.remove("uil-thumbs-up");
-                                                likeIcon.classList.add("uil-heart");
-                                            } else if (data.error) {
-                                                // Handle the error (e.g., user already liked the post)
-                                                alert(data.error); // You can show a more custom error message if needed
-                                            }
-                                        })
-                                        .catch((error) => console.error("Error:", error));
-                                });
-                            });
-                        });
-
-                        function getCSRFToken() {
-                            let tokenElement = document.querySelector("meta[name='csrf-token']");
-                            return tokenElement ? tokenElement.getAttribute("content") : null;
-                        }
-                    </script>
+        
+                    <div class="photo">
+                        <img src="{{ post.post_image.url }}" alt="Post Image" />
+                    </div>
+        
+                    <div class="action-button">
+                        <div class="interaction-button">
+                            <span class="like-btn" data-post-id="{{ post.id }}">
+                                <i class="far fa-heart"></i>
+                            </span>
+                            <span><i class="far fa-comment"></i></span>
+                            <span><i class="fas fa-share"></i></span>
+                        </div>
+                        <div class="bookmark">
+                            <span><i class="far fa-bookmark"></i></span>
+                        </div>
+                    </div>
+        
+                    <div class="liked-by">
+                        <p>Liked by <b>{{ post.likes_count }} others</b></p>
+                    </div>
+        
+                    <div class="caption">
+                        <p><b>{{ post.username }}</b> {{ post.caption }}</p>
+                    </div>
+                    <div class="comments text-muted">View all comments</div>
                 </div>
-                <div class="right">
-                    <div id="profile-container">
-                        <a class="profile">
-                            <div class="profile-pic">
-                                <img src="{{ request.user.profile_pic.url }}" />
-                            </div>
-                            <div class="handle">
-                                <h4>{{request.user.username}}</h4>
-                                <p class="text-muted">@{{request.user.username}}</p>
-                            </div>
-                        </a>
-                    </div>
-                    
-                </div>    
+                {% endfor %}
             </div>
         </main>
         
-        <!-- Popup Modal -->
+        <style>
+            /* Add these styles to your existing CSS */
+            .follow-btn {
+                margin-left: auto;
+                padding: 5px 15px;
+                border-radius: 20px;
+                border: 1px solid #ddd;
+                background-color: white;
+                color: var(--dark-gray);
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .follow-btn:hover {
+                background-color: var(--light-gray);
+            }
+            
+            /* Style for when user is following */
+            .follow-btn[data-following="true"] {
+                background-color: var(--secondary-color);
+                color: white;
+                border-color: var(--secondary-color);
+            }
+            
+            .user {
+                display: flex;
+                align-items: center;
+                padding: 15px;
+                position: relative;
+            }
+        </style>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Follow button functionality
+                document.querySelectorAll('.follow-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const userId = this.getAttribute('data-user-id');
+                        const isFollowing = this.textContent.trim() === 'Following';
+                        
+                        fetch('/follow_user/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-CSRFToken': getCSRFToken()
+                            },
+                            body: `user_id=${userId}&action=${isFollowing ? 'unfollow' : 'follow'}`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.textContent = isFollowing ? 'Follow' : 'Following';
+                                this.setAttribute('data-following', !isFollowing);
+                                
+                                // Update button styling
+                                if (isFollowing) {
+                                    this.style.backgroundColor = 'white';
+                                    this.style.color = 'var(--dark-gray)';
+                                    this.style.borderColor = '#ddd';
+                                } else {
+                                    this.style.backgroundColor = 'var(--secondary-color)';
+                                    this.style.color = 'white';
+                                    this.style.borderColor = 'var(--secondary-color)';
+                                }
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                    });
+                });
+                
+                function getCSRFToken() {
+                    let tokenElement = document.querySelector("meta[name='csrf-token']");
+                    return tokenElement ? tokenElement.getAttribute("content") : null;
+                }
+            });
+        </script>
+        
+        <!-- Create button -->
+        <button class="create-btn" id="create-post-button">
+            <i class="fas fa-plus"></i>
+        </button>
+        
+        <!-- Profile section -->
+        <div id="profile-container">
+            <a class="profile">
+                <div class="profile-pic">
+                    <img src="{{ request.user.profile_pic.url }}" />
+                </div>
+                <div class="handle">
+                    <h4>{{request.user.username}}</h4>
+                    <p class="text-muted">@{{request.user.username}}</p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Followers/Following Popup -->
         <div class="messages" id="messages">
-            <span class="close-btn">&times;</span> <!-- Close Button -->
+            <span class="close-btn">&times;</span>
         
             <div class="category">
                 <h6 class="active" onclick="showTab('followers')">Followers</h6>
                 <h6 onclick="showTab('following')">Following</h6>
             </div>
         
-            <!-- Followers Section -->
             <div id="followers" class="tab-content active">
                 {% for follow in followers %}
                 <div class="user">
@@ -402,7 +591,6 @@
                 {% endfor %}
             </div>
         
-            <!-- Following Section -->
             <div id="following" class="tab-content">
                 {% for follow in following %}
                 <div class="user">
@@ -420,9 +608,7 @@
             </div>
         </div>
         
-        
-        
-        <!-- Button Popup -->
+        <!-- Create Post Modal -->
         <div id="postModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
@@ -431,74 +617,99 @@
                     {% csrf_token %}
 
                     <label>Location:</label>
-                    <input type="text" name="location" />
+                    <input type="text" name="location" placeholder="Where was this taken?" />
 
                     <label>Post Image:</label>
                     <input type="file" name="post_image" accept="image/*" />
 
                     <label>Caption:</label>
-                    <textarea name="caption" rows="3"></textarea>
+                    <textarea name="caption" rows="3" placeholder="What's on your mind?"></textarea>
 
                     <button type="submit" class="submit-btn">Post</button>
                 </form>
             </div>
         </div>
-        <script src="{% static 'js/feed.js' %}"></script>
 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script>
-            document.getElementById("create-post-button").addEventListener("click", function () {
-                document.getElementById("postModal").style.display = "block";
-            });
-
-            function closeModal() {
-                document.getElementById("postModal").style.display = "none";
-            }
-
-            // Close the modal when clicking outside of it
-            window.onclick = function (event) {
-                let modal = document.getElementById("postModal");
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                }
-            };
-
-            function showTab(tabId) {
-                // Remove 'active' class from all tab contents
-                document.querySelectorAll(".tab-content").forEach((tab) => {
-                    tab.classList.remove("active");
+            document.addEventListener('DOMContentLoaded', function() {
+                const navbar = document.getElementById('mainNavbar');
+                let lastScroll = 0;
+                
+                window.addEventListener('scroll', function() {
+                    const currentScroll = window.pageYOffset;
+                    
+                    if (currentScroll <= 0) {
+                        navbar.classList.remove('hide');
+                        return;
+                    }
+                    
+                    if (currentScroll > lastScroll && !navbar.classList.contains('hide')) {
+                        navbar.classList.add('hide');
+                    } else if (currentScroll < lastScroll && navbar.classList.contains('hide')) {
+                        navbar.classList.remove('hide');
+                    }
+                    
+                    lastScroll = currentScroll;
+                });
+                
+                // Create post button
+                document.getElementById("create-post-button").addEventListener("click", function () {
+                    document.getElementById("postModal").style.display = "flex";
                 });
 
-                // Remove 'active' class from all tab buttons
-                document.querySelectorAll(".category h6").forEach((tab) => {
-                    tab.classList.remove("active");
+                // Like button functionality
+                document.querySelectorAll(".like-btn").forEach((button) => {
+                    button.addEventListener("click", function () {
+                        const postId = this.getAttribute("data-post-id");
+                        const likeIcon = this.querySelector("i");
+
+                        fetch("/posts/like_post/", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded",
+                                "X-CSRFToken": getCSRFToken(),
+                            },
+                            body: `post_id=${postId}`,
+                        })
+                            .then((response) => response.json())
+                            .then((data) => {
+                                if (data.likes_count) {
+                                    const likesText = this.closest(".feed").querySelector(".liked-by b");
+                                    likesText.textContent = `${data.likes_count} others`;
+                                    
+                                    if (likeIcon.classList.contains("far")) {
+                                        likeIcon.classList.remove("far");
+                                        likeIcon.classList.add("fas");
+                                        likeIcon.style.color = "#ff0000";
+                                    } else {
+                                        likeIcon.classList.remove("fas");
+                                        likeIcon.classList.add("far");
+                                        likeIcon.style.color = "";
+                                    }
+                                }
+                            })
+                            .catch((error) => console.error("Error:", error));
+                    });
                 });
 
-                // Add 'active' class to the selected tab content
-                document.getElementById(tabId).classList.add("active");
-
-                // Add 'active' class to the clicked tab button
-                document.querySelector(`.category h6[onclick="showTab('${tabId}')"]`).classList.add("active");
-            }
-            document.addEventListener("DOMContentLoaded", function () {
+                // Profile popup
                 let profileContainer = document.getElementById("profile-container");
                 let messagesPopup = document.getElementById("messages");
                 let closeButton = document.querySelector(".close-btn");
                 
                 if (profileContainer && messagesPopup) {
-                    // Open popup when clicking profile
                     profileContainer.addEventListener("click", function (event) {
-                        event.stopPropagation(); // Prevents immediate closing
+                        event.stopPropagation();
                         messagesPopup.classList.toggle("show");
                     });
             
-                    // Close popup when clicking the close button
                     if (closeButton) {
                         closeButton.addEventListener("click", function () {
                             messagesPopup.classList.remove("show");
                         });
                     }
             
-                    // Close popup when clicking outside
                     document.addEventListener("click", function (event) {
                         if (!profileContainer.contains(event.target) && !messagesPopup.contains(event.target)) {
                             messagesPopup.classList.remove("show");
@@ -507,9 +718,34 @@
                 }
             });
             
-            
-        </script>
+            function closeModal() {
+                document.getElementById("postModal").style.display = "none";
+            }
 
-        
+            window.onclick = function (event) {
+                let modal = document.getElementById("postModal");
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            };
+
+            function showTab(tabId) {
+                document.querySelectorAll(".tab-content").forEach((tab) => {
+                    tab.classList.remove("active");
+                });
+
+                document.querySelectorAll(".category h6").forEach((tab) => {
+                    tab.classList.remove("active");
+                });
+
+                document.getElementById(tabId).classList.add("active");
+                document.querySelector(`.category h6[onclick="showTab('${tabId}')"]`).classList.add("active");
+            }
+            
+            function getCSRFToken() {
+                let tokenElement = document.querySelector("meta[name='csrf-token']");
+                return tokenElement ? tokenElement.getAttribute("content") : null;
+            }
+        </script>
     </body>
 </html>
