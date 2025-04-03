@@ -508,10 +508,12 @@
 
                 <section class="pb-5">
                     <div class="container-lg">
+
+                        {% if products%}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="section-header d-flex flex-wrap justify-content-between my-4">
-                                    <h2 class="section-title">Best selling products</h2>
+                                    <h2 class="section-title">Farm fresh</h2>
 
                                     <div class="d-flex align-items-center">
                                         <a href="#" class="btn btn-primary rounded-1">View All</a>
@@ -523,7 +525,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
+                                    
+                                    
+                                    
                                     {% for product in products %}
+                                    
+                                    
+                                    
                                     <div class="col">
                                         <div class="product-item">
                                             <figure>
@@ -550,8 +558,14 @@
                                                             <input type="number" name="quantity" class="form-control border-dark-subtle input-number quantity" value="1" />
                                                         </div>
                                                         <div class="col-7">
+                                                            
+                        
+                                                            {% if user.is_authenticated %}
                                                             <a href="#" class="btn btn-primary rounded-1 p-2 fs-7 btn-cart" data-product-id="{{ product.id }}"> Add to Cart </a>
-                                                        </div>
+                                                            {% else %}
+                                                            <a href="{% url 'login' %}" class="btn btn-primary rounded-1 p-2 fs-7 " > Add to Cart </a>
+                                                            {% endif %}                                                       
+                                                         </div>
                                                         <div class="col-2">
                                                             <a href="#" class="btn btn-outline-dark rounded-1 p-2 fs-6">❤️</a>
                                                         </div>
@@ -560,11 +574,157 @@
                                             </div>
                                         </div>
                                     </div>
+                                   
                                     {% endfor %}
                                 </div>
                                 <!-- / product-grid -->
                             </div>
                         </div>
+                        {% endif %}
+                        {% if hard_ware%}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section-header d-flex flex-wrap justify-content-between my-4">
+                                    <h2 class="section-title">Farm equipment</h2>
+
+                                    <div class="d-flex align-items-center">
+                                        <a href="#" class="btn btn-primary rounded-1">View All</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
+                                    
+                                    
+                                    
+                                    {% for product in hard_ware %}
+                                    
+                                    
+                                    
+                                    <div class="col">
+                                        <div class="product-item">
+                                            <figure>
+                                                <a href="#" title="{{ product.name }}">
+                                                   
+                                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="tab-image" style="max-height: 210px" />
+                                                </a>
+                                            </figure>
+                                            <div class="d-flex flex-column text-center">
+                                                <h3 class="fs-6 fw-normal">{{ product.name }}</h3>
+                                                <div>
+                                                    <span class="rating"> {% with product.rating|floatformat:0 as rating %} {% for i in "12345"|make_list %} {% if forloop.counter <= rating|add:0 %} ⭐ {% else %} ☆ {% endif %} {% endfor %} {% endwith %} </span>
+                                                    <span>({{product.rating}})</span>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                                    
+                                                    <span class="text-dark fw-semibold">$ {{product.cost}}</span>
+                                                    <span class="badge border border-dark-subtle rounded-0 fw-normal px-1 fs-7 lh-1 text-body-tertiary">10% OFF</span>
+                                                </div>
+                                                <div class="button-area p-3 pt-0">
+                                                    <div class="row g-1 mt-2">
+                                                        <div class="col-3">
+                                                            <input type="number" name="quantity" class="form-control border-dark-subtle input-number quantity" value="1" />
+                                                        </div>
+                                                        <div class="col-7">
+                                                            
+                        
+                                                            {% if user.is_authenticated %}
+                                                            <a href="#" class="btn btn-primary rounded-1 p-2 fs-7 btn-cart" data-product-id="{{ product.id }}"> Add to Cart </a>
+                                                            {% else %}
+                                                            <a href="{% url 'login' %}" class="btn btn-primary rounded-1 p-2 fs-7 " > Add to Cart </a>
+                                                            {% endif %}                                                       
+                                                         </div>
+                                                        <div class="col-2">
+                                                            <a href="#" class="btn btn-outline-dark rounded-1 p-2 fs-6">❤️</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                    {% endfor %}
+                                </div>
+                                
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if organic%}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section-header d-flex flex-wrap justify-content-between my-4">
+                                    <h2 class="section-title">Organic Farm Needs </h2>
+
+                                    <div class="d-flex align-items-center">
+                                        <a href="#" class="btn btn-primary rounded-1">View All</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
+                                   
+                                    
+                                    
+                                    {% for product in organic %}
+                                    
+                                    
+                                    
+                                    <div class="col">
+                                        <div class="product-item">
+                                            <figure>
+                                                <a href="#" title="{{ product.name }}">
+                                                   
+                                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="tab-image" style="max-height: 210px" />
+                                                </a>
+                                            </figure>
+                                            <div class="d-flex flex-column text-center">
+                                                <h3 class="fs-6 fw-normal">{{ product.name }}</h3>
+                                                <div>
+                                                    <span class="rating"> {% with product.rating|floatformat:0 as rating %} {% for i in "12345"|make_list %} {% if forloop.counter <= rating|add:0 %} ⭐ {% else %} ☆ {% endif %} {% endfor %} {% endwith %} </span>
+                                                    <span>({{product.rating}})</span>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                                   
+                                                    <span class="text-dark fw-semibold">$ {{product.cost}}</span>
+                                                    <span class="badge border border-dark-subtle rounded-0 fw-normal px-1 fs-7 lh-1 text-body-tertiary">10% OFF</span>
+                                                </div>
+                                                <div class="button-area p-3 pt-0">
+                                                    <div class="row g-1 mt-2">
+                                                        <div class="col-3">
+                                                            <input type="number" name="quantity" class="form-control border-dark-subtle input-number quantity" value="1" />
+                                                        </div>
+                                                        <div class="col-7">
+                                                            
+                        
+                                                            {% if user.is_authenticated %}
+                                                            <a href="#" class="btn btn-primary rounded-1 p-2 fs-7 btn-cart" data-product-id="{{ product.id }}"> Add to Cart </a>
+                                                            {% else %}
+                                                            <a href="{% url 'login' %}" class="btn btn-primary rounded-1 p-2 fs-7 " > Add to Cart </a>
+                                                            {% endif %}                                                       
+                                                         </div>
+                                                        <div class="col-2">
+                                                            <a href="#" class="btn btn-outline-dark rounded-1 p-2 fs-6">❤️</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                    {% endfor %}
+                                </div>
+                                
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                 </section>
 

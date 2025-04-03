@@ -108,6 +108,7 @@
         /* Hero Section */
         .hero {
             position: relative;
+            background: url('{% static "images/hero-bg.jpg" %}') center/cover no-repeat;
             padding: 120px 20px;
             text-align: center;
             color: #fff;
@@ -474,6 +475,60 @@
                 padding: 10px;
             }
         }
+        .ecommerce-bg {
+            position: relative;
+            background: url('{% static "bgs/ecomimg.webp" %}') center/cover no-repeat;
+            /* Optional: adjust height if needed */
+            padding: 80px 0;
+          }
+          
+          .ecommerce-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* dark overlay for contrast */
+            z-index: 1;
+          }
+          
+          .ecommerce-section {
+            position: relative;
+            z-index: 2;
+            color: #ffffff;
+            text-align: center;
+            padding: 60px 20px;
+          }
+          
+          .ecommerce-section h2 {
+            font-weight: bold;
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+          }
+          
+          .ecommerce-section p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+          }
+          
+          .ecommerce-btn {
+            background-color: #c0392b;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            color: #fff;
+            transition: background 0.3s ease, transform 0.3s ease;
+          }
+          
+          .ecommerce-btn:hover {
+            background-color: #a93226;
+            transform: scale(1.05);
+          }
+          
     </style>
 </head>
 <body>
@@ -510,7 +565,7 @@
 
     <!-- Hero Section -->
     <section class="hero" style="background-image:url({% static 'bgs/bg3.jpg' %}); background-repeat:no-repeat; background-size: 100% 100%;">
-        <div class="container" style="width:100%;  height:53vh; ">
+        <div class="container" style="width: 100%; height: 53vh;">
             <h1 style="font-family: serif;">Empowering Farms, Enriching Lives</h1>
             <p style="font-family: sans-serif;">FarmFusion connects farmers to global markets, predicts demand with advanced machine learning, and promotes sustainable organic agriculture for a brighter future.</p>
             <a href="#learn-more" class="btn">Learn More</a>
@@ -531,28 +586,28 @@
             <!-- Slides -->
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="{% static 'images/organic.webp' %}" class="d-block w-100" alt="Organic Farming">
+                    <img src="{% static 'images/orgfarm.jpg' %}" class="d-block w-100" alt="Organic Farming">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Organic Farming</h5>
                         <p>Sustainable agriculture for a healthier planet.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="{% static 'images/mirchi.webp' %}" class="d-block w-100" alt="Mirchi Fields">
+                    <img src="{% static 'images/cmntydelivry.webp' %}" class="d-block w-100" alt="Mirchi Fields">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Mirchi Fields</h5>
-                        <p>Spicing up the world, one crop at a time.</p>
+                        <h5>Organic vegetables and Fruits Delivery</h5>
+                        <p>Consume Healthy and Stay Healty.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="{% static 'images/fresh.webp' %}" class="d-block w-100" alt="Fruit Orchards">
+                    <img src="{% static 'images/agri-business.webp' %}" class="d-block w-100" alt="Fruit Orchards">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Fruit Orchards</h5>
-                        <p>Freshness from tree to table.</p>
+                        <h5>Invest in Agri Farming</h5>
+                        <p>Growing Trend.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="{% static 'images/comm_garden.jpg' %}" class="d-block w-100" alt="Community Gardens">
+                    <img src="{% static 'images/cmntygrdn.jpg' %}" class="d-block w-100" alt="Community Gardens">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Community Gardens</h5>
                         <p>Growing together for a better tomorrow.</p>
@@ -574,65 +629,15 @@
 
     <!-- Content -->
     <div class="content">
-        <!-- Section 1: E-commerce Store -->
-        <section class="section">
-            <div class="container_16">
-                <h2 class="section-title">Best Sellers</h2>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="ecommerce-card">
-                            <img src="{% static 'images/veg1.jpg' %}" alt="Product 1">
-                            <h3>Potatoes</h3>
-                            <p>Rs. 40.99 per kg</p>
-                            <a href="{% url 'shop' %}" class="btn">Buy Now</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="ecommerce-card">
-                            <img src="{% static 'images/veg2.jpeg' %}" alt="Product 2">
-                            <h3>Tomatoes</h3>
-                            <p>Rs. 20.49 per kg</p>
-                            <a href="{% url 'shop' %}" class="btn">Buy Now</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="ecommerce-card">
-                            <img src="{% static 'images/veg3.jpg' %}" alt="Product 3">
-                            <h3>Cauliflower</h3>
-                            <p>Rs. 29.99</p>
-                            <a href="{% url 'shop' %}" class="btn">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="ecommerce-card">
-                            <img src="{% static 'images/veg4.jpeg' %}" alt="Product 1">
-                            <h3>Coriander</h3>
-                            <p>Rs. 15.99</p>
-                            <a href="{% url 'shop' %}" class="btn">Buy Now</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="ecommerce-card">
-                            <img src="{% static 'images/veg5.webp' %}" alt="Product 2">
-                            <h3>Broccoli</h3>
-                            <p>Rs. 12.49</p>
-                            <a href="{% url 'shop' %}" class="btn">Buy Now</a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="ecommerce-card">
-                            <img src="{% static 'images/veg6.jpeg' %}" alt="Product 3">
-                            <h3>Bananas</h3>
-                            <p>Rs. 59.99 per dozen</p>
-                            <a href="{% url 'shop' %}" class="btn">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
+        
+        <section class="section ecommerce-bg">
+            <div class="container_16 ecommerce-section">
+              <h2>Explore Our E-Commerce Store</h2>
+              <p>Discover a wide range of fresh, organic produce available for purchase. Shop now to bring sustainable, healthy food directly from the farm to your table.</p>
+              <a href="{% url 'shop' %}" class="btn ecommerce-btn">Visit Store</a>
             </div>
-        </section>
-
+          </section>
+          
         <!-- Section 2: Social Media Tweets -->
         <section class="section" style="background: rgba(255, 255, 255, 0.05);">
             <div class="container_16">
@@ -673,7 +678,7 @@
                                         {{ proj.progress }}%
                                     </div>
                                 </div>
-                                <a href="{% url 'support' %}" class="btn mt-3" style="background-color: #d7d3d3;">Contribute</a>
+                                <a href="{% url 'support' %}" class="btn mt-3">Contribute</a>
                             </div>
                         </div>
                     {% empty %}

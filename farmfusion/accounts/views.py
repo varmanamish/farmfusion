@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import Wallet
 from businessmodel.models import Farmer, Investor ,InvestmentModel , Investment
+from django.contrib.auth.views import LoginView
 # Create your views here.
 def login_view(request):
     if request.method == "POST":

@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import CustomUser  # Importing the user model
-
+from businessmodel.models import Farmer
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
@@ -8,7 +8,7 @@ class Product(models.Model):
     cost = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='product_images/')
     rating = models.FloatField()
-
+    type = models.CharField(default="eatables")
     def __str__(self):
         return self.name
 
