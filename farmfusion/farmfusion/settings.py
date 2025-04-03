@@ -76,7 +76,7 @@ TEMPLATES = [
         },
     },
 ]
-
+LOGIN_URL = '/accounts/login/'  
 WSGI_APPLICATION = 'farmfusion.wsgi.application'
 
 IPSTACK_API_KEY="36f6f66bd83372ce80a0d0edf66660d2"
