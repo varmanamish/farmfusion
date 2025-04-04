@@ -28,7 +28,7 @@ class CustomUser(AbstractUser):
     dob = models.DateField(default=timezone.now)
     phno = models.CharField(max_length=15, default='000000000')  # Added max_length
     location = models.CharField(max_length=100, blank=True, null=True)
-
+    is_vfc = models.BooleanField(default=False)
     def __str__(self):
         return self.username
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect,JsonResponse
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -124,7 +124,97 @@ def invest(request):
 
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from .models import VerificationQuery, InvestmentModel, Farmer, verifymodel
 
+def raise_verification_query(request):
+    if request.method == "POST":
+        farmer = get_object_or_404(Farmer, user=request.user)
+        investment_model_id = request.POST.get("investment_model_id")
+        reason = request.POST.get("reason")
+
+        investment_model = get_object_or_404(InvestmentModel, id=investment_model_id)
+
+        # Check if there's an existing verification attempt
+        verification_entry = verifymodel.objects.filter(investment_model=investment_model, farmer=farmer).first()
+
+        # Create the query
+        query = VerificationQuery.objects.create(
+            farmer=farmer,
+            investment_model=investment_model,
+            verifymodel=verification_entry,
+            reason=reason
+        )
+
+        return JsonResponse({"message": "Query submitted successfully", "query_id": query.id})
+from django.shortcuts import get_object_or_404
+def submit_verification(request):
+    if request.method == "POST":
+        try:
+            # Get the farmer profile for current user
+            farmer = get_object_or_404(Farmer, user=request.user)
+
+            # Extract project ID first
+            investment_model_id = request.POST.get("project_id")
+            print(f"Received project_id: {investment_model_id}")
+            print(f"POST Data: {request.POST}")
+
+            if not investment_model_id:
+                return JsonResponse({"error": "Investment model ID is required"}, status=400)
+
+            # Convert to int just to be safe
+            try:
+                investment_model_id = int(investment_model_id)
+            except ValueError:
+                return JsonResponse({"error": "Invalid investment model ID"}, status=400)
+
+            # Get the investment model that belongs to this farmer
+            investment_model = get_object_or_404(
+                InvestmentModel,
+                id=investment_model_id,
+                farmer=farmer
+            )
+
+            # Get the other form data (remove commas!)
+            crpimg = request.FILES.get("crpimg")
+            iasimg = request.FILES.get("iasimg")
+            doc_number = request.POST.get("doc_number")
+            articleimg = request.FILES.get("articleimg")
+            artlink = request.POST.get("artlink")
+
+            # Create verification record
+            verification = verifymodel.objects.create(
+                investment_model=investment_model,
+                farmer=farmer,
+                crpimg=crpimg,
+                iasimg=iasimg,
+                doc_number=doc_number,
+                articleimg=articleimg,
+                artlink=artlink,
+                is_approved=None  # Pending approval
+            )
+
+            return JsonResponse({
+                "message": "Verification submitted successfully",
+                "verification_id": verification.id
+            })
+
+        except Exception as e:
+            return JsonResponse({
+                "error": str(e)
+            }, status=400)
+
+    else:
+        far = Farmer.objects.get(user_id=request.user.id)
+        projects = InvestmentModel.objects.filter(farmer=far, completed=False)
+        
+        try :
+            verifications = verifymodel.objects.select_related('farmer__user', 'investment_model').all().order_by('-id')
+            
+            return render(request, "raisequery.html", {"projects": projects,"verifications": verifications})
+        except:
+            return render(request, "raisequery.html", {"projects": projects})
 
 def showallmodels(request):
     print("request")
@@ -146,3 +236,25 @@ def myinvestments(request):
 
 def mlforms(request):
     return render (request, "mlforms.html")
+@login_required
+def verification_dashboard(request):
+    if not request.user.is_vfc:
+        return HttpResponseForbidden("You don't have permission to access this page.")
+    
+    verifications = verifymodel.objects.all().order_by('-id')
+    return render(request, 'verification.html', {'verifications': verifications})
+
+@login_required
+def approve_verification(request, verification_id, action):
+    if not request.user.is_vfc:
+        return HttpResponseForbidden("You don't have permission to perform this action.")
+    
+    verification = get_object_or_404(verifymodel, id=verification_id)
+
+    if action == "approve":
+        verification.is_approved = True
+    elif action == "reject":
+        verification.is_approved = False
+    verification.save()
+    
+    return redirect('verification_dashboard')

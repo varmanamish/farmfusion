@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verification Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      body {
+        background: #f5f7fa;
+        font-family: "Segoe UI", sans-serif;
+        padding: 40px;
+      }
+
+      .card-custom {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 40px;
+      }
+
+      h5 {
+        margin-bottom: 20px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .form-group label {
+        font-weight: 500;
+        margin-top: 10px;
+      }
+
+      .table thead {
+        background-color: #f2f2f2;
+      }
+
+      .badge {
+        font-size: 0.85rem;
+        padding: 5px 10px;
+        border-radius: 8px;
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        transition: all 0.2s ease-in-out;
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3;
+      }
+
+      .table-wrapper {
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <!-- Upload Form Card -->
+      <div class="card-custom">
+        <h5>Upload Project Documents</h5>
+        <form id="documentsForm" action="{% url 'submit_verification' %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+          <div class="form-group">
+            <label for="project_id">Select Project</label>
+            <select name="project_id" id="project_id" class="form-control" required>
+              {% for project in projects %}
+              <option value="{{ project.id }}">{{ project.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="damageImage">Image of Damage (if any)</label>
+            <input type="file" class="form-control" id="damageImage" name="crpimg">
+          </div>
+
+          <div class="form-group">
+            <label for="docNumber">Document Number</label>
+            <input type="text" class="form-control" id="docNumber" name="doc_number" required>
+          </div>
+
+          <div class="form-group">
+            <label for="signaturePage">Signature Page</label>
+            <input type="file" class="form-control" id="signaturePage" name="iasimg" required>
+          </div>
+
+          <div class="form-group">
+            <label for="articleImage">Article Image</label>
+            <input type="file" class="form-control" id="articleImage" name="articleimg" required>
+          </div>
+
+          <div class="form-group">
+            <label for="articleLink">Article Link</label>
+            <input type="url" class="form-control" id="articleLink" name="artlink" required>
+          </div>
+
+          <div class="mt-4 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Upload Documents</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Verification Table Card -->
+      <div class="card-custom">
+        <h5>Submitted Verifications</h5>
+        <div class="table-wrapper">
+          <table class="table table-bordered table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>Farmer</th>
+                <th>Project</th>
+                <th>Doc Number</th>
+                <th>Article Link</th>
+                <th>Status</th>
+                <th>Submitted</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for v in verifications %}
+              <tr>
+                <td>{{ v.farmer.user.username }}</td>
+                <td>{{ v.investment_model.name }}</td>
+                <td>{{ v.doc_number }}</td>
+                <td><a href="{{ v.artlink }}" target="_blank">View</a></td>
+                <td>
+                  {% if v.is_approved == True %}
+                    <span class="badge bg-success">Approved</span>
+                  {% elif v.is_approved == False %}
+                    <span class="badge bg-danger">Rejected</span>
+                  {% else %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                  {% endif %}
+                </td>
+                <td>{{ v.id|date:"d M Y, H:i" }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center">No verifications submitted yet.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

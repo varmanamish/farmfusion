@@ -549,6 +549,10 @@
                             <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'index' %}">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link " href="https://grow-your-future-farm.lovable.app/">guide</a>
+                        </li>
+                        <li class="nav-item">
+                            
                             <a class="nav-link {% if request.path == '/shop/' %}active{% endif %}" href="{% url 'shop' %}">E-Commerce</a>
                         </li>
                         <li class="nav-item">
@@ -557,6 +561,7 @@
                         <li class="nav-item">
                             <a class="nav-link {% if request.path == '/support/' %}active{% endif %}" href="{% url 'support' %}">Fund Raise</a>
                         </li>
+
                         {% if not user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link {% if request.path == '/contacts/' %}active{% endif %}" href="{% url 'contacts' %}">Contacts</a>
@@ -570,6 +575,9 @@
                             <li class="nav-item">
                                 <a class="nav-link {% if request.path == '/myprojects/' %}active{% endif %}" href="{% url 'myprojects' %}">My Projects</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="{% url 'submit_verification' %}">submit_verification</a>
+                            </li>
                             {% else %}
                             <li class="nav-item">
                                 <a class="nav-link {% if request.path == '/showallmodels/' %}active{% endif %}" href="{% url 'showallmodels' %}">My investments</a>
@@ -581,6 +589,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                             </li>
+                            {% if user.is_vfc%}
+                            <li class="nav-item">
+                                <a class="nav-link " href="{% url 'verification_dashboard' %}">verification-dashboard</a>
+                            </li>
+                            {% endif %}
                         {% else %}
                             <li class="nav-item">
                                 <a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Login</a>

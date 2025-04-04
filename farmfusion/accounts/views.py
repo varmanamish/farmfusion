@@ -131,12 +131,19 @@ def profile(request):
 
         # Fetch the user's wallet, if it exists
         wallet = Wallet.objects.filter(user=request.user).first()
-
-        context = {
-            'profile': user_profile,
-            'wallet': wallet,  # Pass wallet data to the template
-        }           
-        
+        try:
+            farmer = Farmer.objects.filter(user=request.user)
+            context = {
+                'profile': user_profile,
+                'wallet': wallet,  # Pass wallet data to the template
+                'farmer':farmer,
+            }           
+        except:
+            context = {
+                'profile': user_profile,
+                'wallet': wallet,  # Pass wallet data to the template
+                
+            }       
         print('sent')
         print(context)
         return render(request, 'profile.html', context)

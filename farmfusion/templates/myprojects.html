@@ -411,7 +411,13 @@
                   </div>
                 </div>
                 <p class="text-end">Funds raised:</p>
-                <button class="btn btn-warning butt" data-toggle="modal" data-target="#investModal{{ project.id }}">View Investors</button>
+                <div class="d-flex flex-row justify-content-center">
+                  <button class="btn btn-warning butt" data-toggle="modal" data-target="#investModal{{ project.id }}">View Investors</button>     
+                  <button class="btn btn-primary butt ms-2" data-toggle="modal" data-target="#uploadDocumentsModal" data-project-id="{{ project.id }}">Upload Documents</button>
+                </div>
+
+<!-- Overlay (for background blur effect) -->
+<div id="overlay" onclick="openMode()"></div>   
               </div>
             </div>
           </div>
@@ -610,9 +616,9 @@
                   <label>Estimated Time to Profitability:</label>
                   <div class="input-container">
                     <div class="radio-group">
-                      <label><input type="radio" id="time1" name="estimatedTime" value="1-2 years" required> 1-2 Years</label>
-                      <label><input type="radio" id="time3" name="estimatedTime" value="3-5 years"> 3-5 Years</label>
-                      <label><input type="radio" id="time5" name="estimatedTime" value="5+ years"> 5+ Years</label>
+                      <label><input type="radio" id="time1" name="estimatedTime" value="1-2 months" required> 1-2 months</label>
+                      <label><input type="radio" id="time3" name="estimatedTime" value="3-5 months"> 3-5 months</label>
+                      <label><input type="radio" id="time5" name="estimatedTime" value="6-8 months"> 5-6 months</label>
                     </div>
                   </div>
                 </div>
@@ -629,6 +635,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" form="projectForm" class="btn btn-success">Submit Proposal</button>
+            
           </div>
         </div>
       </div>
@@ -684,5 +691,7 @@
         .catch(error => console.error("Error:", error));
       });
     </script>
+    <!-- Upload Documents Modal -->
+
   </body>
 </html>

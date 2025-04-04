@@ -7,6 +7,7 @@ class Farmer(models.Model):
     soil_type = models.CharField(max_length=255,null=True,default=0)
     crop_type = models.CharField(max_length=255,null=True,default=0)
     farm_type = models.CharField(max_length=255,null=True,default="farmer")
+    token = models.BigIntegerField(default = 100)
     def __str__(self):
         return f"Farmer: {self.user.username}"
     
@@ -30,7 +31,7 @@ class InvestmentModel(models.Model):
     is_disbursed = models.BooleanField(default=False)
     completed = models.BooleanField(default=False)
     profit_generated = models.IntegerField(null=True, blank=True,default=0)
-
+    is_verified = models.BooleanField(null=True)
     def __str__(self):
         return f"Investment: {self.name} by {self.farmer.user.username}"
 class Investment(models.Model):
@@ -40,3 +41,26 @@ class Investment(models.Model):
 
     def __str__(self):
         return f"{self.investor.user.username} invested in {self.investment_model.name}"
+class verifymodel(models.Model):
+    investment_model = models.ForeignKey(InvestmentModel, on_delete=models.CASCADE)
+    farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE)
+    crpimg=models.ImageField(upload_to='product_images/')
+    iasimg=models.ImageField(upload_to='product_images/')
+    doc_number=models.BigIntegerField()
+    articleimg=models.ImageField(upload_to='product_images/')
+    artlink=models.CharField(max_length=255)
+    is_approved = models.BooleanField(null=True)
+class VerificationQuery(models.Model):
+    farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE, related_name="verification_queries")
+    investment_model = models.ForeignKey(InvestmentModel, on_delete=models.CASCADE, related_name="verification_queries")
+    verifymodel = models.ForeignKey(verifymodel, on_delete=models.CASCADE, related_name="queries", null=True, blank=True)
+    reason = models.TextField()  # Farmer's reason for verification failure
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(
+        max_length=20, 
+        choices=[("pending", "Pending"), ("resolved", "Resolved")], 
+        default="pending"
+    )
+
+    def __str__(self):
+        return f"Query by {self.farmer.user.username} on {self.investment_model.name}"
